@@ -12,7 +12,7 @@ namespace VRCImageHelper
             var icon = new NotifyIcon
             {
                 Icon = new Icon($"{Path.GetDirectoryName(Application.ExecutablePath)}\\icon.ico"),
-                Text = "VRChat Exif Writer",
+                Text = "VRChat Image Helper",
                 Visible = true
             };
 
@@ -39,7 +39,7 @@ namespace VRCImageHelper
 
             var label = new ToolStripLabel
             {
-                Text = "VRChat Exif Writer"
+                Text = "VRChat Image Helper"
             };
 
             strip.Items.AddRange(new ToolStripItem[] { label, new ToolStripSeparator(), autostart, exit });
