@@ -109,7 +109,7 @@ namespace VRCImageHelper
                 if (cancellationToken.IsCancellationRequested) { break; }
 
                 newline = logStream.ReadLine();
-                if (newline != null && newline != "")
+                if (newline != null && newline != "" && !newline.Contains("Error      -  "))
                 {
                     var e = new NewLineEventArgs(newline);
                     NewLine?.Invoke(this, e);
