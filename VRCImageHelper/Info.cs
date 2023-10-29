@@ -30,6 +30,7 @@ namespace VRCImageHelper
         [JsonIgnore]
         public int ApertureValue { get; set; }
         public List<string> Players { get; set; }
+        [JsonPropertyName("roominfo")]
         public RoomInfo RoomInfo { get; set; }
     }
 

@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Drawing.Imaging;
+using System.Globalization;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using FFMpegCore;
-using NExifTool;
-using NExifTool.Writer;
 
 namespace VRCImageHelper
 {
@@ -19,7 +19,8 @@ namespace VRCImageHelper
 
                 {
                     var CreationDate = match.Groups[1].ToString().Replace('.', ':');
-                    if (DateTime.TryParse(CreationDate, out DateTime dT))
+
+                    if (DateTime.TryParseExact(CreationDate, "yyyy:MM:dd HH:mm:ss", CultureInfo.CurrentCulture, DateTimeStyles.None, out DateTime dT))
                     {
                         CreationDate += $"+{TimeZoneInfo.Local.GetUtcOffset(dT)}";
                     }
@@ -28,7 +29,7 @@ namespace VRCImageHelper
 
                 var path = match.Groups[2].ToString();
 
-                var t = new Task(new ImageProcess(path, state).Process);   
+                var t = new Task(new ImageProcess(path, state).Process);
                 t.Start();
             }
         }
@@ -36,7 +37,8 @@ namespace VRCImageHelper
         private readonly string Path;
         private readonly State State;
 
-        ImageProcess(string path, State state) {
+        ImageProcess(string path, State state)
+        {
             State = state;
             Path = path;
         }
@@ -46,9 +48,9 @@ namespace VRCImageHelper
             if (new FileInfo(Path).Exists)
             {
                 var tmpPath = Compress(Path, "avif", 10);
-                var destPath = tmpPath;
+                var destPath = Path.Remove(Path.Length - 3) + "avif";
 
-                if (!new FileInfo(tmpPath).Exists)
+                if (new FileInfo(tmpPath).Exists)
                 {
                     WriteMetadata(tmpPath, destPath, State);
                 }
@@ -57,18 +59,24 @@ namespace VRCImageHelper
 
         private static string Compress(string path, string encode, int quality)
         {
-            var dest = path.Remove(path.Length - 3) + encode;
+            var dest = System.IO.Path.GetTempFileName();
+            File.Delete(dest);
+
             if (!(new FileInfo(dest).Exists))
             {
                 switch (encode)
                 {
                     case "avif":
                         CompressAVIF(path, dest, quality);
-                        return dest;
+                        break;
 
                     case "jpeg":
                         CompressJPEG(path, dest, 100 - quality);
-                        return dest;
+                        break;
+
+                    case "png":
+                        File.Copy(path, dest);
+                        break;
                 }
             }
 
@@ -90,11 +98,13 @@ namespace VRCImageHelper
 
         private static void CompressAVIF(string src, string dest, int quality)
         {
+            Debug.WriteLine(dest);
             FFMpegArguments
                 .FromFileInput(src)
                 .OutputToFile(dest, false, options =>
                 {
                     options
+                        .ForceFormat("avif")
                         .WithSpeedPreset(FFMpegCore.Enums.Speed.VerySlow)
                         .WithCustomArgument("-still-picture 1")
                         .WithFramerate(1);
@@ -140,22 +150,40 @@ namespace VRCImageHelper
 
         private static void WriteMetadata(string path, string destPath, State state)
         {
-            var desc = $"Taken at {state.RoomInfo.World_name} ({state.RoomInfo.Organizer}'s {state.RoomInfo.Permission}), with {string.Join(",", state.Players)}.";
+            var desc = $"Taken at {state.RoomInfo.World_name}, with {string.Join(",", state.Players)}.";
 
-            Debug.WriteLine("Write " + path + " -> " + destPath);
+            var makernote = Convert.ToBase64String(
+                System.Text.Encoding.UTF8.GetBytes(
+                    JsonSerializer.Serialize(state, options: new JsonSerializerOptions(JsonSerializerDefaults.Web) { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping })
+                )
+            );
 
-            var tags = new List<Operation>()
+            var argsFilePath = System.IO.Path.GetTempFileName();
+            var args = "";
+
+            args += $"-overwrite_original\n";
+            args += $"-:CreationTime={state.CreationDate}\n";
+            args += $"-:DateTimeOriginal={state.CreationDate}\n";
+            args += $"-:ImageDescription={desc}\n";
+            args += $"-:Description={desc}\n";
+            args += $"-:Comment={desc}\n";
+            args += $"-makernote={makernote}\n";
+
+            var argsFile = new StreamWriter(argsFilePath);
+            argsFile.Write(args);
+            argsFile.Dispose();
+
+            Debug.WriteLine(args);
+
+            var exifTool = new ProcessStartInfo("exiftool.exe") { Arguments = path + " -@ " + argsFilePath, CreateNoWindow = true };
+            var exifToolProcess = System.Diagnostics.Process.Start(exifTool);
+            if (exifToolProcess is not null)
             {
-                new SetOperation(new Tag("CreationDateOriginal", state.CreationDate)),
-                new SetOperation(new Tag("CreationTime", state.CreationDate)),
-                new SetOperation(new Tag("ImageDescription", desc)),
-                new SetOperation(new Tag("Description", desc)),
-                new SetOperation(new Tag("MakerNote", JsonSerializer.Serialize(state)))
-            };
-
-            var exifTool = new ExifTool(new ExifToolOptions { });
-            exifTool.OverwriteTagsAsync(destPath, tags, FileWriteMode.OverwriteOriginal);
+                exifToolProcess.WaitForExit();
+                File.Delete(destPath);
+                File.Move(path, destPath);
+                File.Delete(argsFilePath);
+            }
         }
-
     }
 }
