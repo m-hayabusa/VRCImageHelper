@@ -16,9 +16,22 @@ namespace VRCImageHelper
 
             var toolbarIcon = new ToolbarIcon();
             toolbarIcon.CreateToolbarIcon();
-            
-            var logReader = new LogReader();
-            var oscServer = new OscServer();
+
+            Cts = new CancellationTokenSource();
+
+            var bgTask = new Task(background, Cts.Token);
+            bgTask.Start();
+
+            Application.Run();
+        }
+
+        public static CancellationTokenSource? Cts { get; private set; }
+        static void background()
+        {
+            if (Cts == null) return;
+
+            var logReader = new LogReader(Cts.Token);
+            var oscServer = new OscServer(Cts.Token);
 
             logReader.NewLine += ImageProcess.Taken;
             logReader.NewLine += Info.WorldId;
@@ -34,8 +47,6 @@ namespace VRCImageHelper
 
             logReader.Enable = true;
             oscServer.Enable = true;
-
-            Application.Run();
         }
     }
 }

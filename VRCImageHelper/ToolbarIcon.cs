@@ -49,6 +49,9 @@ namespace VRCImageHelper
 
         private void Exit_Click(object? sender, EventArgs e)
         {
+            Program.Cts?.Cancel();
+            Thread.Sleep(500);
+            Program.Cts?.Dispose();
             Application.Exit();
         }
 

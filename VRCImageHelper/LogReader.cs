@@ -52,9 +52,11 @@ namespace VRCImageHelper
         }
 
         public event NewLineEventHandler? NewLine;
+        private readonly CancellationToken cancellationToken;
 
-        public LogReader()
+        public LogReader(CancellationToken token)
         {
+            cancellationToken = token;
             logDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "Low\\VRChat\\VRChat\\";
 
             logFile = FindLogFile();
@@ -104,6 +106,8 @@ namespace VRCImageHelper
 
             do
             {
+                if (cancellationToken.IsCancellationRequested) { break; }
+
                 newline = logStream.ReadLine();
                 if (newline != null && newline != "")
                 {

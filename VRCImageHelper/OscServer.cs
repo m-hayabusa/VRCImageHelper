@@ -15,6 +15,7 @@
 
     internal class OscServer
     {
+        private readonly CancellationToken cancellationToken;
         private bool _enabled = false;
         public bool Enable
         {
@@ -38,8 +39,10 @@
                 return _enabled;
             }
         }
-
-
         public event OscEventHandler? Received;
+        public OscServer(CancellationToken token)
+        {
+            cancellationToken = token;
+        }
     }
 }
