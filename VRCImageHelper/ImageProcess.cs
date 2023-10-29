@@ -27,15 +27,30 @@ namespace VRCImageHelper
                 }
 
                 var path = match.Groups[2].ToString();
-                if (new FileInfo(path).Exists)
-                {
-                    var tmpPath = Compress(path, "avif", 10);
-                    var destPath = tmpPath;
 
-                    if (!new FileInfo(tmpPath).Exists)
-                    {
-                        WriteMetadata(tmpPath, destPath, state);
-                    }
+                var t = new Task(new ImageProcess(path, state).Process);   
+                t.Start();
+            }
+        }
+
+        private readonly string Path;
+        private readonly State State;
+
+        ImageProcess(string path, State state) {
+            State = state;
+            Path = path;
+        }
+
+        private void Process()
+        {
+            if (new FileInfo(Path).Exists)
+            {
+                var tmpPath = Compress(Path, "avif", 10);
+                var destPath = tmpPath;
+
+                if (!new FileInfo(tmpPath).Exists)
+                {
+                    WriteMetadata(tmpPath, destPath, State);
                 }
             }
         }
