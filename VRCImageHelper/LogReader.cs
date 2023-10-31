@@ -111,7 +111,7 @@ internal class LogReader : IDisposable
             { break; }
 
             var newline = log[i];
-            if (newline.Trim() != "" && !newline.Contains("Error      -  "))
+            if (newline.Length < 500 && !newline.StartsWith(" ") && newline.Trim() != ""  && !newline.Contains("Error      -  ") && !newline.Contains("Warning    -  "))
             {
                 var e = new NewLineEventArgs(newline);
                 NewLine?.Invoke(this, e);
