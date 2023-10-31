@@ -17,8 +17,9 @@ namespace VRCImageHelper
     {
         public State()
         {
-            FocalLength = 0;
-            ApertureValue = 0;
+            FocalLength = 0f;
+            ApertureValue = 0f;
+            VL2Enabled = false;
             CreationDate = "";
             Players = new List<string>();
             RoomInfo = new RoomInfo();
@@ -26,9 +27,11 @@ namespace VRCImageHelper
         [JsonIgnore]
         public string CreationDate { get; set; }
         [JsonIgnore]
-        public int FocalLength { get; set; }
+        public bool VL2Enabled { get; set; }
         [JsonIgnore]
-        public int ApertureValue { get; set; }
+        public float FocalLength { get; set; }
+        [JsonIgnore]
+        public float ApertureValue { get; set; }
         public List<string> Players { get; set; }
         [JsonPropertyName("roominfo")]
         public RoomInfo RoomInfo { get; set; }
@@ -96,15 +99,19 @@ namespace VRCImageHelper
         {
             if (e.Path == "/avatar/parameters/VirtualLens2_Zoom")
             {
+                var raw = Single.Parse(e.Data.Trim()[..^1]);
+                _state.FocalLength = 12f * MathF.Exp(raw * MathF.Log(300f / 12f));
+                Debug.WriteLine(e.Path + " " + raw + " " + _state.FocalLength + "mm");
 
             }
         }
 
-        public static void VL2Control(object sender, OscEventArgs e)
+        public static void VL2Enable(object sender, OscEventArgs e)
         {
-            if (e.Path == "/avatar/parameters/VirtualLens2_Control")
+            if (e.Path == "/avatar/parameters/VirtualLens2_Enable")
             {
-
+                Debug.WriteLine(e.Path + " " + (Int32.Parse(e.Data) == 1));
+                _state.VL2Enabled = (Int32.Parse(e.Data) == 1);
             }
         }
 
@@ -112,6 +119,9 @@ namespace VRCImageHelper
         {
             if (e.Path == "/avatar/parameters/VirtualLens2_Aperture")
             {
+                var raw = Single.Parse(e.Data.Trim()[..^1]);
+                _state.ApertureValue = 22f * MathF.Exp(raw * MathF.Log(1f / 22f));
+                Debug.WriteLine(e.Path + " " + raw + " F" + _state.ApertureValue);
 
             }
         }
@@ -120,7 +130,9 @@ namespace VRCImageHelper
         {
             if (e.Path == "/avatar/change")
             {
-
+                _state.VL2Enabled = false;
+                _state.FocalLength = 50f;
+                _state.ApertureValue = 22f;
             }
         }
     }

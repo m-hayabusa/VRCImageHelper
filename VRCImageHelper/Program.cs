@@ -40,7 +40,7 @@ namespace VRCImageHelper
             logReader.NewLine += Info.PlayerLeft;
             logReader.NewLine += Info.Quit;
 
-            oscServer.Received += Info.VL2Control;
+            oscServer.Received += Info.VL2Enable;
             oscServer.Received += Info.VL2Zoom;
             oscServer.Received += Info.VL2Aperture;
             oscServer.Received += Info.ChangeAvater;
