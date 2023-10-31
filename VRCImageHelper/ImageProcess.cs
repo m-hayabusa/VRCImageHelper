@@ -182,13 +182,28 @@ internal class ImageProcess
         var argsFilePath = System.IO.Path.GetTempFileName();
         var args = "";
 
-        args += $"-overwrite_original\n";
+        args += $"-overwrite_original -codedcharacterset=utf8\n";
         args += $"-:CreationTime={state.CreationDate}\n";
         args += $"-:DateTimeOriginal={state.CreationDate}\n";
         args += $"-:ImageDescription={desc}\n";
         args += $"-:Description={desc}\n";
         args += $"-:Comment={desc}\n";
         args += $"-makernote={makernote}\n";
+        args += "-sep \";\"\n";
+        args += $"-:Keywords={state.RoomInfo.World_name};{string.Join(';', state.Players)}\n";
+
+        if (state.VL2Enabled)
+        {
+            args += $"-:Make=logilabo\n";
+            args += $"-:Model=VirtualLens2\n";
+            args += $"-:FocalLength={state.FocalLength}\n";
+            args += $"-:FNumber={state.ApertureValue}\n";
+        }
+        else
+        {
+            args += $"-:Make=VRChat\n";
+            args += $"-:Model=VRChat Camera\n";
+        }
 
         var argsFile = new StreamWriter(argsFilePath);
         argsFile.Write(args);
