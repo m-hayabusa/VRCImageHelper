@@ -16,8 +16,8 @@ internal class State
 {
     public State()
     {
-        FocalLength = 50f;
-        ApertureValue = 22f;
+        FocalLength = ConfigManager.Config.VirtualLens2.FocalLengthDefault;
+        ApertureValue = ConfigManager.Config.VirtualLens2.ApertureDefault;
         VL2Enabled = false;
         CreationDate = "";
         Players = new List<string>();
@@ -98,7 +98,9 @@ internal class Info
         if (e.Path == "/avatar/parameters/VirtualLens2_Zoom")
         {
             var raw = Single.Parse(e.Data.Trim()[..^1]);
-            State.FocalLength = 12f * MathF.Exp(raw * MathF.Log(300f / 12f));
+            var min = ConfigManager.Config.VirtualLens2.FocalLengthMin;
+            var max = ConfigManager.Config.VirtualLens2.FocalLengthMax;
+            State.FocalLength = max * MathF.Exp(raw * MathF.Log(min / max));
             Debug.WriteLine(e.Path + " " + raw + " " + State.FocalLength + "mm");
 
         }
@@ -117,7 +119,9 @@ internal class Info
         if (e.Path == "/avatar/parameters/VirtualLens2_Aperture")
         {
             var raw = float.Parse(e.Data.Trim()[..^1]);
-            State.ApertureValue = 22f * MathF.Exp(raw * MathF.Log(1f / 22f));
+            var min = ConfigManager.Config.VirtualLens2.ApertureMin;
+            var max = ConfigManager.Config.VirtualLens2.ApertureMax;
+            State.ApertureValue = max * MathF.Exp(raw * MathF.Log(min / max));
         }
     }
 
@@ -126,8 +130,8 @@ internal class Info
         if (e.Path == "/avatar/change")
         {
             State.VL2Enabled = false;
-            State.FocalLength = 50f;
-            State.ApertureValue = 22f;
+            State.FocalLength = ConfigManager.Config.VirtualLens2.FocalLengthDefault;
+            State.ApertureValue = ConfigManager.Config.VirtualLens2.ApertureDefault;
         }
     }
 }

@@ -75,7 +75,10 @@ internal class ImageProcess
             var tmpPath = Compress(_sourcePath, ConfigManager.Config.Format, ConfigManager.Config.Quality);
             if (new FileInfo(tmpPath).Exists)
             {
-                WriteMetadata(tmpPath, destPath, _state);
+                if (WriteMetadata(tmpPath, destPath, _state) == 0)
+                {
+                    File.Delete(_sourcePath);
+                }
             }
         }
     }
@@ -169,7 +172,7 @@ internal class ImageProcess
             .ProcessSynchronously();
     }
 
-    private static void WriteMetadata(string path, string destPath, State state)
+    private static int WriteMetadata(string path, string destPath, State state)
     {
         var desc = $"Taken at {state.RoomInfo.World_name}, with {string.Join(",", state.Players)}.";
 
@@ -216,9 +219,19 @@ internal class ImageProcess
         if (exifToolProcess is not null)
         {
             exifToolProcess.WaitForExit();
-            File.Delete(destPath);
-            File.Move(path, destPath);
-            File.Delete(argsFilePath);
+
+            if (exifToolProcess.ExitCode == 0)
+            {
+                File.Delete(destPath);
+                File.Move(path, destPath);
+                File.Delete(argsFilePath);
+            }
+
+            return exifToolProcess.ExitCode;
+        }
+        else
+        {
+            return -1;
         }
     }
 }

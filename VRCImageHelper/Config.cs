@@ -46,9 +46,19 @@ internal class Config
     public string Encoder { get; set; } = "libaom-av1";
     public string EncoderOption { get; set; } = "";
     public int Quality { get; set; } = 20;
+    public VirtualLens2Config VirtualLens2 { get; set; } = new();
+    internal class VirtualLens2Config
+    {
+        public float ApertureMin { get; set; } = 22;
+        public float ApertureMax { get; set; } = 1;
+        public float ApertureDefault { get; set; } = 22;
+        public float FocalLengthMin { get; set; } = 12;
+        public float FocalLengthMax { get; set; } = 300;
+        public float FocalLengthDefault { get; set; } = 50;
+    }
 
     [JsonConstructor]
-    public Config(string destDir, string filePattern, string format, string encoder, string encoderOption, int quality)
+    public Config(string destDir, string filePattern, string format, string encoder, string encoderOption, int quality, VirtualLens2Config virtualLens2)
     {
         DestDir = destDir;
         FilePattern = filePattern;
@@ -56,6 +66,7 @@ internal class Config
         Encoder = encoder;
         EncoderOption = encoderOption;
         Quality = quality;
+        VirtualLens2 = virtualLens2;
     }
     public Config() { }
 }
