@@ -16,7 +16,6 @@ namespace VRCImageHelper
 
     internal class LogReader
     {
-        private StreamReader? logStream;
         private readonly System.Timers.Timer refreshTimer;
         private FileInfo logFile;
         private static FileSystemWatcher? watcher;
@@ -96,26 +95,27 @@ namespace VRCImageHelper
                 SeeqLog();
         }
 
+        private string lastLine = "";
         private void SeeqLog()
         {
-            logStream = new StreamReader(logFile.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+            var logStream = new StreamReader(logFile.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
 
             logStream.BaseStream.Seek(head, SeekOrigin.Current);
 
-            string? newline;
-
-            do
+            string[] log = logStream.ReadToEnd().Split('\n');
+            log[0] += lastLine;
+            for (int i = 0; i < log.Length - 1; i++)
             {
                 if (cancellationToken.IsCancellationRequested) { break; }
 
-                newline = logStream.ReadLine();
-                if (newline != null && newline != "" && !newline.Contains("Error      -  "))
+                var newline = log[i];
+                if (newline.Trim() != "" && !newline.Contains("Error      -  "))
                 {
                     var e = new NewLineEventArgs(newline);
                     NewLine?.Invoke(this, e);
                 }
             }
-            while (newline != null);
+            lastLine = log[^1];
 
             head = logStream.BaseStream.Position;
 
