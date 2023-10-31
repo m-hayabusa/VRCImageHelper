@@ -24,6 +24,12 @@ namespace VRCImageHelper
             };
             exit.Click += new EventHandler(Exit_Click);
 
+            var settings = new ToolStripMenuItem
+            {
+                Text = "Settings"
+            };
+            settings.Click += Settings_Click;
+
             autostart.Text = "Run when Logon";
 
             autostart.CheckState = new Func<CheckState>(() =>
@@ -42,9 +48,16 @@ namespace VRCImageHelper
                 Text = "VRChat Image Helper"
             };
 
-            strip.Items.AddRange(new ToolStripItem[] { label, new ToolStripSeparator(), autostart, exit });
+            strip.Items.AddRange(new ToolStripItem[] { label, new ToolStripSeparator(), autostart, settings, exit });
 
             icon.ContextMenuStrip = strip;
+        }
+        private ConfigWindow? configWindow;
+        private void Settings_Click(object? sender, EventArgs e)
+        {
+            if (configWindow is null || configWindow.IsDisposed)
+                configWindow = new ConfigWindow();
+            configWindow.ShowDialog();
         }
 
         private void Exit_Click(object? sender, EventArgs e)

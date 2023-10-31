@@ -45,11 +45,39 @@ namespace VRCImageHelper
 
         private void Process()
         {
+            var fileName = System.IO.Path.GetFileName(Path);
+
+            var match = Regex.Match(fileName, "(\\d+)-(\\d+)-(\\d+)_(\\d+)-(\\d+)-(\\d+)\\.(\\d+)_(\\d+)x(\\d+)");
+            if (match.Success)
+            {
+                fileName = ConfigManager.Config.FilePattern
+                    .Replace("yyyy", match.Groups[1].Value)
+                    .Replace("MM", match.Groups[2].Value)
+                    .Replace("dd", match.Groups[3].Value)
+                    .Replace("hh", match.Groups[4].Value)
+                    .Replace("mm", match.Groups[5].Value)
+                    .Replace("ss", match.Groups[6].Value)
+                    .Replace("fff", match.Groups[7].Value)
+                    .Replace("XXXX", match.Groups[8].Value)
+                    .Replace("YYYY", match.Groups[9].Value);
+
+                fileName = System.IO.Path.ChangeExtension(fileName, ConfigManager.Config.Format.ToLower());
+            }
+
+            var destPath = ConfigManager.Config.DestDir + "\\" + fileName;
+            Debug.WriteLine($"{destPath}");
+
+            var destDir = System.IO.Path.GetDirectoryName(destPath);
+            
+            if (destDir is null)
+                return;
+
+            if (Directory.CreateDirectory(destDir).Exists == false)
+                return;
+
             if (new FileInfo(Path).Exists)
             {
-                var tmpPath = Compress(Path, "avif", 10);
-                var destPath = Path.Remove(Path.Length - 3) + "avif";
-
+                var tmpPath = Compress(Path, ConfigManager.Config.Format, ConfigManager.Config.Quality);
                 if (new FileInfo(tmpPath).Exists)
                 {
                     WriteMetadata(tmpPath, destPath, State);
@@ -66,15 +94,15 @@ namespace VRCImageHelper
             {
                 switch (encode)
                 {
-                    case "avif":
+                    case "AVIF":
                         CompressAVIF(path, dest, quality);
                         break;
 
-                    case "jpeg":
+                    case "JPEG":
                         CompressJPEG(path, dest, 100 - quality);
                         break;
 
-                    case "png":
+                    case "PNG":
                         File.Copy(path, dest);
                         break;
                 }
@@ -98,7 +126,6 @@ namespace VRCImageHelper
 
         private static void CompressAVIF(string src, string dest, int quality)
         {
-            Debug.WriteLine(dest);
             FFMpegArguments
                 .FromFileInput(src)
                 .OutputToFile(dest, false, options =>
@@ -121,8 +148,7 @@ namespace VRCImageHelper
                     }
                     else
                     {
-                        string encoder = "av1_qsv";
-                        switch (encoder)
+                        switch (ConfigManager.Config.Encoder)
                         {
                             case "libaom-av1":
                                 options
@@ -143,6 +169,9 @@ namespace VRCImageHelper
                                     .WithVideoCodec("av1_amf");
                                 break;
                         }
+
+                        if (ConfigManager.Config.EncoderOption != "")
+                            options.WithCustomArgument(ConfigManager.Config.EncoderOption);
                     }
                 })
                 .ProcessSynchronously();
