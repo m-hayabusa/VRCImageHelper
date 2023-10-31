@@ -17,7 +17,7 @@ internal class LogReader : IDisposable
     private readonly string _logDir;
     private readonly CancellationToken _cancellationToken;
     private static FileSystemWatcher? s_watcher;
-    private FileInfo _logFile;
+    private FileInfo? _logFile;
     private long _head;
     private bool _enabled;
 
@@ -43,7 +43,13 @@ internal class LogReader : IDisposable
         {
             AutoReset = true
         };
-        _refreshTimer.Elapsed += new ElapsedEventHandler((_, _) => _logFile.Refresh());
+        _refreshTimer.Elapsed += new ElapsedEventHandler((_, _) =>
+        {
+            if (_logFile is not null && _logFile.Exists)
+            {
+                _logFile.Refresh();
+            }
+        });
     }
 
     public bool Enable
@@ -79,7 +85,7 @@ internal class LogReader : IDisposable
     {
         var newLogFile = FindLogFile();
         Debug.WriteLine("Watcher_Created: " + _logFile + " " + newLogFile);
-        if (newLogFile != _logFile)
+        if (newLogFile != _logFile && newLogFile is not null)
         {
             _logFile = newLogFile;
             _head = 0;
@@ -99,6 +105,9 @@ internal class LogReader : IDisposable
     private string _lastLine = "";
     private void SeeqLog()
     {
+        if (_logFile is null || !_logFile.Exists)
+            return;
+
         var logStream = new StreamReader(_logFile.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
 
         _ = logStream.BaseStream.Seek(_head, SeekOrigin.Current);
@@ -124,13 +133,12 @@ internal class LogReader : IDisposable
         logStream.Close();
     }
 
-    private FileInfo FindLogFile()
+    private FileInfo? FindLogFile()
     {
         var logFile = Directory.EnumerateFiles(_logDir, "output_log_*.txt", SearchOption.TopDirectoryOnly)
             .ToList()
-            .OrderBy(f => File.GetCreationTime(f))
-            .Last();
-        return new FileInfo(logFile);
+            .OrderBy(f => File.GetCreationTime(f));
+        return logFile.Any() ? new FileInfo(logFile.First()) : null;
     }
 
     public void Dispose() => _refreshTimer.Dispose();
