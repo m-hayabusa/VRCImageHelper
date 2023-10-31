@@ -1,112 +1,112 @@
-﻿using Rug.Osc;
+﻿namespace VRCImageHelper;
+
+using Rug.Osc;
 using System.Diagnostics;
 using VRC.OSCQuery;
 
-namespace VRCImageHelper
+public class OscEventArgs : EventArgs
 {
-    public class OscEventArgs : EventArgs
+    public OscEventArgs(string path, string data)
     {
-        public OscEventArgs(string path, string data)
-        {
-            Path = path;
-            Data = data;
-        }
-
-        public string Path { get; }
-        public string Data { get; }
+        Path = path;
+        Data = data;
     }
-    public delegate void OscEventHandler(object sender, OscEventArgs e);
 
-    internal class OscServer
+    public string Path { get; }
+    public string Data { get; }
+}
+public delegate void OscEventHandler(object sender, OscEventArgs e);
+
+internal class OscServer
+{
+    private readonly CancellationToken _cancellationToken;
+    private bool _enabled;
+    public bool Enable
     {
-        private readonly CancellationToken cancellationToken;
-        private bool _enabled = false;
-        public bool Enable
+        set
         {
-            set
+            if (value == _enabled)
+                return;
+
+            if (value)
             {
-                if (value == _enabled) return;
+                _port = Extensions.GetAvailableUdpPort();
 
-                if (value)
-                {
-                    _port = Extensions.GetAvailableUdpPort();
+                _oscQuery = new OSCQueryServiceBuilder()
+                    .WithTcpPort(Extensions.GetAvailableTcpPort())
+                    .WithUdpPort(_port)
+                    .WithServiceName("VRCImageHelper")
+                    .AdvertiseOSC()
+                    .AdvertiseOSCQuery()
+                    .StartHttpServer()
+                    .Build();
 
-                    _oscQuery = new OSCQueryServiceBuilder()
-                        .WithTcpPort(Extensions.GetAvailableTcpPort())
-                        .WithUdpPort(_port)
-                        .WithServiceName("VRCImageHelper")
-                        .AdvertiseOSC()
-                        .AdvertiseOSCQuery()
-                        .StartHttpServer()
-                        .Build();
+                _oscQuery.AddEndpoint<string>("/avatar/change", Attributes.AccessValues.WriteOnly);
+                _oscQuery.AddEndpoint<int>("/avatar/parameters/VirtualLens2_Enable", Attributes.AccessValues.WriteOnly);
+                _oscQuery.AddEndpoint<float>("/avatar/parameters/VirtualLens2_Zoom", Attributes.AccessValues.WriteOnly);
+                _oscQuery.AddEndpoint<float>("/avatar/parameters/VirtualLens2_Aperture", Attributes.AccessValues.WriteOnly);
 
-                    _oscQuery.AddEndpoint<string>("/avatar/change", Attributes.AccessValues.WriteOnly);
-                    _oscQuery.AddEndpoint<int>("/avatar/parameters/VirtualLens2_Enable", Attributes.AccessValues.WriteOnly);
-                    _oscQuery.AddEndpoint<float>("/avatar/parameters/VirtualLens2_Zoom", Attributes.AccessValues.WriteOnly);
-                    _oscQuery.AddEndpoint<float>("/avatar/parameters/VirtualLens2_Aperture", Attributes.AccessValues.WriteOnly);
+                _oscQuery.OnOscServiceAdded += OscQuery_OnOscServiceAdded;
 
-                    _oscQuery.OnOscServiceAdded += OscQuery_OnOscServiceAdded;
+                _oscQuery.RefreshServices();
+                Debug.WriteLine(_oscQuery.HostInfo);
+                Debug.WriteLine(_oscQuery.OscPort);
 
-                    _oscQuery.RefreshServices();
-                    Debug.WriteLine(_oscQuery.HostInfo);
-                    Debug.WriteLine(_oscQuery.OscPort);
+                _oscReceiver = new OscReceiver(_port);
+                _oscReceiver.Connect();
 
-                    oscReceiver = new OscReceiver(_port);
-                    oscReceiver.Connect();
-
-                    watcher = new Task(() => oscReceiverWatcher());
-                    watcher.Start();
-                }
-                else
-                {
-                    // close
-                    watcher = null;
-                    oscReceiver.Dispose();
-                    _oscQuery.Dispose();
-                }
-
-                _enabled = value;
+                _oscWatcher = new Task(() => OscReceiverWatcher());
+                _oscWatcher.Start();
             }
-            get
+            else
             {
-                return _enabled;
+                // close
+                _oscWatcher = null;
+                _oscReceiver?.Dispose();
+                _oscQuery?.Dispose();
             }
+
+            _enabled = value;
         }
-
-        private int _port;
-        private OSCQueryService _oscQuery;
-
-        private void OscQuery_OnOscServiceAdded(OSCQueryServiceProfile profile)
+        get
         {
-            watcher = new Task(() => oscReceiverWatcher());
-            watcher.Start();
+            return _enabled;
         }
+    }
 
-        private OscReceiver oscReceiver;
-        private Task? watcher;
-        private void oscReceiverWatcher()
+    private int _port;
+    private OSCQueryService? _oscQuery;
+
+    private void OscQuery_OnOscServiceAdded(OSCQueryServiceProfile profile)
+    {
+        _oscWatcher = new Task(() => OscReceiverWatcher());
+        _oscWatcher.Start();
+    }
+
+    private OscReceiver? _oscReceiver;
+    private Task? _oscWatcher;
+    private void OscReceiverWatcher()
+    {
+        while (!_cancellationToken.IsCancellationRequested && _enabled)
         {
-            while (!cancellationToken.IsCancellationRequested && _enabled)
+            if (_oscReceiver is not null && _oscReceiver.TryReceive(out var packet))
             {
-                if (oscReceiver.TryReceive(out var packet))
+                var a = packet.ToString()?.Split(',');
+                if (a is not null && a.Length >= 2)
                 {
-                    var a = packet.ToString()?.Split(',');
-                    if (a is not null && a.Length >= 2)
-                    {
-                        var e = new OscEventArgs(a[0], a[1]);
-                        Received?.Invoke(this, e);
-                    }
-                }
-                else
-                {
-                    Task.Delay(200);
+                    var e = new OscEventArgs(a[0], a[1]);
+                    Received?.Invoke(this, e);
                 }
             }
+            else
+            {
+                Task.Delay(200);
+            }
         }
-        public event OscEventHandler? Received;
-        public OscServer(CancellationToken token)
-        {
-            cancellationToken = token;
-        }
+    }
+    public event OscEventHandler? Received;
+    public OscServer(CancellationToken token)
+    {
+        _cancellationToken = token;
     }
 }
