@@ -16,8 +16,8 @@ internal class State
 {
     public State()
     {
-        FocalLength = 0f;
-        ApertureValue = 0f;
+        FocalLength = 50f;
+        ApertureValue = 22f;
         VL2Enabled = false;
         CreationDate = "";
         Players = new List<string>();
@@ -118,7 +118,6 @@ internal class Info
         {
             var raw = float.Parse(e.Data.Trim()[..^1]);
             State.ApertureValue = 22f * MathF.Exp(raw * MathF.Log(1f / 22f));
-
         }
     }
 
