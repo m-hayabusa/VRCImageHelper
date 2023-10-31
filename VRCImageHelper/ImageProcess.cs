@@ -75,7 +75,7 @@ namespace VRCImageHelper
             if (Directory.CreateDirectory(destDir).Exists == false)
                 return;
 
-            if (new FileInfo(Path).Exists)
+            if (new FileInfo(Path).Exists && !new FileInfo(destPath).Exists)
             {
                 var tmpPath = Compress(Path, ConfigManager.Config.Format, ConfigManager.Config.Quality);
                 if (new FileInfo(tmpPath).Exists)
