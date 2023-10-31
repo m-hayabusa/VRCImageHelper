@@ -43,7 +43,7 @@ internal class LogReader : IDisposable
         {
             AutoReset = true
         };
-        _refreshTimer.Elapsed += new ElapsedEventHandler((object? sender, ElapsedEventArgs e) => _logFile.Refresh());
+        _refreshTimer.Elapsed += new ElapsedEventHandler((_, _) => _logFile.Refresh());
     }
 
     public bool Enable
@@ -111,7 +111,7 @@ internal class LogReader : IDisposable
             { break; }
 
             var newline = log[i];
-            if (newline.Length < 500 && !newline.StartsWith(" ") && newline.Trim() != ""  && !newline.Contains("Error      -  ") && !newline.Contains("Warning    -  "))
+            if (newline.Length < 500 && !newline.StartsWith(" ") && newline.Trim() != "" && !newline.Contains("Error      -  ") && !newline.Contains("Warning    -  "))
             {
                 var e = new NewLineEventArgs(newline);
                 NewLine?.Invoke(this, e);
