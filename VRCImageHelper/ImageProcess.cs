@@ -133,7 +133,7 @@ internal class ImageProcess
 
     private static void CompressJPEG(string src, string dest, int quality)
     {
-        var image = new Bitmap(src);
+        using var image = new Bitmap(src);
         var encoder = ImageCodecInfo.GetImageEncoders().ToList()
                         .Where(e => e.FormatID == ImageFormat.Jpeg.Guid)
                         .First();
@@ -157,7 +157,8 @@ internal class ImageProcess
                     .WithFramerate(1);
 
                 var formatWithAlpha = new PixelFormat[] { PixelFormat.Alpha, PixelFormat.Canonical, PixelFormat.Format16bppArgb1555, PixelFormat.Format32bppArgb, PixelFormat.Format32bppPArgb, PixelFormat.Format64bppArgb, PixelFormat.Format64bppPArgb };
-                if (formatWithAlpha.Contains((new Bitmap(src)).PixelFormat))
+                using var targetImage = new Bitmap(src);
+                if (formatWithAlpha.Contains(targetImage.PixelFormat))
                 {
                     // 少なくとも libsvtav1 と av1_qsv では透過を処理できなかった
                     options
