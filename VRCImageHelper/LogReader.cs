@@ -103,11 +103,13 @@ internal class LogReader : IDisposable
     }
 
     private string _lastLine = "";
+    private bool _seeqLogLock = false;
     private void SeeqLog()
     {
-        if (_logFile is null || !_logFile.Exists)
+        if (_logFile is null || !_logFile.Exists || _seeqLogLock == true)
             return;
 
+        _seeqLogLock = true;
         var logStream = new StreamReader(_logFile.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
 
         _ = logStream.BaseStream.Seek(_head, SeekOrigin.Current);
@@ -131,6 +133,8 @@ internal class LogReader : IDisposable
         _head = logStream.BaseStream.Position;
 
         logStream.Close();
+
+        _seeqLogLock = false;
     }
 
     private FileInfo? FindLogFile()
