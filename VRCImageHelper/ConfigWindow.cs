@@ -49,10 +49,8 @@ public partial class ConfigWindow : Form
 
     private string GetFilePattern(string fileName)
     {
-        fileName = fileName[..^Path.GetExtension(fileName).Length];
         var ext = comboBoxFileFormat.SelectedItem.ToString() ?? "";
-        fileName += "." + ext.ToLower();
-        return fileName;
+        return Path.ChangeExtension(fileName, ext.ToLower());
     }
 
     private void ButtonResetFilePattern_Click(object sender, EventArgs e)
