@@ -1,6 +1,7 @@
 ﻿namespace VRCImageHelper;
 
 using FFMpegCore;
+using System;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Globalization;
@@ -77,7 +78,25 @@ internal class ImageProcess
             {
                 if (WriteMetadata(tmpPath, destPath, _state) == 0)
                 {
-                    File.Delete(_sourcePath);
+                    var retryCount = 0;
+                    while (true)
+                    {
+                        try
+                        {
+                            File.Delete(_sourcePath);
+                            break;
+                        }
+                        catch (IOException ex)
+                        {
+                            Debug.WriteLine(ex); // 他のアプリが掴んでいる状態のはず
+                            if (retryCount >= 5)
+                            {
+                                throw ex;
+                            }
+                            retryCount++;
+                            Task.Delay(1000).Wait();
+                        }
+                    }
                 }
             }
         }
