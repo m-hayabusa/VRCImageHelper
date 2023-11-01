@@ -100,7 +100,7 @@ internal class OscServer
             }
             else
             {
-                Task.Delay(200);
+                Task.Delay(200).Wait();
             }
         }
     }
