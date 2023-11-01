@@ -13,6 +13,7 @@ internal class ImageProcess
 {
     private readonly string _sourcePath;
     private readonly State _state;
+    public static CancellationToken s_cancellationToken;
 
     private ImageProcess(string path, State state)
     {
@@ -79,7 +80,7 @@ internal class ImageProcess
                 if (WriteMetadata(tmpPath, destPath, _state) == 0)
                 {
                     var retryCount = 0;
-                    while (true)
+                    while (!s_cancellationToken.IsCancellationRequested)
                     {
                         try
                         {
@@ -94,7 +95,7 @@ internal class ImageProcess
                                 throw ex;
                             }
                             retryCount++;
-                            Task.Delay(1000).Wait();
+                            Task.Delay(1000, s_cancellationToken).Wait();
                         }
                     }
                 }
