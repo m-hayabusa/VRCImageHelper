@@ -170,35 +170,32 @@ internal class ImageProcess
                 }
                 else
                 {
+                    options
+                        .WithVideoCodec(ConfigManager.Config.Encoder);
+
                     switch (ConfigManager.Config.Encoder)
                     {
                         case "libaom-av1":
                             options
-                                .WithVideoCodec("libaom-av1")
                                 .WithConstantRateFactor(quality);
                             break;
                         case "libsvtav1":
                             options
-                                .WithVideoCodec("libsvtav1")
                                 .WithConstantRateFactor(quality);
                             break;
                         case "av1_qsv":
                             options
-                                .WithVideoCodec("av1_qsv")
                                 .WithCustomArgument($"-q {quality}");
                             break;
                         case "av1_nvenc":
                             options
-                                .WithVideoCodec("av1_nvenc")
                                 .WithCustomArgument($"-cq {quality}");
                             break;
                         case "av1_amf":
                             options
-                                .WithVideoCodec("av1_amf")
                                 .WithCustomArgument($"-qp_i {quality}");
                             break;
                     }
-
                     if (ConfigManager.Config.EncoderOption != "")
                         options.WithCustomArgument(ConfigManager.Config.EncoderOption);
                 }
