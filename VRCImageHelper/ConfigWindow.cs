@@ -62,8 +62,14 @@ public partial class ConfigWindow : Form
 
     private void ComboBoxFileFormat_SelectedIndexChanged(object sender, EventArgs e)
     {
-        textBoxFilePattern.Text = GetFilePattern(textBoxFilePattern.Text);
-        switch (comboBoxFileFormat.SelectedItem)
+        var format = comboBoxFileFormat.SelectedItem.ToString();
+        if (format is not null && format != _config.Format)
+        {
+            textBoxFilePattern.Text = GetFilePattern(textBoxFilePattern.Text);
+            _config.Format = format;
+        }
+
+        switch (format)
         {
             case "AVIF":
                 comboBoxEncoder.Enabled = true;
