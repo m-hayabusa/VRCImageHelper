@@ -27,6 +27,11 @@ internal class ConfigManager
         var path = $"{Path.GetDirectoryName(Application.ExecutablePath)}\\config.json";
         var result = new Config();
 
+        if (result.Format == "AVIF" && !(ImageProcess.GetSupportedEncoder("av1").Contains(result.Encoder)))
+        {
+            result.Encoder = Config.Default.Encoder;
+        }
+
         if (File.Exists(path))
         {
             var source = File.ReadAllText(path);

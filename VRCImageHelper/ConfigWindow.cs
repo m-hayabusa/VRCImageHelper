@@ -8,7 +8,7 @@ public partial class ConfigWindow : Form
 
         Icon = new Icon($"{Path.GetDirectoryName(Application.ExecutablePath)}\\icon.ico");
         comboBoxFileFormat.Items.AddRange(new object[] { "PNG", "JPEG", "AVIF" });
-        comboBoxEncoder.Items.AddRange(new object[] { "libaom-av1", "av1_qsv", "av1_nvenc", "av1_amf" });
+        comboBoxEncoder.Items.AddRange(ImageProcess.GetSupportedEncoder("av1"));
     }
 
     private Config _config;
