@@ -154,6 +154,7 @@ internal class ImageProcess
                 var formatWithAlpha = new PixelFormat[] { PixelFormat.Alpha, PixelFormat.Canonical, PixelFormat.Format16bppArgb1555, PixelFormat.Format32bppArgb, PixelFormat.Format32bppPArgb, PixelFormat.Format64bppArgb, PixelFormat.Format64bppPArgb };
                 if (formatWithAlpha.Contains((new Bitmap(src)).PixelFormat))
                 {
+                    // 少なくとも libsvtav1 と av1_qsv では透過を処理できなかった
                     options
                         .WithVideoCodec("libaom-av1")
                         .WithConstantRateFactor(quality)
@@ -170,6 +171,11 @@ internal class ImageProcess
                                 .WithVideoCodec("libaom-av1")
                                 .WithConstantRateFactor(quality);
                             break;
+                        case "libsvtav1":
+                            options
+                                .WithVideoCodec("libsvtav1")
+                                .WithConstantRateFactor(quality);
+                            break;
                         case "av1_qsv":
                             options
                                 .WithVideoCodec("av1_qsv")
@@ -177,11 +183,13 @@ internal class ImageProcess
                             break;
                         case "av1_nvenc":
                             options
-                                .WithVideoCodec("av1_nvenc");
+                                .WithVideoCodec("av1_nvenc")
+                                .WithCustomArgument($"-cq {quality}");
                             break;
                         case "av1_amf":
                             options
-                                .WithVideoCodec("av1_amf");
+                                .WithVideoCodec("av1_amf")
+                                .WithCustomArgument($"-qp_i {quality}");
                             break;
                     }
 
