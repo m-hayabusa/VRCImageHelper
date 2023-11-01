@@ -95,7 +95,14 @@ internal class ImageProcess
                                 throw ex;
                             }
                             retryCount++;
-                            Task.Delay(1000, s_cancellationToken).Wait();
+                            try
+                            {
+                                Task.Delay(1000, s_cancellationToken).Wait();
+                            }
+                            catch (TaskCanceledException)
+                            {
+                                return; // 終了時にcancellationTokenによってキャンセルされる
+                            }
                         }
                     }
                 }

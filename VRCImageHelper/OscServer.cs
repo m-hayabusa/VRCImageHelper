@@ -2,6 +2,7 @@
 
 using Rug.Osc;
 using System.Diagnostics;
+using System.Threading;
 using VRC.OSCQuery;
 
 public class OscEventArgs : EventArgs
@@ -100,7 +101,14 @@ internal class OscServer
             }
             else
             {
-                Task.Delay(200, _cancellationToken).Wait();
+                try
+                {
+                    Task.Delay(200, _cancellationToken).Wait();
+                }
+                catch (TaskCanceledException)
+                {
+                    return; // 終了時にcancellationTokenによってキャンセルされる
+                }
             }
         }
     }
