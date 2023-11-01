@@ -59,8 +59,6 @@ internal class ImageProcess
                 .Replace("fff", match.Groups[7].Value)
                 .Replace("XXXX", match.Groups[8].Value)
                 .Replace("YYYY", match.Groups[9].Value);
-
-            fileName = Path.ChangeExtension(fileName, ConfigManager.Config.Format.ToLower());
         }
 
         var destPath = ConfigManager.Config.DestDir + "\\" + fileName;
