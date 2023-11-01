@@ -84,7 +84,6 @@ internal class LogReader : IDisposable
     private void Watcher_Created(object sender, FileSystemEventArgs e)
     {
         var newLogFile = FindLogFile();
-        Debug.WriteLine("Watcher_Created: " + _logFile + " " + newLogFile);
         if (newLogFile != _logFile && newLogFile is not null)
         {
             _logFile = newLogFile;
@@ -95,7 +94,6 @@ internal class LogReader : IDisposable
 
     private void Watcher_Changed(object sender, FileSystemEventArgs e)
     {
-        Debug.WriteLine("Watcher_Changed");
         if (e.ChangeType == WatcherChangeTypes.Changed)
         {
             SeeqLog();
