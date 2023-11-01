@@ -115,7 +115,7 @@ internal class LogReader : IDisposable
         _ = logStream.BaseStream.Seek(_head, SeekOrigin.Current);
 
         var log = logStream.ReadToEnd().Split('\n');
-        log[0] += _lastLine;
+        log[0] = _lastLine + log[0];
         for (var i = 0; i < log.Length - 1; i++)
         {
             if (_cancellationToken.IsCancellationRequested)
