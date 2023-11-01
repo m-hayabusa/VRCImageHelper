@@ -137,7 +137,7 @@ internal class LogReader : IDisposable
     {
         var logFile = Directory.EnumerateFiles(_logDir, "output_log_*.txt", SearchOption.TopDirectoryOnly)
             .ToList()
-            .OrderBy(f => File.GetCreationTime(f));
+            .OrderByDescending(f => File.GetCreationTime(f));
         return logFile.Any() ? new FileInfo(logFile.First()) : null;
     }
 
