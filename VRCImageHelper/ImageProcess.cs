@@ -57,7 +57,19 @@ internal class ImageProcess
                 .Replace("YYYY", match.Groups[9].Value);
         }
 
-        var destPath = ConfigManager.Config.DestDir + "\\" + fileName;
+        var destPath = ConfigManager.Config.DestDir;
+        if (destPath == "")
+        {
+            var sourceDir = Path.GetDirectoryName(_sourcePath);
+            if (sourceDir is null)
+                return;
+
+            destPath = new DirectoryInfo(sourceDir)?.Parent?.FullName;
+            if (destPath is null)
+                return;
+        }
+
+        destPath = destPath + "\\" + fileName;
         var destDir = Path.GetDirectoryName(destPath);
 
         if (destDir is null)
@@ -96,7 +108,7 @@ internal class ImageProcess
                             catch (Exception taskException)
                             {
                                 if (taskException.InnerException?.GetType() == typeof(TaskCanceledException))
-                                return; // 終了時にcancellationTokenによってキャンセルされる
+                                    return; // 終了時にcancellationTokenによってキャンセルされる
                                 throw;
                             }
                         }

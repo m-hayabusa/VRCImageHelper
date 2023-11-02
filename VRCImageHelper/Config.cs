@@ -45,7 +45,7 @@ internal class ConfigManager
 internal class Config
 {
     public static Config Default { get; } = new();
-    public string DestDir { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\VRCImage";
+    public string DestDir { get; set; } = "";
     public string FilePattern { get; set; } = "yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY.png";
     public string Format { get; set; } = "PNG";
     public string Encoder { get; set; } = "libaom-av1";
