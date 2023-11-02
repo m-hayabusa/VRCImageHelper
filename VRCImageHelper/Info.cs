@@ -42,12 +42,12 @@ internal class Info
 
     public static void WorldId(object sender, NewLineEventArgs e)
     {
-        var match = Regex.Match(e.Line, ".*\\[Behaviour\\] Joining (wrld_.*?):(?:.*?(private|friends|hidden|group)\\((.*?)\\))?(~canRequestInvite)?");
+        var match = Regex.Match(e.Line, ".*\\[Behaviour\\] Joining (wrld_.*?):(?:.*?(private|friends|hidden|group)\\((.*?)\\))?(~canRequestInvite|~groupAccessType\\(plus\\))?");
         if (match.Success)
         {
             Debug.WriteLine($"Joining {match.Groups[1]}, {match.Groups[2]}, {match.Groups[3]}, {match.Groups[4]}");
             State.RoomInfo.World_id = match.Groups[1].Value;
-            State.RoomInfo.Permission = match.Groups[2].Value;
+            State.RoomInfo.Permission = match.Groups[2].Value + (match.Groups[4].Success ? "+" : "");
             State.RoomInfo.Organizer = match.Groups[3].Value;
             State.Players.Clear();
         }
