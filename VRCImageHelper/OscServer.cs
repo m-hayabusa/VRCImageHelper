@@ -105,9 +105,11 @@ internal class OscServer
                 {
                     Task.Delay(200, _cancellationToken).Wait();
                 }
-                catch (TaskCanceledException)
+                catch (Exception ex)
                 {
-                    return; // 終了時にcancellationTokenによってキャンセルされる
+                    if (ex.InnerException?.GetType() == typeof(TaskCanceledException))
+                        return; // 終了時にcancellationTokenによってキャンセルされる
+                    throw;
                 }
             }
         }

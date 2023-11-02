@@ -93,9 +93,11 @@ internal class ImageProcess
                             {
                                 Task.Delay(1000, s_cancellationToken).Wait();
                             }
-                            catch (TaskCanceledException)
+                            catch (Exception taskException)
                             {
+                                if (taskException.InnerException?.GetType() == typeof(TaskCanceledException))
                                 return; // 終了時にcancellationTokenによってキャンセルされる
+                                throw;
                             }
                         }
                     }
