@@ -100,9 +100,7 @@ internal class Info
             var raw = Single.Parse(e.Data.Trim()[..^1]);
             var min = ConfigManager.Config.VirtualLens2.FocalLengthMin;
             var max = ConfigManager.Config.VirtualLens2.FocalLengthMax;
-            State.FocalLength = max * MathF.Exp(raw * MathF.Log(min / max));
-            Debug.WriteLine(e.Path + " " + raw + " " + State.FocalLength + "mm");
-
+            State.FocalLength = min * MathF.Exp(raw * MathF.Log(max / min));
         }
     }
 
@@ -121,7 +119,7 @@ internal class Info
             var raw = float.Parse(e.Data.Trim()[..^1]);
             var min = ConfigManager.Config.VirtualLens2.ApertureMin;
             var max = ConfigManager.Config.VirtualLens2.ApertureMax;
-            State.ApertureValue = max * MathF.Exp(raw * MathF.Log(min / max));
+            State.ApertureValue = min * MathF.Exp(raw * MathF.Log(max / min));
         }
     }
 
