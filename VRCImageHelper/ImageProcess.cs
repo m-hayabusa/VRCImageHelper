@@ -29,10 +29,6 @@ internal class ImageProcess
             var state = Info.State;
 
             var creationDate = match.Groups[1].ToString().Replace('.', ':');
-            if (DateTime.TryParseExact(creationDate, "yyyy:MM:dd HH:mm:ss", CultureInfo.CurrentCulture, DateTimeStyles.None, out var dT))
-            {
-                creationDate += $"+{TimeZoneInfo.Local.GetUtcOffset(dT)}";
-            }
             state.CreationDate = creationDate;
 
             var path = match.Groups[2].ToString();
@@ -217,7 +213,7 @@ internal class ImageProcess
         var args = "";
 
         args += $"-overwrite_original -codedcharacterset=utf8\n";
-        args += $"-:CreationTime={state.CreationDate}\n";
+        args += $"-:CreateDate={state.CreationDate}\n";
         args += $"-:DateTimeOriginal={state.CreationDate}\n";
         args += $"-:ImageDescription={desc}\n";
         args += $"-:Description={desc}\n";
@@ -225,6 +221,12 @@ internal class ImageProcess
         args += $"-makernote={makernote}\n";
         args += "-sep \";\"\n";
         args += $"-:Keywords={state.RoomInfo.World_name};{string.Join(';', state.Players)}\n";
+
+        if (DateTime.TryParseExact(state.CreationDate, "yyyy:MM:dd HH:mm:ss", CultureInfo.CurrentCulture, DateTimeStyles.None, out var dT))
+        {
+            var offset = $"+{TimeZoneInfo.Local.GetUtcOffset(dT)}";
+            args += $"-:OffsetTime={offset}\n";
+        }
 
         if (state.VL2Enabled)
         {
