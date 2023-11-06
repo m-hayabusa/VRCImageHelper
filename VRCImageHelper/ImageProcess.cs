@@ -1,4 +1,4 @@
-namespace VRCImageHelper;
+﻿namespace VRCImageHelper;
 
 using FFMpegCore;
 using System;
@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using static System.Windows.Forms.DataFormats;
 
 internal class ImageProcess
 {
@@ -126,7 +127,8 @@ internal class ImageProcess
         switch (encode)
         {
             case "AVIF":
-                CompressAVIF(sourcePath, destPath, quality);
+                if (GetSupportedEncoder("av1").Contains(ConfigManager.Config.Encoder))
+                    CompressAVIF(sourcePath, destPath, quality);
                 break;
 
             case "JPEG":
@@ -281,7 +283,15 @@ internal class ImageProcess
             return s_supportedEncoder[format];
 
         var ffmpegStartInfo = new ProcessStartInfo("ffmpeg.exe") { Arguments = "-encoders", CreateNoWindow = true, RedirectStandardOutput = true };
-        var ffmpeg = System.Diagnostics.Process.Start(ffmpegStartInfo);
+        Process? ffmpeg;
+        try
+        {
+            ffmpeg = System.Diagnostics.Process.Start(ffmpegStartInfo);
+        }
+        catch
+        {
+            ffmpeg = null;
+        }
 
         if (ffmpeg is null) return Array.Empty<string>();
 
