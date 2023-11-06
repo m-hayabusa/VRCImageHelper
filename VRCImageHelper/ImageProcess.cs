@@ -1,4 +1,4 @@
-﻿namespace VRCImageHelper;
+namespace VRCImageHelper;
 
 using FFMpegCore;
 using System;
@@ -83,7 +83,7 @@ internal class ImageProcess
             var tmpPath = Compress(_sourcePath, ConfigManager.Config.Format, ConfigManager.Config.Quality);
             if (new FileInfo(tmpPath).Exists)
             {
-                if (WriteMetadata(tmpPath, destPath, _state) == 0)
+                if (WriteMetadata(tmpPath, destPath, _state) == true)
                 {
                     var retryCount = 0;
                     while (!s_cancellationToken.IsCancellationRequested)
@@ -213,7 +213,7 @@ internal class ImageProcess
             .ProcessSynchronously();
     }
 
-    private static int WriteMetadata(string path, string destPath, State state)
+    private static bool WriteMetadata(string path, string destPath, State state)
     {
         var desc = $"Taken at {state.RoomInfo.World_name}, with {string.Join(",", state.Players)}.";
 
@@ -223,62 +223,54 @@ internal class ImageProcess
             )
         );
 
-        var argsFilePath = System.IO.Path.GetTempFileName();
-        var args = "";
+        var args = new List<string>();
 
-        args += $"-overwrite_original -codedcharacterset=utf8\n";
-        args += $"-:CreateDate={state.CreationDate}\n";
-        args += $"-:DateTimeOriginal={state.CreationDate}\n";
-        args += $"-:ImageDescription={desc}\n";
-        args += $"-:Description={desc}\n";
-        args += $"-:Comment={desc}\n";
-        args += $"-makernote={makernote}\n";
-        args += "-sep \";\"\n";
-        args += $"-:Keywords={state.RoomInfo.World_name};{string.Join(';', state.Players)}\n";
+        args.Add("-overwrite_original");
+        args.Add("-codedcharacterset=utf8");
+        args.Add($"-:CreateDate={state.CreationDate}");
+        args.Add($"-:DateTimeOriginal={state.CreationDate}");
+        args.Add($"-:ImageDescription={desc}");
+        args.Add($"-:Description={desc}");
+        args.Add($"-:Comment={desc}");
+        args.Add($"-makernote={makernote}");
+        args.Add("-sep \";\"");
+        args.Add($"-:Keywords={state.RoomInfo.World_name};{string.Join(';', state.Players)}");
 
         if (DateTime.TryParseExact(state.CreationDate, "yyyy:MM:dd HH:mm:ss", CultureInfo.CurrentCulture, DateTimeStyles.None, out var dT))
         {
             var offset = $"+{TimeZoneInfo.Local.GetUtcOffset(dT)}";
-            args += $"-:OffsetTime={offset}\n";
+            args.Add($"-:OffsetTime={offset}");
         }
 
         if (state.VL2Enabled)
         {
-            args += $"-:Make=logilabo\n";
-            args += $"-:Model=VirtualLens2\n";
-            args += $"-:FocalLength={state.FocalLength}\n";
-            args += $"-:FNumber={state.ApertureValue}\n";
+            args.Add("-:Make=logilabo");
+            args.Add("-:Model=VirtualLens2");
+            args.Add($"-:FocalLength={state.FocalLength}");
+            args.Add($"-:FNumber={state.ApertureValue}");
         }
         else
         {
-            args += $"-:Make=VRChat\n";
-            args += $"-:Model=VRChat Camera\n";
+            args.Add("-:Make=VRChat");
+            args.Add("-:Model=VRChat Camera");
         }
 
-        var argsFile = new StreamWriter(argsFilePath);
-        argsFile.Write(args);
-        argsFile.Dispose();
-
-        Debug.WriteLine(args);
-
-        var exifTool = new ProcessStartInfo("exiftool.exe") { Arguments = path + " -@ " + argsFilePath, CreateNoWindow = true };
-        var exifToolProcess = System.Diagnostics.Process.Start(exifTool);
-        if (exifToolProcess is not null)
+        var exifTool = ExifTool.ProcessImage(path, args);
+        if (exifTool is not null)
         {
-            exifToolProcess.WaitForExit();
+            exifTool.Wait();
 
-            if (exifToolProcess.ExitCode == 0)
+            if (exifTool.Result)
             {
                 File.Delete(destPath);
                 File.Move(path, destPath);
-                File.Delete(argsFilePath);
             }
 
-            return exifToolProcess.ExitCode;
+            return exifTool.Result;
         }
         else
         {
-            return -1;
+            return false;
         }
     }
 
