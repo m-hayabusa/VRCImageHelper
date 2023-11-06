@@ -32,6 +32,7 @@ internal static class Program
         var oscServer = new OscServer(CancelToken.Token);
         ImageProcess.s_cancellationToken = CancelToken.Token;
         ExifTool.s_cancellationToken = CancelToken.Token;
+        FFMpeg.s_cancellationToken = CancelToken.Token;
 
         logReader.NewLine += ImageProcess.Taken;
         logReader.NewLine += Info.WorldId;

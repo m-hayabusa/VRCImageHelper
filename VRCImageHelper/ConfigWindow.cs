@@ -8,7 +8,7 @@ public partial class ConfigWindow : Form
 
         Icon = new Icon($"{Path.GetDirectoryName(Application.ExecutablePath)}\\icon.ico");
         comboBoxFileFormat.Items.AddRange(new object[] { "PNG", "JPEG", "AVIF" });
-        comboBoxEncoder.Items.AddRange(ImageProcess.GetSupportedEncoder("av1"));
+        comboBoxEncoder.Items.AddRange(FFMpeg.GetSupportedEncoder("av1"));
     }
 
     private Config _config;
@@ -57,7 +57,7 @@ public partial class ConfigWindow : Form
     {
         textBoxFilePattern.Text = GetFilePattern(Config.Default.FilePattern);
     }
-
+    public delegate void FFMpegDownloadEnd();
     private void ComboBoxFileFormat_SelectedIndexChanged(object sender, EventArgs e)
     {
         var format = comboBoxFileFormat.SelectedItem.ToString();
@@ -65,6 +65,43 @@ public partial class ConfigWindow : Form
         {
             textBoxFilePattern.Text = GetFilePattern(textBoxFilePattern.Text);
             _config.Format = format;
+        }
+
+        if (format == "AVIF" && FFMpeg.GetSupportedEncoder("av1").Length == 0)
+        {
+            var res = MessageBox.Show("この形式で圧縮するためにはffmpegが必要です。\nダウンロードしますか？", "VRCImageHelper/ffmpegのダウンロード", MessageBoxButtons.OKCancel);
+            if (res == DialogResult.OK)
+            {
+                var downloadingDialog = new DownloadProgressDialog()
+                {
+                    Text = "Downloading...",
+                };
+                var downloading = true;
+                downloadingDialog.FormClosing += (sender, e) =>
+                {
+                    if (downloading)
+                        e.Cancel = true;
+                };
+                downloadingDialog.Load += (sender, e) =>
+                {
+                    new Task(() =>
+                    {
+                        FFMpeg.Download();
+                        BeginInvoke(new FFMpegDownloadEnd(() =>
+                        {
+                            comboBoxEncoder.Items.AddRange(FFMpeg.GetSupportedEncoder("av1"));
+                            comboBoxEncoder.SelectedItem = Config.Default.Encoder;
+                            downloading = false;
+                            downloadingDialog.Close();
+                        }));
+                    }).Start();
+                };
+                downloadingDialog.ShowDialog();
+            }
+            else
+            {
+                comboBoxFileFormat.SelectedItem = Config.Default.Format;
+            }
         }
 
         switch (format)

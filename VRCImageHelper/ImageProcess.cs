@@ -89,13 +89,13 @@ internal class ImageProcess
                     while (!s_cancellationToken.IsCancellationRequested)
                     {
                         try
-                    {
-                        File.Delete(_sourcePath);
+                        {
+                            File.Delete(_sourcePath);
                             break;
-                    }
-                    catch (IOException ex)
-                    {
-                        Debug.WriteLine(ex); // 他のアプリが掴んでいる状態のはず
+                        }
+                        catch (IOException ex)
+                        {
+                            Debug.WriteLine(ex); // 他のアプリが掴んでいる状態のはず
                             if (retryCount >= 5)
                             {
                                 throw ex;
@@ -126,7 +126,7 @@ internal class ImageProcess
         switch (encode)
         {
             case "AVIF":
-                if (GetSupportedEncoder("av1").Contains(ConfigManager.Encoder))
+                if (FFMpeg.GetSupportedEncoder("av1").Contains(ConfigManager.Encoder))
                     CompressAVIF(sourcePath, destPath, quality);
                 break;
 
@@ -211,7 +211,7 @@ internal class ImageProcess
                         options.WithCustomArgument(ConfigManager.EncoderOption);
                 }
             })
-            .ProcessSynchronously();
+            .ProcessSynchronously(true, new FFOptions() { BinaryFolder = FFMpeg.ExecDir });
     }
 
     private static bool WriteMetadata(string path, string destPath, State state)
@@ -248,7 +248,7 @@ internal class ImageProcess
             args.Add("-:Make=logilabo");
             args.Add("-:Model=VirtualLens2");
             args.Add($"-:FocalLength={state.FocalLength}");
-                args.Add($"-:FNumber={state.ApertureValue}");
+            args.Add($"-:FNumber={state.ApertureValue}");
         }
         else
         {
@@ -275,44 +275,4 @@ internal class ImageProcess
         }
     }
 
-    private static readonly Dictionary<string, string[]> s_supportedEncoder = new();
-    public static string[] GetSupportedEncoder(string format)
-    {
-        if (s_supportedEncoder.ContainsKey(format))
-            return s_supportedEncoder[format];
-
-        var ffmpegStartInfo = new ProcessStartInfo("ffmpeg.exe") { Arguments = "-encoders", CreateNoWindow = true, RedirectStandardOutput = true };
-        Process? ffmpeg;
-        try
-        {
-            ffmpeg = System.Diagnostics.Process.Start(ffmpegStartInfo);
-        }
-        catch
-        {
-            ffmpeg = null;
-        }
-
-        if (ffmpeg is null) return Array.Empty<string>();
-
-        var result = new List<string>();
-
-        while (!ffmpeg.HasExited)
-        {
-            if (ffmpeg.StandardOutput.BaseStream.CanRead)
-            {
-                var line = ffmpeg.StandardOutput.ReadLine();
-                if (line is null) break;
-                if (line.Contains($"(codec {format})"))
-                {
-                    result.Add(line[8..29].Trim());
-                }
-            }
-        }
-
-        var resultArray = result.ToArray();
-
-        s_supportedEncoder.Add(format, resultArray);
-
-        return resultArray;
-    }
 }
