@@ -45,15 +45,20 @@ internal class ConfigManager
         var path = $"{Path.GetDirectoryName(Application.ExecutablePath)}\\config.json";
         var result = new Config();
 
-        if (result.Format == "AVIF" && !(ImageProcess.GetSupportedEncoder("av1").Contains(result.Encoder)))
-        {
-            result.Encoder = Config.Default.Encoder;
-        }
-
         if (File.Exists(path))
         {
             var source = File.ReadAllText(path);
             result = JsonSerializer.Deserialize<Config>(source) ?? result;
+        }
+
+        if (result.Format == "AVIF" && ImageProcess.GetSupportedEncoder("av1").Length == 0)
+        {
+            result.Format = Config.Default.Format;
+            result.FilePattern = Path.ChangeExtension(result.FilePattern, result.Format.ToLower());
+        }
+        if (result.Format == "AVIF" && !(ImageProcess.GetSupportedEncoder("av1").Contains(result.Encoder)))
+        {
+            result.Encoder = Config.Default.Encoder;
         }
 
         return result;
