@@ -1,4 +1,4 @@
-﻿namespace VRCImageHelper;
+namespace VRCImageHelper;
 
 using FFMpegCore;
 using System;
@@ -8,7 +8,6 @@ using System.Globalization;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using static System.Windows.Forms.DataFormats;
 
 internal class ImageProcess
 {
@@ -46,7 +45,7 @@ internal class ImageProcess
         var match = Regex.Match(fileName, "(\\d+)-(\\d+)-(\\d+)_(\\d+)-(\\d+)-(\\d+)\\.(\\d+)_(\\d+)x(\\d+)");
         if (match.Success)
         {
-            fileName = ConfigManager.Config.FilePattern
+            fileName = ConfigManager.FilePattern
                 .Replace("yyyy", match.Groups[1].Value)
                 .Replace("MM", match.Groups[2].Value)
                 .Replace("dd", match.Groups[3].Value)
@@ -58,7 +57,7 @@ internal class ImageProcess
                 .Replace("YYYY", match.Groups[9].Value);
         }
 
-        var destPath = ConfigManager.Config.DestDir;
+        var destPath = ConfigManager.DestDir;
         if (destPath == "")
         {
             var sourceDir = Path.GetDirectoryName(_sourcePath);
@@ -81,7 +80,7 @@ internal class ImageProcess
 
         if (new FileInfo(_sourcePath).Exists && !new FileInfo(destPath).Exists)
         {
-            var tmpPath = Compress(_sourcePath, ConfigManager.Config.Format, ConfigManager.Config.Quality);
+            var tmpPath = Compress(_sourcePath, ConfigManager.Format, ConfigManager.Quality);
             if (new FileInfo(tmpPath).Exists)
             {
                 if (WriteMetadata(tmpPath, destPath, _state) == true)
@@ -90,13 +89,13 @@ internal class ImageProcess
                     while (!s_cancellationToken.IsCancellationRequested)
                     {
                         try
-                        {
-                            File.Delete(_sourcePath);
+                    {
+                        File.Delete(_sourcePath);
                             break;
-                        }
-                        catch (IOException ex)
-                        {
-                            Debug.WriteLine(ex); // 他のアプリが掴んでいる状態のはず
+                    }
+                    catch (IOException ex)
+                    {
+                        Debug.WriteLine(ex); // 他のアプリが掴んでいる状態のはず
                             if (retryCount >= 5)
                             {
                                 throw ex;
@@ -127,7 +126,7 @@ internal class ImageProcess
         switch (encode)
         {
             case "AVIF":
-                if (GetSupportedEncoder("av1").Contains(ConfigManager.Config.Encoder))
+                if (GetSupportedEncoder("av1").Contains(ConfigManager.Encoder))
                     CompressAVIF(sourcePath, destPath, quality);
                 break;
 
@@ -183,9 +182,9 @@ internal class ImageProcess
                 else
                 {
                     options
-                        .WithVideoCodec(ConfigManager.Config.Encoder);
+                        .WithVideoCodec(ConfigManager.Encoder);
 
-                    switch (ConfigManager.Config.Encoder)
+                    switch (ConfigManager.Encoder)
                     {
                         case "libaom-av1":
                             options
@@ -208,8 +207,8 @@ internal class ImageProcess
                                 .WithCustomArgument($"-qp_i {quality}");
                             break;
                     }
-                    if (ConfigManager.Config.EncoderOption != "")
-                        options.WithCustomArgument(ConfigManager.Config.EncoderOption);
+                    if (ConfigManager.EncoderOption != "")
+                        options.WithCustomArgument(ConfigManager.EncoderOption);
                 }
             })
             .ProcessSynchronously();
@@ -249,7 +248,7 @@ internal class ImageProcess
             args.Add("-:Make=logilabo");
             args.Add("-:Model=VirtualLens2");
             args.Add($"-:FocalLength={state.FocalLength}");
-            args.Add($"-:FNumber={state.ApertureValue}");
+                args.Add($"-:FNumber={state.ApertureValue}");
         }
         else
         {

@@ -6,6 +6,24 @@ using System.Text.Json.Serialization;
 internal class ConfigManager
 {
     public static Config Config { get; private set; } = Load();
+
+    public static string DestDir { get { return Config.DestDir; } }
+    public static string FilePattern { get { return Config.FilePattern; } }
+    public static string Format { get { return Config.Format; } }
+    public static string Encoder { get { return Config.Encoder; } }
+    public static string EncoderOption { get { return Config.EncoderOption; } }
+    public static int Quality { get { return Config.Quality; } }
+
+    internal static class VirtualLens2
+    {
+        public static float ApertureMin { get { return Config.VirtualLens2.ApertureMin; } }
+        public static float ApertureMax { get { return Config.VirtualLens2.ApertureMax; } }
+        public static float ApertureDefault { get { return Config.VirtualLens2.ApertureDefault; } }
+        public static float FocalLengthMin { get { return Config.VirtualLens2.FocalLengthMin; } }
+        public static float FocalLengthMax { get { return Config.VirtualLens2.FocalLengthMax; } }
+        public static float FocalLengthDefault { get { return Config.VirtualLens2.FocalLengthDefault; } }
+    }
+
     public static void Save(Config config)
     {
         var path = $"{Path.GetDirectoryName(Application.ExecutablePath)}\\config.json";
