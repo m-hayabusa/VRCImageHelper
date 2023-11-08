@@ -119,7 +119,10 @@ internal class Info
             var raw = float.Parse(e.Data.Trim()[..^1]);
             var min = ConfigManager.VirtualLens2.ApertureMin;
             var max = ConfigManager.VirtualLens2.ApertureMax;
-            State.ApertureValue = min * MathF.Exp(raw * MathF.Log(max / min));
+            if (raw == 0)
+                State.ApertureValue = float.PositiveInfinity;
+            else
+                State.ApertureValue = min * MathF.Exp(raw * MathF.Log(max / min));
         }
     }
 

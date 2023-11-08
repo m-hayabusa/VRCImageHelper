@@ -248,7 +248,8 @@ internal class ImageProcess
             args.Add("-:Make=logilabo");
             args.Add("-:Model=VirtualLens2");
             args.Add($"-:FocalLength={state.FocalLength}");
-            args.Add($"-:FNumber={state.ApertureValue}");
+            if (!float.IsInfinity(state.ApertureValue))
+                args.Add($"-:FNumber={state.ApertureValue}");
         }
         else
         {

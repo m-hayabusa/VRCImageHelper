@@ -27,6 +27,10 @@ internal class ConfigManager
     public static void Save(Config config)
     {
         var path = $"{Path.GetDirectoryName(Application.ExecutablePath)}\\config.json";
+
+        if (config.VirtualLens2.ApertureDefault >= config.VirtualLens2.ApertureMin)
+            config.VirtualLens2.ApertureDefault = float.PositiveInfinity;
+
         var result = JsonSerializer.Serialize(config);
 
         var confDir = Path.GetDirectoryName(path);
@@ -61,6 +65,9 @@ internal class ConfigManager
             result.Encoder = Config.Default.Encoder;
         }
 
+        if (result.VirtualLens2.ApertureDefault >= result.VirtualLens2.ApertureMin)
+            result.VirtualLens2.ApertureDefault = float.PositiveInfinity;
+
         return result;
     }
 }
@@ -79,7 +86,7 @@ internal class Config
     {
         public float ApertureMin { get; set; } = 22;
         public float ApertureMax { get; set; } = 1;
-        public float ApertureDefault { get; set; } = 22;
+        public float ApertureDefault { get; set; } = float.PositiveInfinity;
         public float FocalLengthMin { get; set; } = 12;
         public float FocalLengthMax { get; set; } = 300;
         public float FocalLengthDefault { get; set; } = 50;
