@@ -1,5 +1,6 @@
 ﻿namespace VRCImageHelper;
 
+using Microsoft.Win32;
 using System.Diagnostics;
 
 internal static class Program
@@ -39,7 +40,24 @@ internal static class Program
         var bgTask = new Task(Background, CancelToken.Token);
         bgTask.Start();
 
+        SystemEvents.SessionEnding += SystemEvents_SessionEnding;
+        SystemEvents.SessionEnded += SystemEvents_SessionEnded;
+
         Application.Run();
+
+    }
+
+    private static void SystemEvents_SessionEnded(object sender, SessionEndedEventArgs e)
+    {
+        CancelToken?.Cancel();
+        Task.Delay(500).Wait();
+        CancelToken?.Dispose();
+        Application.Exit();
+    }
+
+    private static void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
+    {
+        Debug.WriteLine(e.Reason.ToString());
     }
 
     public static CancellationTokenSource? CancelToken { get; private set; }
