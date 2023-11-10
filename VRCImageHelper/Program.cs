@@ -1,4 +1,7 @@
 ﻿namespace VRCImageHelper;
+
+using System.Diagnostics;
+
 internal static class Program
 {
     /// <summary>
@@ -11,6 +14,16 @@ internal static class Program
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
 
+        if (Environment.GetCommandLineArgs().ToList() is var args && args is not null && args.Any())
+        {
+            if (args.Contains("--setup"))
+            {
+                new ConfigWindow().ShowDialog();
+                Process.Start(Application.ExecutablePath);
+                return;
+            }
+        }
+        }
         var toolbarIcon = new ToolbarIcon();
         toolbarIcon.CreateToolbarIcon();
 

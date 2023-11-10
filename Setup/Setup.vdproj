@@ -91,6 +91,20 @@
     {
         "CustomAction"
         {
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_3449DD69743345489B62CDA68AE5D41C"
+            {
+            "Name" = "8:項目の公開 from VRCImageHelper (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_21FADEDBE57D412EAC1CC48D28FFFB1C"
+            "FileType" = "3:2"
+            "InstallAction" = "3:2"
+            "Arguments" = "8:--setup"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_521C6100_AFA2_4178_A0C1_F7EC8C62AE86"
+            "InstallerClass" = "11:FALSE"
+            "CustomActionData" = "8:"
+            }
         }
         "DefaultFeature"
         {
@@ -691,7 +705,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_21FADEDBE57D412EAC1CC48D28FFFB1C"
             {
-            "SourcePath" = "8:..\\VRCImageHelper\\obj\\Release\\net6.0-windows\\apphost.exe"
+            "SourcePath" = "8:..\\VRCImageHelper\\obj\\Debug\\net6.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_42BC11FB4B474DD9B968B0CE1B2EB7AE"
