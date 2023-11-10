@@ -207,7 +207,7 @@
         "UseSystemSearchPath" = "11:TRUE"
         "TargetPlatform" = "3:1"
         "PreBuildEvent" = "8:"
-        "PostBuildEvent" = "8:"
+        "PostBuildEvent" = "8:\"C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.22000.0\\x86\\MsiInfo.exe\" .\\Setup.msi -w 10\""
         "RunPostBuildEvent" = "3:0"
         }
         "Registry"
@@ -691,7 +691,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_21FADEDBE57D412EAC1CC48D28FFFB1C"
             {
-            "SourcePath" = "8:..\\VRCImageHelper\\obj\\Debug\\net6.0-windows\\apphost.exe"
+            "SourcePath" = "8:..\\VRCImageHelper\\obj\\Release\\net6.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_42BC11FB4B474DD9B968B0CE1B2EB7AE"
