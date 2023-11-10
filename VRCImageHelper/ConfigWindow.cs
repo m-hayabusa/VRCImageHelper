@@ -129,7 +129,7 @@ public partial class ConfigWindow : Form
         var format = comboBoxFileFormat.SelectedItem.ToString();
         if (format is not null) _config.Format = format;
 
-        var encoder = comboBoxEncoder.SelectedItem.ToString();
+        var encoder = comboBoxEncoder.SelectedItem?.ToString();
         if (encoder is not null) _config.Encoder = encoder;
 
         _config.Quality = Convert.ToInt32(numericUpDownQuality.Value);
