@@ -28,8 +28,8 @@ internal class ConfigManager
     {
         var path = $"{Path.GetDirectoryName(Application.ExecutablePath)}\\config.json";
 
-        if (config.VirtualLens2.ApertureDefault >= config.VirtualLens2.ApertureMin)
-            config.VirtualLens2.ApertureDefault = float.PositiveInfinity;
+        if (config.VirtualLens2.ApertureDefault > config.VirtualLens2.ApertureMin)
+            config.VirtualLens2.ApertureDefault = config.VirtualLens2.ApertureMin;
 
         var result = JsonSerializer.Serialize(config);
 
@@ -40,6 +40,9 @@ internal class ConfigManager
         }
 
         File.WriteAllText(path, result);
+
+        if (config.VirtualLens2.ApertureDefault >= config.VirtualLens2.ApertureMin)
+            config.VirtualLens2.ApertureDefault = float.PositiveInfinity;
 
         Config = config;
     }
