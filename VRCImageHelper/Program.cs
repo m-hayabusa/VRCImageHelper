@@ -23,7 +23,14 @@ internal static class Program
                 return;
             }
         }
+
+        var processes = Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName)
+            .Where(p => p.Id != Environment.ProcessId);
+        if (processes.Any())
+        {
+            return;
         }
+
         var toolbarIcon = new ToolbarIcon();
         toolbarIcon.CreateToolbarIcon();
 
