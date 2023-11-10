@@ -105,6 +105,20 @@
             "InstallerClass" = "11:FALSE"
             "CustomActionData" = "8:"
             }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_A876C6E30D6A48FEAF500500D04C35FE"
+            {
+            "Name" = "8:項目の公開 from VRCImageHelper (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_21FADEDBE57D412EAC1CC48D28FFFB1C"
+            "FileType" = "3:2"
+            "InstallAction" = "3:4"
+            "Arguments" = "8:--uninstall"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_FB5F8D3B_0933_43E8_8696_839A57685A09"
+            "InstallerClass" = "11:FALSE"
+            "CustomActionData" = "8:"
+            }
         }
         "DefaultFeature"
         {

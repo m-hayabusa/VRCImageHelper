@@ -23,6 +23,11 @@ internal static class Program
                 Process.Start(Application.ExecutablePath);
                 return;
             }
+            else if (args.Contains("--uninstall"))
+            {
+                Cleanup();
+                return;
+            }
         }
 
         var processes = Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName)
@@ -45,6 +50,33 @@ internal static class Program
 
         Application.Run();
 
+    }
+
+    private static void Cleanup()
+    {
+        var basePath = Path.GetDirectoryName(Application.ExecutablePath);
+        Debug.WriteLine(basePath);
+        if (Directory.Exists(basePath + "\\exiftool"))
+        {
+            Directory.Delete(basePath + "\\exiftool", true);
+        }
+        if (Directory.Exists(basePath + "\\ffmpeg"))
+        {
+            Directory.Delete(basePath + "\\ffmpeg", true);
+        }
+        if (File.Exists(basePath + "\\config.json"))
+        {
+            File.Delete(basePath + "\\config.json");
+        }
+
+        var key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+        if (key is not null && key.GetValue(Application.ProductName) is not null)
+        {
+            key.DeleteValue(Application.ProductName);
+        }
+
+        key?.Dispose();
     }
 
     private static void SystemEvents_SessionEnded(object sender, SessionEndedEventArgs e)
