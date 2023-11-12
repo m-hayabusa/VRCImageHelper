@@ -6,6 +6,14 @@ using System.Text.RegularExpressions;
 
 internal class RoomInfo
 {
+    public RoomInfo() { }
+    public RoomInfo(RoomInfo roomInfo)
+    {
+        World_id = roomInfo.World_id;
+        World_name = roomInfo.World_name;
+        Permission = roomInfo.Permission;
+        Organizer = roomInfo.Organizer;
+    }
     public string? World_id { get; set; }
     public string? World_name { get; set; }
     public string? Permission { get; set; }
@@ -22,6 +30,14 @@ internal class State
         CreationDate = "";
         Players = new List<string>();
         RoomInfo = new RoomInfo();
+    }
+
+    public State Clone()
+    {
+        var clone = (State)MemberwiseClone();
+        clone.Players = new List<string>(Players);
+        clone.RoomInfo = new RoomInfo(RoomInfo);
+        return clone;
     }
     [JsonIgnore]
     public string CreationDate { get; set; }

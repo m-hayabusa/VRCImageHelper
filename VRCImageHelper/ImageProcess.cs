@@ -26,7 +26,7 @@ internal class ImageProcess
         var match = Regex.Match(e.Line, "([0-9\\.\\: ]*) Log        -  \\[VRC Camera\\] Took screenshot to\\: (.*)");
         if (match.Success)
         {
-            var state = Info.State;
+            var state = Info.State.Clone();
 
             var creationDate = match.Groups[1].ToString().Replace('.', ':');
             state.CreationDate = creationDate;
