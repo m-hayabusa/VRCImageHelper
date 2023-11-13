@@ -59,7 +59,10 @@ internal class ToolbarIcon
         {
             _configWindow = new ConfigWindow();
         }
-        _configWindow.ShowDialog();
+        if (!_configWindow.Visible)
+        {
+            _configWindow.ShowDialog();
+        }
     }
 
     private void Exit_Click(object? sender, EventArgs e)
