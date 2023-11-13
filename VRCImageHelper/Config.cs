@@ -94,17 +94,4 @@ internal class Config
         public float FocalLengthMax { get; set; } = 300;
         public float FocalLengthDefault { get; set; } = 50;
     }
-
-    [JsonConstructor]
-    public Config(string destDir, string filePattern, string format, string encoder, string encoderOption, int quality, VirtualLens2Config virtualLens2)
-    {
-        DestDir = destDir;
-        FilePattern = filePattern;
-        Format = format;
-        Encoder = encoder;
-        EncoderOption = encoderOption;
-        Quality = quality;
-        VirtualLens2 = virtualLens2;
-    }
-    public Config() { }
 }
