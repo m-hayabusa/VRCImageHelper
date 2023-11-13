@@ -31,41 +31,61 @@ partial class ConfigWindow
         buttonSave = new Button();
         buttonCancel = new Button();
         bottomPanel = new FlowLayoutPanel();
-        mainGroupBox = new GroupBox();
-        mainTableLayoutPanel = new TableLayoutPanel();
-        panel1 = new Panel();
-        label1 = new Label();
+        groupBoxSaveDir = new GroupBox();
+        panelSaveDir = new Panel();
+        labelSaveDir = new Label();
         buttonSelectDir = new Button();
         textBoxDir = new TextBox();
-        panel2 = new Panel();
-        label2 = new Label();
+        groupBoxFileFormat = new GroupBox();
+        panelFilePattern = new Panel();
+        labelFilePattern = new Label();
         textBoxFilePattern = new TextBox();
         buttonResetFilePattern = new Button();
-        panel3 = new Panel();
-        label3 = new Label();
+        panelFileFormat = new Panel();
+        labelFileFormat = new Label();
         comboBoxFileFormat = new ComboBox();
         comboBoxEncoder = new ComboBox();
         labelQuality = new Label();
         numericUpDownQuality = new NumericUpDown();
         labelEncoderOption = new Label();
         textBoxEncoderOption = new TextBox();
+        groupBoxAlphaFileFormat = new GroupBox();
+        panelAlphaFilePattern = new Panel();
+        labelAlphaFilePattern = new Label();
+        textBoxAlphaFilePattern = new TextBox();
+        buttonResetAlphaFilePattern = new Button();
+        panelAlphaFormat = new Panel();
+        labelAlphaFormat = new Label();
+        comboBoxAlphaFileFormat = new ComboBox();
+        comboBoxAlphaEncoder = new ComboBox();
+        labelAlphaQuality = new Label();
+        numericUpDownAlphaQuality = new NumericUpDown();
+        labelAlphaEncoderOption = new Label();
+        textBoxAlphaEncoderOption = new TextBox();
+        mainTableLayoutPanel = new TableLayoutPanel();
         buttonQualityTest = new Button();
         bottomPanel.SuspendLayout();
-        mainGroupBox.SuspendLayout();
-        mainTableLayoutPanel.SuspendLayout();
-        panel1.SuspendLayout();
-        panel2.SuspendLayout();
-        panel3.SuspendLayout();
+        groupBoxSaveDir.SuspendLayout();
+        panelSaveDir.SuspendLayout();
+        groupBoxFileFormat.SuspendLayout();
+        panelFilePattern.SuspendLayout();
+        panelFileFormat.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)numericUpDownQuality).BeginInit();
+        groupBoxAlphaFileFormat.SuspendLayout();
+        panelAlphaFilePattern.SuspendLayout();
+        panelAlphaFormat.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)numericUpDownAlphaQuality).BeginInit();
+        mainTableLayoutPanel.SuspendLayout();
         SuspendLayout();
         // 
         // buttonSave
         // 
-        buttonSave.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+        buttonSave.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
         buttonSave.AutoSize = true;
-        buttonSave.Location = new Point(376, 3);
+        buttonSave.Location = new Point(449, 6);
+        buttonSave.Margin = new Padding(5, 6, 5, 6);
         buttonSave.Name = "buttonSave";
-        buttonSave.Size = new Size(77, 25);
+        buttonSave.Size = new Size(75, 25);
         buttonSave.TabIndex = 100;
         buttonSave.Text = "保存";
         buttonSave.UseVisualStyleBackColor = true;
@@ -75,87 +95,72 @@ partial class ConfigWindow
         // 
         buttonCancel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
         buttonCancel.AutoSize = true;
-        buttonCancel.Location = new Point(459, 3);
+        buttonCancel.Location = new Point(534, 6);
+        buttonCancel.Margin = new Padding(5, 6, 5, 6);
         buttonCancel.Name = "buttonCancel";
-        buttonCancel.Size = new Size(88, 25);
+        buttonCancel.Size = new Size(75, 25);
         buttonCancel.TabIndex = 110;
         buttonCancel.Text = "キャンセル";
         buttonCancel.UseVisualStyleBackColor = true;
         // 
         // bottomPanel
         // 
-        bottomPanel.AutoSize = true;
         bottomPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         bottomPanel.Controls.Add(buttonCancel);
         bottomPanel.Controls.Add(buttonSave);
         bottomPanel.Dock = DockStyle.Bottom;
         bottomPanel.FlowDirection = FlowDirection.RightToLeft;
-        bottomPanel.Location = new Point(0, 120);
+        bottomPanel.Location = new Point(0, 281);
         bottomPanel.Name = "bottomPanel";
-        bottomPanel.Size = new Size(550, 31);
+        bottomPanel.Padding = new Padding(0, 0, 10, 0);
+        bottomPanel.Size = new Size(624, 40);
         bottomPanel.TabIndex = 4;
         // 
-        // mainGroupBox
+        // groupBoxSaveDir
         // 
-        mainGroupBox.Controls.Add(mainTableLayoutPanel);
-        mainGroupBox.Dock = DockStyle.Fill;
-        mainGroupBox.Location = new Point(0, 0);
-        mainGroupBox.Margin = new Padding(3, 3, 0, 3);
-        mainGroupBox.Name = "mainGroupBox";
-        mainGroupBox.Padding = new Padding(3, 3, 3, 30);
-        mainGroupBox.Size = new Size(550, 151);
-        mainGroupBox.TabIndex = 2;
-        mainGroupBox.TabStop = false;
-        mainGroupBox.Text = "保存先 / 保存形式";
+        groupBoxSaveDir.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        groupBoxSaveDir.AutoSize = true;
+        groupBoxSaveDir.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        groupBoxSaveDir.Controls.Add(panelSaveDir);
+        groupBoxSaveDir.Location = new Point(5, 5);
+        groupBoxSaveDir.Margin = new Padding(5);
+        groupBoxSaveDir.Name = "groupBoxSaveDir";
+        groupBoxSaveDir.Padding = new Padding(3, 3, 3, 30);
+        groupBoxSaveDir.Size = new Size(614, 55);
+        groupBoxSaveDir.TabIndex = 2;
+        groupBoxSaveDir.TabStop = false;
+        groupBoxSaveDir.Text = "保存先";
         // 
-        // mainTableLayoutPanel
+        // panelSaveDir
         // 
-        mainTableLayoutPanel.BackColor = SystemColors.Control;
-        mainTableLayoutPanel.ColumnCount = 1;
-        mainTableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-        mainTableLayoutPanel.Controls.Add(panel1);
-        mainTableLayoutPanel.Controls.Add(panel2);
-        mainTableLayoutPanel.Controls.Add(panel3);
-        mainTableLayoutPanel.Dock = DockStyle.Fill;
-        mainTableLayoutPanel.Location = new Point(3, 19);
-        mainTableLayoutPanel.Margin = new Padding(0);
-        mainTableLayoutPanel.Name = "mainTableLayoutPanel";
-        mainTableLayoutPanel.RowCount = 4;
-        mainTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-        mainTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-        mainTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-        mainTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-        mainTableLayoutPanel.Size = new Size(544, 102);
-        mainTableLayoutPanel.TabIndex = 0;
+        panelSaveDir.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        panelSaveDir.AutoSize = true;
+        panelSaveDir.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        panelSaveDir.BackColor = SystemColors.Control;
+        panelSaveDir.Controls.Add(labelSaveDir);
+        panelSaveDir.Controls.Add(buttonSelectDir);
+        panelSaveDir.Controls.Add(textBoxDir);
+        panelSaveDir.Location = new Point(5, 20);
+        panelSaveDir.Margin = new Padding(0);
+        panelSaveDir.MinimumSize = new Size(0, 30);
+        panelSaveDir.Name = "panelSaveDir";
+        panelSaveDir.Size = new Size(600, 30);
+        panelSaveDir.TabIndex = 0;
         // 
-        // panel1
+        // labelSaveDir
         // 
-        panel1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-        panel1.AutoSize = true;
-        panel1.BackColor = SystemColors.Control;
-        panel1.Controls.Add(label1);
-        panel1.Controls.Add(buttonSelectDir);
-        panel1.Controls.Add(textBoxDir);
-        panel1.Location = new Point(0, 0);
-        panel1.Margin = new Padding(0);
-        panel1.MinimumSize = new Size(0, 30);
-        panel1.Name = "panel1";
-        panel1.Size = new Size(544, 30);
-        panel1.TabStop = false;
-        // 
-        // label1
-        // 
-        label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-        label1.AutoSize = true;
-        label1.Location = new Point(6, 7);
-        label1.Name = "label1";
-        label1.Size = new Size(43, 15);
-        label1.Text = "保存先";
+        labelSaveDir.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+        labelSaveDir.AutoSize = true;
+        labelSaveDir.Location = new Point(6, 7);
+        labelSaveDir.Name = "labelSaveDir";
+        labelSaveDir.Size = new Size(43, 15);
+        labelSaveDir.TabIndex = 0;
+        labelSaveDir.Text = "保存先";
         // 
         // buttonSelectDir
         // 
         buttonSelectDir.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-        buttonSelectDir.Location = new Point(468, 3);
+        buttonSelectDir.Location = new Point(520, 3);
         buttonSelectDir.Name = "buttonSelectDir";
         buttonSelectDir.Size = new Size(75, 23);
         buttonSelectDir.TabIndex = 0;
@@ -169,44 +174,64 @@ partial class ConfigWindow
         textBoxDir.Location = new Point(65, 3);
         textBoxDir.Name = "textBoxDir";
         textBoxDir.ReadOnly = true;
-        textBoxDir.Size = new Size(398, 23);
-        textBoxDir.TabStop = false; 
+        textBoxDir.Size = new Size(450, 23);
+        textBoxDir.TabIndex = 1;
+        textBoxDir.TabStop = false;
         // 
-        // panel2
+        // groupBoxFileFormat
         // 
-        panel2.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-        panel2.AutoSize = true;
-        panel2.BackColor = SystemColors.Control;
-        panel2.Controls.Add(label2);
-        panel2.Controls.Add(textBoxFilePattern);
-        panel2.Controls.Add(buttonResetFilePattern);
-        panel2.Location = new Point(0, 30);
-        panel2.Margin = new Padding(0);
-        panel2.MinimumSize = new Size(0, 30);
-        panel2.Name = "panel2";
-        panel2.Size = new Size(544, 30);
+        groupBoxFileFormat.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        groupBoxFileFormat.AutoSize = true;
+        groupBoxFileFormat.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        groupBoxFileFormat.Controls.Add(panelFilePattern);
+        groupBoxFileFormat.Controls.Add(panelFileFormat);
+        groupBoxFileFormat.Location = new Point(5, 70);
+        groupBoxFileFormat.Margin = new Padding(5);
+        groupBoxFileFormat.Name = "groupBoxFileFormat";
+        groupBoxFileFormat.Padding = new Padding(3, 3, 3, 30);
+        groupBoxFileFormat.Size = new Size(614, 85);
+        groupBoxFileFormat.TabIndex = 2;
+        groupBoxFileFormat.TabStop = false;
+        groupBoxFileFormat.Text = "保存形式";
         // 
-        // label2
+        // panelFilePattern
         // 
-        label2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-        label2.AutoSize = true;
-        label2.Location = new Point(6, 7);
-        label2.Name = "label2";
-        label2.Size = new Size(53, 15);
-        label2.Text = "ファイル名";
+        panelFilePattern.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        panelFilePattern.AutoSize = true;
+        panelFilePattern.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        panelFilePattern.BackColor = SystemColors.Control;
+        panelFilePattern.Controls.Add(labelFilePattern);
+        panelFilePattern.Controls.Add(textBoxFilePattern);
+        panelFilePattern.Controls.Add(buttonResetFilePattern);
+        panelFilePattern.Location = new Point(5, 20);
+        panelFilePattern.Margin = new Padding(0);
+        panelFilePattern.MinimumSize = new Size(0, 30);
+        panelFilePattern.Name = "panelFilePattern";
+        panelFilePattern.Size = new Size(600, 30);
+        panelFilePattern.TabIndex = 1;
+        // 
+        // labelFilePattern
+        // 
+        labelFilePattern.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+        labelFilePattern.AutoSize = true;
+        labelFilePattern.Location = new Point(6, 7);
+        labelFilePattern.Name = "labelFilePattern";
+        labelFilePattern.Size = new Size(53, 15);
+        labelFilePattern.TabIndex = 0;
+        labelFilePattern.Text = "ファイル名";
         // 
         // textBoxFilePattern
         // 
         textBoxFilePattern.Anchor = AnchorStyles.Left | AnchorStyles.Right;
         textBoxFilePattern.Location = new Point(65, 3);
         textBoxFilePattern.Name = "textBoxFilePattern";
-        textBoxFilePattern.Size = new Size(398, 23);
+        textBoxFilePattern.Size = new Size(450, 23);
         textBoxFilePattern.TabIndex = 10;
         // 
         // buttonResetFilePattern
         // 
         buttonResetFilePattern.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-        buttonResetFilePattern.Location = new Point(468, 3);
+        buttonResetFilePattern.Location = new Point(520, 3);
         buttonResetFilePattern.Name = "buttonResetFilePattern";
         buttonResetFilePattern.Size = new Size(75, 23);
         buttonResetFilePattern.TabIndex = 15;
@@ -214,32 +239,35 @@ partial class ConfigWindow
         buttonResetFilePattern.UseVisualStyleBackColor = true;
         buttonResetFilePattern.Click += ButtonResetFilePattern_Click;
         // 
-        // panel3
+        // panelFileFormat
         // 
-        panel3.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-        panel3.AutoSize = true;
-        panel3.BackColor = SystemColors.Control;
-        panel3.Controls.Add(label3);
-        panel3.Controls.Add(comboBoxFileFormat);
-        panel3.Controls.Add(comboBoxEncoder);
-        panel3.Controls.Add(labelQuality);
-        panel3.Controls.Add(numericUpDownQuality);
-        panel3.Controls.Add(labelEncoderOption);
-        panel3.Controls.Add(textBoxEncoderOption);
-        panel3.Location = new Point(0, 60);
-        panel3.Margin = new Padding(0);
-        panel3.MinimumSize = new Size(0, 30);
-        panel3.Name = "panel3";
-        panel3.Size = new Size(544, 30);
+        panelFileFormat.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        panelFileFormat.AutoSize = true;
+        panelFileFormat.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        panelFileFormat.BackColor = SystemColors.Control;
+        panelFileFormat.Controls.Add(labelFileFormat);
+        panelFileFormat.Controls.Add(comboBoxFileFormat);
+        panelFileFormat.Controls.Add(comboBoxEncoder);
+        panelFileFormat.Controls.Add(labelQuality);
+        panelFileFormat.Controls.Add(numericUpDownQuality);
+        panelFileFormat.Controls.Add(labelEncoderOption);
+        panelFileFormat.Controls.Add(textBoxEncoderOption);
+        panelFileFormat.Location = new Point(5, 50);
+        panelFileFormat.Margin = new Padding(0);
+        panelFileFormat.MinimumSize = new Size(0, 30);
+        panelFileFormat.Name = "panelFileFormat";
+        panelFileFormat.Size = new Size(600, 30);
+        panelFileFormat.TabIndex = 2;
         // 
-        // label3
+        // labelFileFormat
         // 
-        label3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-        label3.AutoSize = true;
-        label3.Location = new Point(6, 7);
-        label3.Name = "label3";
-        label3.Size = new Size(31, 15);
-        label3.Text = "形式";
+        labelFileFormat.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+        labelFileFormat.AutoSize = true;
+        labelFileFormat.Location = new Point(6, 7);
+        labelFileFormat.Name = "labelFileFormat";
+        labelFileFormat.Size = new Size(31, 15);
+        labelFileFormat.TabIndex = 0;
+        labelFileFormat.Text = "形式";
         // 
         // comboBoxFileFormat
         // 
@@ -269,6 +297,7 @@ partial class ConfigWindow
         labelQuality.Location = new Point(215, 7);
         labelQuality.Name = "labelQuality";
         labelQuality.Size = new Size(31, 15);
+        labelQuality.TabIndex = 26;
         labelQuality.Text = "品質";
         // 
         // numericUpDownQuality
@@ -287,6 +316,7 @@ partial class ConfigWindow
         labelEncoderOption.Location = new Point(295, 7);
         labelEncoderOption.Name = "labelEncoderOption";
         labelEncoderOption.Size = new Size(50, 15);
+        labelEncoderOption.TabIndex = 31;
         labelEncoderOption.Text = "オプション";
         // 
         // textBoxEncoderOption
@@ -294,8 +324,177 @@ partial class ConfigWindow
         textBoxEncoderOption.Anchor = AnchorStyles.Left | AnchorStyles.Right;
         textBoxEncoderOption.Location = new Point(350, 3);
         textBoxEncoderOption.Name = "textBoxEncoderOption";
-        textBoxEncoderOption.Size = new Size(192, 23);
+        textBoxEncoderOption.Size = new Size(244, 23);
         textBoxEncoderOption.TabIndex = 40;
+        // 
+        // groupBoxAlphaFileFormat
+        // 
+        groupBoxAlphaFileFormat.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        groupBoxAlphaFileFormat.AutoSize = true;
+        groupBoxAlphaFileFormat.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        groupBoxAlphaFileFormat.Controls.Add(panelAlphaFilePattern);
+        groupBoxAlphaFileFormat.Controls.Add(panelAlphaFormat);
+        groupBoxAlphaFileFormat.Location = new Point(5, 165);
+        groupBoxAlphaFileFormat.Margin = new Padding(5);
+        groupBoxAlphaFileFormat.Name = "groupBoxAlphaFileFormat";
+        groupBoxAlphaFileFormat.Padding = new Padding(3, 3, 3, 30);
+        groupBoxAlphaFileFormat.Size = new Size(614, 85);
+        groupBoxAlphaFileFormat.TabIndex = 2;
+        groupBoxAlphaFileFormat.TabStop = false;
+        groupBoxAlphaFileFormat.Text = "保存形式 (透過)";
+        // 
+        // panelAlphaFilePattern
+        // 
+        panelAlphaFilePattern.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        panelAlphaFilePattern.AutoSize = true;
+        panelAlphaFilePattern.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        panelAlphaFilePattern.BackColor = SystemColors.Control;
+        panelAlphaFilePattern.Controls.Add(labelAlphaFilePattern);
+        panelAlphaFilePattern.Controls.Add(textBoxAlphaFilePattern);
+        panelAlphaFilePattern.Controls.Add(buttonResetAlphaFilePattern);
+        panelAlphaFilePattern.Location = new Point(5, 20);
+        panelAlphaFilePattern.Margin = new Padding(0);
+        panelAlphaFilePattern.MinimumSize = new Size(0, 30);
+        panelAlphaFilePattern.Name = "panelAlphaFilePattern";
+        panelAlphaFilePattern.Size = new Size(600, 30);
+        panelAlphaFilePattern.TabIndex = 1;
+        // 
+        // labelAlphaFilePattern
+        // 
+        labelAlphaFilePattern.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+        labelAlphaFilePattern.AutoSize = true;
+        labelAlphaFilePattern.Location = new Point(6, 7);
+        labelAlphaFilePattern.Name = "labelAlphaFilePattern";
+        labelAlphaFilePattern.Size = new Size(53, 15);
+        labelAlphaFilePattern.TabIndex = 0;
+        labelAlphaFilePattern.Text = "ファイル名";
+        // 
+        // textBoxAlphaFilePattern
+        // 
+        textBoxAlphaFilePattern.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        textBoxAlphaFilePattern.Location = new Point(65, 3);
+        textBoxAlphaFilePattern.Name = "textBoxAlphaFilePattern";
+        textBoxAlphaFilePattern.Size = new Size(450, 23);
+        textBoxAlphaFilePattern.TabIndex = 10;
+        // 
+        // buttonResetAlphaFilePattern
+        // 
+        buttonResetAlphaFilePattern.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+        buttonResetAlphaFilePattern.Location = new Point(520, 3);
+        buttonResetAlphaFilePattern.Name = "buttonResetAlphaFilePattern";
+        buttonResetAlphaFilePattern.Size = new Size(75, 23);
+        buttonResetAlphaFilePattern.TabIndex = 15;
+        buttonResetAlphaFilePattern.Text = "リセット";
+        buttonResetAlphaFilePattern.UseVisualStyleBackColor = true;
+        buttonResetAlphaFilePattern.Click += ButtonResetFilePattern_Click;
+        // 
+        // panelAlphaFormat
+        // 
+        panelAlphaFormat.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        panelAlphaFormat.AutoSize = true;
+        panelAlphaFormat.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        panelAlphaFormat.BackColor = SystemColors.Control;
+        panelAlphaFormat.Controls.Add(labelAlphaFormat);
+        panelAlphaFormat.Controls.Add(comboBoxAlphaFileFormat);
+        panelAlphaFormat.Controls.Add(comboBoxAlphaEncoder);
+        panelAlphaFormat.Controls.Add(labelAlphaQuality);
+        panelAlphaFormat.Controls.Add(numericUpDownAlphaQuality);
+        panelAlphaFormat.Controls.Add(labelAlphaEncoderOption);
+        panelAlphaFormat.Controls.Add(textBoxAlphaEncoderOption);
+        panelAlphaFormat.Location = new Point(5, 50);
+        panelAlphaFormat.Margin = new Padding(0);
+        panelAlphaFormat.MinimumSize = new Size(0, 30);
+        panelAlphaFormat.Name = "panelAlphaFormat";
+        panelAlphaFormat.Size = new Size(600, 30);
+        panelAlphaFormat.TabIndex = 4;
+        // 
+        // labelAlphaFormat
+        // 
+        labelAlphaFormat.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+        labelAlphaFormat.AutoSize = true;
+        labelAlphaFormat.Location = new Point(6, 7);
+        labelAlphaFormat.Name = "labelAlphaFormat";
+        labelAlphaFormat.Size = new Size(31, 15);
+        labelAlphaFormat.TabIndex = 0;
+        labelAlphaFormat.Text = "形式";
+        // 
+        // comboBoxAlphaFileFormat
+        // 
+        comboBoxAlphaFileFormat.Anchor = AnchorStyles.Left;
+        comboBoxAlphaFileFormat.DropDownStyle = ComboBoxStyle.DropDownList;
+        comboBoxAlphaFileFormat.FormattingEnabled = true;
+        comboBoxAlphaFileFormat.Location = new Point(65, 3);
+        comboBoxAlphaFileFormat.Name = "comboBoxAlphaFileFormat";
+        comboBoxAlphaFileFormat.Size = new Size(50, 23);
+        comboBoxAlphaFileFormat.TabIndex = 20;
+        comboBoxAlphaFileFormat.SelectedIndexChanged += ComboBoxFileFormat_SelectedIndexChanged;
+        // 
+        // comboBoxAlphaEncoder
+        // 
+        comboBoxAlphaEncoder.Anchor = AnchorStyles.Left;
+        comboBoxAlphaEncoder.DropDownStyle = ComboBoxStyle.DropDownList;
+        comboBoxAlphaEncoder.FormattingEnabled = true;
+        comboBoxAlphaEncoder.Location = new Point(120, 3);
+        comboBoxAlphaEncoder.Name = "comboBoxAlphaEncoder";
+        comboBoxAlphaEncoder.Size = new Size(90, 23);
+        comboBoxAlphaEncoder.TabIndex = 25;
+        // 
+        // labelAlphaQuality
+        // 
+        labelAlphaQuality.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+        labelAlphaQuality.AutoSize = true;
+        labelAlphaQuality.Location = new Point(215, 7);
+        labelAlphaQuality.Name = "labelAlphaQuality";
+        labelAlphaQuality.Size = new Size(31, 15);
+        labelAlphaQuality.TabIndex = 26;
+        labelAlphaQuality.Text = "品質";
+        // 
+        // numericUpDownAlphaQuality
+        // 
+        numericUpDownAlphaQuality.Anchor = AnchorStyles.Left;
+        numericUpDownAlphaQuality.Location = new Point(250, 3);
+        numericUpDownAlphaQuality.Name = "numericUpDownAlphaQuality";
+        numericUpDownAlphaQuality.Size = new Size(40, 23);
+        numericUpDownAlphaQuality.TabIndex = 30;
+        numericUpDownAlphaQuality.TextAlign = HorizontalAlignment.Center;
+        // 
+        // labelAlphaEncoderOption
+        // 
+        labelAlphaEncoderOption.Anchor = AnchorStyles.Left;
+        labelAlphaEncoderOption.AutoSize = true;
+        labelAlphaEncoderOption.Location = new Point(295, 7);
+        labelAlphaEncoderOption.Name = "labelAlphaEncoderOption";
+        labelAlphaEncoderOption.Size = new Size(50, 15);
+        labelAlphaEncoderOption.TabIndex = 31;
+        labelAlphaEncoderOption.Text = "オプション";
+        // 
+        // textBoxAlphaEncoderOption
+        // 
+        textBoxAlphaEncoderOption.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        textBoxAlphaEncoderOption.Location = new Point(350, 3);
+        textBoxAlphaEncoderOption.Name = "textBoxAlphaEncoderOption";
+        textBoxAlphaEncoderOption.Size = new Size(244, 23);
+        textBoxAlphaEncoderOption.TabIndex = 40;
+        // 
+        // mainTableLayoutPanel
+        // 
+        mainTableLayoutPanel.BackColor = SystemColors.Control;
+        mainTableLayoutPanel.ColumnCount = 1;
+        mainTableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+        mainTableLayoutPanel.Controls.Add(groupBoxSaveDir);
+        mainTableLayoutPanel.Controls.Add(groupBoxFileFormat);
+        mainTableLayoutPanel.Controls.Add(groupBoxAlphaFileFormat);
+        mainTableLayoutPanel.Dock = DockStyle.Fill;
+        mainTableLayoutPanel.Location = new Point(0, 0);
+        mainTableLayoutPanel.Margin = new Padding(0);
+        mainTableLayoutPanel.Name = "mainTableLayoutPanel";
+        mainTableLayoutPanel.RowCount = 4;
+        mainTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
+        mainTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 95F));
+        mainTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 95F));
+        mainTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
+        mainTableLayoutPanel.Size = new Size(624, 321);
+        mainTableLayoutPanel.TabIndex = 0;
         // 
         // buttonQualityTest
         // 
@@ -313,28 +512,37 @@ partial class ConfigWindow
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         CancelButton = buttonCancel;
-        ClientSize = new Size(550, 151);
+        ClientSize = new Size(624, 321);
         Controls.Add(bottomPanel);
-        Controls.Add(mainGroupBox);
-        MaximumSize = new Size(1550, 190);
-        MinimumSize = new Size(550, 190);
+        Controls.Add(mainTableLayoutPanel);
+        MaximumSize = new Size(640, 360);
+        MinimumSize = new Size(640, 360);
         Name = "ConfigWindow";
         Text = "VRCImageHelper/設定";
         Load += ConfigWindow_Load;
         bottomPanel.ResumeLayout(false);
         bottomPanel.PerformLayout();
-        mainGroupBox.ResumeLayout(false);
+        groupBoxSaveDir.ResumeLayout(false);
+        groupBoxSaveDir.PerformLayout();
+        panelSaveDir.ResumeLayout(false);
+        panelSaveDir.PerformLayout();
+        groupBoxFileFormat.ResumeLayout(false);
+        groupBoxFileFormat.PerformLayout();
+        panelFilePattern.ResumeLayout(false);
+        panelFilePattern.PerformLayout();
+        panelFileFormat.ResumeLayout(false);
+        panelFileFormat.PerformLayout();
+        ((System.ComponentModel.ISupportInitialize)numericUpDownQuality).EndInit();
+        groupBoxAlphaFileFormat.ResumeLayout(false);
+        groupBoxAlphaFileFormat.PerformLayout();
+        panelAlphaFilePattern.ResumeLayout(false);
+        panelAlphaFilePattern.PerformLayout();
+        panelAlphaFormat.ResumeLayout(false);
+        panelAlphaFormat.PerformLayout();
+        ((System.ComponentModel.ISupportInitialize)numericUpDownAlphaQuality).EndInit();
         mainTableLayoutPanel.ResumeLayout(false);
         mainTableLayoutPanel.PerformLayout();
-        panel1.ResumeLayout(false);
-        panel1.PerformLayout();
-        panel2.ResumeLayout(false);
-        panel2.PerformLayout();
-        panel3.ResumeLayout(false);
-        panel3.PerformLayout();
-        ((System.ComponentModel.ISupportInitialize)numericUpDownQuality).EndInit();
         ResumeLayout(false);
-        PerformLayout();
     }
 
     #endregion
@@ -342,23 +550,37 @@ partial class ConfigWindow
     private Button buttonSave;
     private Button buttonCancel;
     private FlowLayoutPanel bottomPanel;
-    private GroupBox mainGroupBox;
+    private GroupBox groupBoxSaveDir;
+    private GroupBox groupBoxFileFormat;
+    private GroupBox groupBoxAlphaFileFormat;
     private TableLayoutPanel mainTableLayoutPanel;
-    private Panel panel1;
-    private Panel panel2;
-    private Panel panel3;
-    private Label label1;
-    private Label label2;
-    private Label label3;
+    private Panel panelSaveDir;
+    private Panel panelFilePattern;
+    private Panel panelFileFormat;
+    private Panel panelAlphaFormat;
+    private Panel panelAlphaFilePattern;
+    private Label labelSaveDir;
+    private Label labelFilePattern;
+    private Label labelFileFormat;
+    private Label labelAlphaFormat;
+    private Label labelAlphaFilePattern;
     private Label labelQuality;
+    private Label labelAlphaQuality;
     private Label labelEncoderOption;
+    private Label labelAlphaEncoderOption;
     private Button buttonSelectDir;
     private Button buttonResetFilePattern;
+    private Button buttonResetAlphaFilePattern;
     private Button buttonQualityTest;
     private TextBox textBoxDir;
     private TextBox textBoxFilePattern;
+    private TextBox textBoxAlphaFilePattern;
     private TextBox textBoxEncoderOption;
+    private TextBox textBoxAlphaEncoderOption;
     private ComboBox comboBoxFileFormat;
     private ComboBox comboBoxEncoder;
+    private ComboBox comboBoxAlphaFileFormat;
+    private ComboBox comboBoxAlphaEncoder;
     private NumericUpDown numericUpDownQuality;
+    private NumericUpDown numericUpDownAlphaQuality;
 }

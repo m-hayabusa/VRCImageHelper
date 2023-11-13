@@ -40,12 +40,25 @@ internal class ImageProcess
 
     private void Process()
     {
+        if (!new FileInfo(_sourcePath).Exists) return;
+
         var fileName = Path.GetFileName(_sourcePath);
+
+        var hasAlpha = false;
+        {
+            using var targetImage = new Bitmap(_sourcePath);
+
+            var formatWithAlpha = new PixelFormat[] { PixelFormat.Alpha, PixelFormat.Canonical, PixelFormat.Format16bppArgb1555, PixelFormat.Format32bppArgb, PixelFormat.Format32bppPArgb, PixelFormat.Format64bppArgb, PixelFormat.Format64bppPArgb };
+            if (formatWithAlpha.Contains(targetImage.PixelFormat))
+            {
+                hasAlpha = true;
+            }
+        }
 
         var match = Regex.Match(fileName, "(\\d+)-(\\d+)-(\\d+)_(\\d+)-(\\d+)-(\\d+)\\.(\\d+)_(\\d+)x(\\d+)");
         if (match.Success)
         {
-            fileName = ConfigManager.FilePattern
+            fileName = (hasAlpha ? ConfigManager.AlphaFilePattern : ConfigManager.FilePattern)
                 .Replace("yyyy", match.Groups[1].Value)
                 .Replace("MM", match.Groups[2].Value)
                 .Replace("dd", match.Groups[3].Value)
@@ -78,9 +91,9 @@ internal class ImageProcess
         if (Directory.CreateDirectory(destDir).Exists == false)
             return;
 
-        if (new FileInfo(_sourcePath).Exists && !new FileInfo(destPath).Exists)
+        if (!new FileInfo(destPath).Exists)
         {
-            var tmpPath = Compress(_sourcePath, ConfigManager.Format, ConfigManager.Quality);
+            var tmpPath = Compress(_sourcePath, hasAlpha);
             if (new FileInfo(tmpPath).Exists)
             {
                 if (WriteMetadata(tmpPath, destPath, _state) == true)
@@ -118,16 +131,17 @@ internal class ImageProcess
         }
     }
 
-    private static string Compress(string sourcePath, string encode, int quality)
+    private static string Compress(string sourcePath, bool hasAlpha)
     {
         var destPath = Path.GetTempFileName();
         File.Delete(destPath);
+        var format = hasAlpha ? ConfigManager.AlphaFormat : ConfigManager.Format;
+        var quality = hasAlpha ? ConfigManager.AlphaQuality : ConfigManager.Quality;
 
-        switch (encode)
+        switch (format)
         {
             case "AVIF":
-                if (FFMpeg.GetSupportedEncoder("av1").Contains(ConfigManager.Encoder))
-                    CompressAVIF(sourcePath, destPath, quality);
+                CompressAVIF(sourcePath, destPath, quality, hasAlpha);
                 break;
 
             case "JPEG":
@@ -155,36 +169,25 @@ internal class ImageProcess
         image.Save(dest, encoder, encodeParams);
     }
 
-    private static void CompressAVIF(string src, string dest, int quality)
+    private static void CompressAVIF(string src, string dest, int quality, bool hasAlpha)
     {
-        FFMpegArguments
-            .FromFileInput(src)
-            .OutputToFile(dest, false, options =>
-            {
-                options
-                    .ForceFormat("avif")
-                    .WithSpeedPreset(FFMpegCore.Enums.Speed.VerySlow)
-                    .WithCustomArgument("-still-picture 1")
-                    .WithFramerate(1);
-
-                var formatWithAlpha = new PixelFormat[] { PixelFormat.Alpha, PixelFormat.Canonical, PixelFormat.Format16bppArgb1555, PixelFormat.Format32bppArgb, PixelFormat.Format32bppPArgb, PixelFormat.Format64bppArgb, PixelFormat.Format64bppPArgb };
-                using var targetImage = new Bitmap(src);
-                if (formatWithAlpha.Contains(targetImage.PixelFormat))
-                {
-                    // 少なくとも libsvtav1 と av1_qsv では透過を処理できなかった
-                    options
-                        .WithVideoCodec("libaom-av1")
-                        .WithConstantRateFactor(quality)
-                        .WithCustomArgument("-filter:v:1 alphaextract")
-                        .WithCustomArgument("-map 0")
-                        .WithCustomArgument("-map 0");
-                }
-                else
+        try
+        {
+            FFMpegArguments
+                .FromFileInput(src)
+                .OutputToFile(dest, false, options =>
                 {
                     options
-                        .WithVideoCodec(ConfigManager.Encoder);
+                        .ForceFormat("avif");
 
-                    switch (ConfigManager.Encoder)
+                    var encoder = hasAlpha ? ConfigManager.AlphaEncoder : ConfigManager.Encoder;
+
+                    options
+                        .WithVideoCodec(encoder);
+
+                    Debug.WriteLine(encoder);
+
+                    switch (encoder)
                     {
                         case "libaom-av1":
                             options
@@ -207,12 +210,20 @@ internal class ImageProcess
                                 .WithCustomArgument($"-qp_i {quality}");
                             break;
                     }
-                    if (ConfigManager.EncoderOption != "")
-                        options.WithCustomArgument(ConfigManager.EncoderOption);
-                }
-            })
-            .ProcessSynchronously(true, new FFOptions() { BinaryFolder = FFMpeg.ExecDir });
+                    var option = hasAlpha ? ConfigManager.AlphaEncoderOption : ConfigManager.EncoderOption;
+                    if (option != "")
+                        options.WithCustomArgument(option);
+
+                })
+                .ProcessSynchronously(true, new FFOptions() { BinaryFolder = FFMpeg.ExecDir });
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex);
+            File.Delete(dest);
+        }
     }
+
 
     private static bool WriteMetadata(string path, string destPath, State state)
     {

@@ -9,6 +9,8 @@ public partial class ConfigWindow : Form
         Icon = new Icon($"{Path.GetDirectoryName(Application.ExecutablePath)}\\icon.ico");
         comboBoxFileFormat.Items.AddRange(new object[] { "PNG", "JPEG", "AVIF" });
         comboBoxEncoder.Items.AddRange(FFMpeg.GetSupportedEncoder("av1"));
+        comboBoxAlphaFileFormat.Items.AddRange(new object[] { "PNG", "AVIF" });
+        comboBoxAlphaEncoder.Items.AddRange(FFMpeg.GetSupportedEncoder("av1"));
     }
 
     private Config _config;
@@ -26,7 +28,14 @@ public partial class ConfigWindow : Form
         textBoxFilePattern.Text = _config.FilePattern;
         textBoxEncoderOption.Text = _config.EncoderOption;
 
-        ComboBoxFileFormat_SelectedIndexChanged(this, EventArgs.Empty);
+        comboBoxAlphaFileFormat.SelectedItem = _config.AlphaFormat;
+        comboBoxAlphaEncoder.SelectedItem = _config.AlphaEncoder;
+
+        textBoxAlphaFilePattern.Text = _config.AlphaFilePattern;
+        textBoxAlphaEncoderOption.Text = _config.AlphaEncoderOption;
+
+        ComboBoxFileFormat_SelectedIndexChanged(comboBoxFileFormat, EventArgs.Empty);
+        ComboBoxFileFormat_SelectedIndexChanged(comboBoxAlphaFileFormat, EventArgs.Empty);
     }
 
     private void ButtonSelectDir_Click(object sender, EventArgs e)
@@ -47,23 +56,43 @@ public partial class ConfigWindow : Form
         }
     }
 
-    private string GetFilePattern(string fileName)
-    {
-        var ext = comboBoxFileFormat.SelectedItem.ToString() ?? "";
-        return Path.ChangeExtension(fileName, ext.ToLower());
-    }
 
     private void ButtonResetFilePattern_Click(object sender, EventArgs e)
     {
-        textBoxFilePattern.Text = GetFilePattern(Config.Default.FilePattern);
+        var alpha = false;
+        if (((Control)sender).Name.Contains("Alpha")) alpha = true;
+
+        var controls = ((Control)sender).Parent.Parent.Controls;
+        var textBox = (TextBox)controls.Find("textBoxFilePattern", true)[0];
+        var comboBox = (ComboBox)controls.Find("fileFormat", true)[0];
+
+        if (textBox is not null && comboBox is not null)
+        {
+            var filePattern = alpha ? Config.Default.AlphaFilePattern : Config.Default.FilePattern;
+            var ext = comboBox.SelectedItem.ToString()?.ToLower();
+            if (ext is not null)
+            {
+                textBox.Text = Path.ChangeExtension(filePattern, ext);
+            }
+        }
     }
     public delegate void FFMpegDownloadEnd();
     private void ComboBoxFileFormat_SelectedIndexChanged(object sender, EventArgs e)
     {
-        var format = comboBoxFileFormat.SelectedItem.ToString();
+        var alpha = "";
+        if (((Control)sender).Name.Contains("Alpha")) alpha = "Alpha";
+        var controls = ((Control)sender).Parent.Parent.Controls;
+        var textBox = (TextBox)controls.Find($"textBox{alpha}FilePattern", true)[0];
+        var fileFormat = (ComboBox)controls.Find($"comboBox{alpha}FileFormat", true)[0];
+        var encoder = (ComboBox)controls.Find($"comboBox{alpha}Encoder", true)[0];
+        var encoderOption = (TextBox)controls.Find($"textBox{alpha}EncoderOption", true)[0];
+        var quality = (NumericUpDown)controls.Find($"numericUpDown{alpha}Quality", true)[0];
+
+        var format = fileFormat.SelectedItem.ToString();
+
         if (format is not null && format != _config.Format)
         {
-            textBoxFilePattern.Text = GetFilePattern(textBoxFilePattern.Text);
+            textBox.Text = Path.ChangeExtension(textBoxFilePattern.Text, format.ToLower());
             _config.Format = format;
         }
 
@@ -90,7 +119,9 @@ public partial class ConfigWindow : Form
                         BeginInvoke(new FFMpegDownloadEnd(() =>
                         {
                             comboBoxEncoder.Items.AddRange(FFMpeg.GetSupportedEncoder("av1"));
-                            comboBoxEncoder.SelectedItem = Config.Default.Encoder;
+                            comboBoxAlphaEncoder.Items.AddRange(FFMpeg.GetSupportedEncoder("av1"));
+
+                            encoder.SelectedItem = alpha == "" ? Config.Default.Encoder : Config.Default.AlphaEncoder;
                             downloading = false;
                             downloadingDialog.Close();
                         }));
@@ -100,26 +131,29 @@ public partial class ConfigWindow : Form
             }
             else
             {
-                comboBoxFileFormat.SelectedItem = Config.Default.Format;
+                if (alpha == "")
+                    fileFormat.SelectedItem = Config.Default.Format;
+                else
+                    fileFormat.SelectedItem = Config.Default.AlphaFormat;
             }
         }
 
         switch (format)
         {
             case "AVIF":
-                comboBoxEncoder.Enabled = true;
-                textBoxEncoderOption.Enabled = true;
-                numericUpDownQuality.Enabled = true;
+                encoder.Enabled = true;
+                encoderOption.Enabled = true;
+                quality.Enabled = true;
                 break;
             case "JPEG":
-                comboBoxEncoder.Enabled = false;
-                textBoxEncoderOption.Enabled = false;
-                numericUpDownQuality.Enabled = true;
+                encoder.Enabled = false;
+                encoderOption.Enabled = false;
+                quality.Enabled = true;
                 break;
             default:
-                comboBoxEncoder.Enabled = false;
-                textBoxEncoderOption.Enabled = false;
-                numericUpDownQuality.Enabled = false;
+                encoder.Enabled = false;
+                encoderOption.Enabled = false;
+                quality.Enabled = false;
                 break;
         }
     }
@@ -132,9 +166,18 @@ public partial class ConfigWindow : Form
         var encoder = comboBoxEncoder.SelectedItem?.ToString();
         if (encoder is not null) _config.Encoder = encoder;
 
+        var alphaFormat = comboBoxAlphaFileFormat.SelectedItem.ToString();
+        if (alphaFormat is not null) _config.AlphaFormat = alphaFormat;
+
+        var alphaEncoder = comboBoxAlphaEncoder.SelectedItem?.ToString();
+        if (alphaEncoder is not null) _config.AlphaEncoder = alphaEncoder;
+
         _config.Quality = Convert.ToInt32(numericUpDownQuality.Value);
         _config.EncoderOption = textBoxEncoderOption.Text;
         _config.FilePattern = textBoxFilePattern.Text;
+        _config.AlphaQuality = Convert.ToInt32(numericUpDownAlphaQuality.Value);
+        _config.AlphaEncoderOption = textBoxAlphaEncoderOption.Text;
+        _config.AlphaFilePattern = textBoxAlphaFilePattern.Text;
 
         ConfigManager.Save(_config);
         Dispose();

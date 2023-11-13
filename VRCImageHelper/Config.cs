@@ -1,7 +1,6 @@
 ﻿namespace VRCImageHelper;
 
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 internal class ConfigManager
 {
@@ -13,6 +12,11 @@ internal class ConfigManager
     public static string Encoder { get { return Config.Encoder; } }
     public static string EncoderOption { get { return Config.EncoderOption; } }
     public static int Quality { get { return Config.Quality; } }
+    public static string AlphaFilePattern { get { return Config.AlphaFilePattern; } }
+    public static string AlphaFormat { get { return Config.AlphaFormat; } }
+    public static string AlphaEncoder { get { return Config.AlphaEncoder; } }
+    public static string AlphaEncoderOption { get { return Config.AlphaEncoderOption; } }
+    public static int AlphaQuality { get { return Config.AlphaQuality; } }
 
     internal static class VirtualLens2
     {
@@ -82,8 +86,13 @@ internal class Config
     public string FilePattern { get; set; } = "yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY.png";
     public string Format { get; set; } = "PNG";
     public string Encoder { get; set; } = "libaom-av1";
-    public string EncoderOption { get; set; } = "";
+    public string EncoderOption { get; set; } = "-r 1 -preset veryslow -still-picture 1";
     public int Quality { get; set; } = 20;
+    public string AlphaFilePattern { get; set; } = "yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY.png";
+    public string AlphaFormat { get; set; } = "PNG";
+    public string AlphaEncoder { get; set; } = "libaom-av1";
+    public string AlphaEncoderOption { get; set; } = "-r 1 -preset veryslow -still-picture 1 -filter:v:1 alphaextract -map 0 -map 0";
+    public int AlphaQuality { get; set; } = 20;
     public VirtualLens2Config VirtualLens2 { get; set; } = new();
     internal class VirtualLens2Config
     {
