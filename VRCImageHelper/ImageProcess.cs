@@ -250,9 +250,10 @@ internal class ImageProcess
 
         if (DateTime.TryParseExact(state.CreationDate, "yyyy:MM:dd HH:mm:ss", CultureInfo.CurrentCulture, DateTimeStyles.None, out var dT))
         {
-            var offset = $"+{TimeZoneInfo.Local.GetUtcOffset(dT)}";
-            args.Add($"-:OffsetTime={offset}");
-        }
+            var offset = TimeZoneInfo.Local.GetUtcOffset(dT);
+                var sign = offset > TimeSpan.Zero ? "+" : "";
+                args.Add($"-:OffsetTime={sign}{offset}");
+            }
 
         if (state.VL2Enabled)
         {
