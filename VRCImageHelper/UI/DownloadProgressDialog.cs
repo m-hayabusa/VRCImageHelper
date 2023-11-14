@@ -1,5 +1,4 @@
-﻿namespace VRCImageHelper;
-using System;
+﻿namespace VRCImageHelper.UI;
 using System.Windows.Forms;
 
 public partial class DownloadProgressDialog : Form

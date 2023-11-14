@@ -1,7 +1,6 @@
-﻿namespace VRCImageHelper;
+﻿namespace VRCImageHelper.Core;
 
 using Rug.Osc;
-using System.Diagnostics;
 using System.Threading;
 using VRC.OSCQuery;
 
@@ -18,61 +17,49 @@ public class OscEventArgs : EventArgs
 }
 public delegate void OscEventHandler(object sender, OscEventArgs e);
 
-internal class OscServer
+internal class OscServer : IDisposable
 {
     private readonly CancellationToken _cancellationToken;
     private bool _enabled;
-    public bool Enable
+
+    public void Dispose()
     {
-        set
-        {
-            if (value == _enabled)
-                return;
+        _oscWatcher = null;
+        _oscReceiver?.Dispose();
+        _oscQuery?.Dispose();
+    }
 
-            if (value)
-            {
-                _port = Extensions.GetAvailableUdpPort();
+    public void Enable()
+    {
+        if (_enabled)
+            return;
+        _enabled = true;
 
-                _oscQuery = new OSCQueryServiceBuilder()
-                    .WithTcpPort(Extensions.GetAvailableTcpPort())
-                    .WithUdpPort(_port)
-                    .WithServiceName("VRCImageHelper")
-                    .AdvertiseOSC()
-                    .AdvertiseOSCQuery()
-                    .StartHttpServer()
-                    .Build();
+        _port = Extensions.GetAvailableUdpPort();
 
-                _oscQuery.AddEndpoint<string>("/avatar/change", Attributes.AccessValues.WriteOnly);
-                _oscQuery.AddEndpoint<int>("/avatar/parameters/VirtualLens2_Enable", Attributes.AccessValues.WriteOnly);
-                _oscQuery.AddEndpoint<float>("/avatar/parameters/VirtualLens2_Zoom", Attributes.AccessValues.WriteOnly);
-                _oscQuery.AddEndpoint<float>("/avatar/parameters/VirtualLens2_Aperture", Attributes.AccessValues.WriteOnly);
+        _oscQuery = new OSCQueryServiceBuilder()
+            .WithTcpPort(Extensions.GetAvailableTcpPort())
+            .WithUdpPort(_port)
+            .WithServiceName("VRCImageHelper")
+            .AdvertiseOSC()
+            .AdvertiseOSCQuery()
+            .StartHttpServer()
+            .Build();
 
-                _oscQuery.OnOscServiceAdded += OscQuery_OnOscServiceAdded;
+        _oscQuery.AddEndpoint<string>("/avatar/change", Attributes.AccessValues.WriteOnly);
+        _oscQuery.AddEndpoint<int>("/avatar/parameters/VirtualLens2_Enable", Attributes.AccessValues.WriteOnly);
+        _oscQuery.AddEndpoint<float>("/avatar/parameters/VirtualLens2_Zoom", Attributes.AccessValues.WriteOnly);
+        _oscQuery.AddEndpoint<float>("/avatar/parameters/VirtualLens2_Aperture", Attributes.AccessValues.WriteOnly);
 
-                _oscQuery.RefreshServices();
-                Debug.WriteLine(_oscQuery.HostInfo);
-                Debug.WriteLine(_oscQuery.OscPort);
+        _oscQuery.OnOscServiceAdded += OscQuery_OnOscServiceAdded;
 
-                _oscReceiver = new OscReceiver(_port);
-                _oscReceiver.Connect();
+        _oscQuery.RefreshServices();
 
-                _oscWatcher = new Task(() => OscReceiverWatcher());
-                _oscWatcher.Start();
-            }
-            else
-            {
-                // close
-                _oscWatcher = null;
-                _oscReceiver?.Dispose();
-                _oscQuery?.Dispose();
-            }
+        _oscReceiver = new OscReceiver(_port);
+        _oscReceiver.Connect();
 
-            _enabled = value;
-        }
-        get
-        {
-            return _enabled;
-        }
+        _oscWatcher = new Task(() => OscReceiverWatcher());
+        _oscWatcher.Start();
     }
 
     private int _port;

@@ -1,4 +1,8 @@
-﻿namespace VRCImageHelper;
+﻿namespace VRCImageHelper.UI;
+
+using VRCImageHelper.Core;
+using VRCImageHelper.Tools;
+
 public partial class ConfigWindow : Form
 {
     public ConfigWindow()

@@ -1,9 +1,10 @@
-﻿namespace VRCImageHelper;
+﻿namespace VRCImageHelper.Tools;
+
+using FFMpegCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,10 +31,7 @@ internal class FFMpeg
                     return "";
             }
 
-            if (s_ffMpegPath is null)
-            {
-                s_ffMpegPath = CheckExists();
-            }
+            s_ffMpegPath ??= Executables.Find("ffmpeg.exe");
 
             return s_ffMpegPath;
         }
@@ -44,7 +42,7 @@ internal class FFMpeg
         while (s_ffMpegDownloading)
         {
             Task.Delay(100).Wait();
-            var exists = CheckExists();
+            var exists = Executables.Find("ffmpeg.exe");
             if (exists is not null)
                 return exists;
             if (s_cancellationToken.IsCancellationRequested)
@@ -53,36 +51,9 @@ internal class FFMpeg
         s_ffMpegDownloading = true;
 
         var url = "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip";
-        var destPath = Path.GetDirectoryName(Application.ExecutablePath) + "\\ffmpeg";
+        var dir = Executables.Download("ffmpeg.exe", url, s_cancellationToken);
 
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.UserAgent.ParseAdd("Windows NT (VRCImageHelper)");
-        var request = client.GetStreamAsync(url, s_cancellationToken);
-        request.Wait();
-
-        if (Directory.Exists(destPath))
-            Directory.Delete(destPath, true);
-
-        Directory.CreateDirectory(destPath);
-
-        var archive = new ZipArchive(request.Result);
-        archive.ExtractToDirectory(destPath);
-
-        var extracted = Directory.EnumerateDirectories(destPath).First();
-        foreach (var item in Directory.EnumerateFileSystemEntries(extracted))
-        {
-            if (File.Exists(item))
-            {
-                File.Move(item, destPath + "\\" + Path.GetFileName(item));
-            }
-            else if (Directory.Exists(item))
-            {
-                Directory.Move(item, destPath + "\\" + Path.GetFileName(item));
-            }
-        }
-        Directory.Delete(extracted);
-
-        var readme = new StreamWriter(File.Create(destPath + "\\README.txt"));
+        var readme = new StreamWriter(File.Create(dir + "\\README.txt"));
         readme.Write($"this files are downloaded from https://github.com/BtbN/FFmpeg-Builds");
         readme.Close();
 
@@ -90,30 +61,7 @@ internal class FFMpeg
 
         s_ffMpegDownloading = false;
 
-        return destPath + "\\bin\\ffmpeg.exe";
-    }
-
-    private static string? CheckExists()
-    {
-        var fileName = "ffmpeg.exe";
-
-        var destPath = Path.GetDirectoryName(Application.ExecutablePath) + "\\ffmpeg";
-
-        if (File.Exists(destPath + "\\bin\\" + fileName))
-            return destPath + "\\bin\\" + fileName;
-
-        var pathes = Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Process) + ";"
-                     + Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.User) + ";"
-                     + Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine);
-
-        if (pathes is not null)
-            foreach (var path in pathes.Split(Path.PathSeparator))
-            {
-                var fullPath = Path.Combine(path, fileName);
-                if (File.Exists(fullPath))
-                    return fullPath;
-            }
-        return null;
+        return dir + "\\bin\\ffmpeg.exe";
     }
 
     private static readonly Dictionary<string, string[]> s_supportedEncoder = new();
@@ -160,4 +108,56 @@ internal class FFMpeg
 
         return resultArray;
     }
+
+    public static async Task<bool> Encode(string src, string dest, string format, string encoder, int quality, string option)
+    {
+        if (ExecDir is null)
+            return false;
+        try
+        {
+            await FFMpegArguments
+                .FromFileInput(src)
+                .OutputToFile(dest, false, options =>
+                {
+                    options
+                        .ForceFormat(format)
+                        .WithVideoCodec(encoder);
+
+                    switch (encoder)
+                    {
+                        case "libaom-av1":
+                            options
+                                .WithConstantRateFactor(quality);
+                            break;
+                        case "libsvtav1":
+                            options
+                                .WithConstantRateFactor(quality);
+                            break;
+                        case "av1_qsv":
+                            options
+                                .WithCustomArgument($"-q {quality}");
+                            break;
+                        case "av1_nvenc":
+                            options
+                                .WithCustomArgument($"-cq {quality}");
+                            break;
+                        case "av1_amf":
+                            options
+                                .WithCustomArgument($"-qp_i {quality}");
+                            break;
+                    }
+                    if (option != "")
+                        options.WithCustomArgument(option);
+                })
+                .ProcessAsynchronously(true, new FFOptions() { BinaryFolder = ExecDir });
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex);
+            File.Delete(dest);
+            return false;
+        }
+        return true;
+    }
 }
+

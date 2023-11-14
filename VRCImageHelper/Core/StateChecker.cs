@@ -1,4 +1,4 @@
-﻿namespace VRCImageHelper;
+﻿namespace VRCImageHelper.Core;
 
 using System.Diagnostics;
 using System.Text.Json.Serialization;
@@ -52,7 +52,7 @@ internal class State
     public RoomInfo RoomInfo { get; set; }
 }
 
-internal class Info
+internal class StateChecker
 {
     public static State State { get; private set; } = new State();
 
@@ -66,6 +66,22 @@ internal class Info
             State.RoomInfo.Permission = match.Groups[2].Value + (match.Groups[4].Success ? "+" : "");
             State.RoomInfo.Organizer = match.Groups[3].Value;
             State.Players.Clear();
+        }
+    }
+
+    public static void Taken(object sender, NewLineEventArgs e)
+    {
+        var match = Regex.Match(e.Line, "([0-9\\.\\: ]*) Log        -  \\[VRC Camera\\] Took screenshot to\\: (.*)");
+        if (match.Success)
+        {
+            var state = State.Clone();
+
+            var creationDate = match.Groups[1].ToString().Replace('.', ':');
+            state.CreationDate = creationDate;
+
+            var path = match.Groups[2].ToString();
+
+            new Task(() => ImageProcess.Process(path, state)).Start();
         }
     }
 
@@ -113,7 +129,7 @@ internal class Info
     {
         if (e.Path == "/avatar/parameters/VirtualLens2_Zoom")
         {
-            var raw = Single.Parse(e.Data.Trim()[..^1]);
+            var raw = float.Parse(e.Data.Trim()[..^1]);
             var min = ConfigManager.VirtualLens2.FocalLengthMin;
             var max = ConfigManager.VirtualLens2.FocalLengthMax;
             State.FocalLength = min * MathF.Exp(raw * MathF.Log(max / min));
@@ -124,7 +140,7 @@ internal class Info
     {
         if (e.Path == "/avatar/parameters/VirtualLens2_Enable")
         {
-            State.VL2Enabled = Int32.Parse(e.Data) == 1;
+            State.VL2Enabled = int.Parse(e.Data) == 1;
         }
     }
 

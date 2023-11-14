@@ -1,6 +1,5 @@
-﻿namespace VRCImageHelper;
+﻿namespace VRCImageHelper.Core;
 
-using System.Diagnostics;
 using System.Timers;
 
 public class NewLineEventArgs : EventArgs
@@ -16,7 +15,7 @@ internal class LogReader : IDisposable
     private readonly Timer _refreshTimer;
     private readonly string _logDir;
     private readonly CancellationToken _cancellationToken;
-    private static FileSystemWatcher? s_watcher;
+    private readonly FileSystemWatcher _fsWatcher;
     private FileInfo? _logFile;
     private long _head;
     private bool _enabled;
@@ -30,13 +29,13 @@ internal class LogReader : IDisposable
 
         _logFile = FindLogFile();
 
-        s_watcher = new FileSystemWatcher(_logDir)
+        _fsWatcher = new FileSystemWatcher(_logDir)
         {
             NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size | NotifyFilters.FileName
         };
 
-        s_watcher.Created += Watcher_Created;
-        s_watcher.Changed += Watcher_Changed;
+        _fsWatcher.Created += Watcher_Created;
+        _fsWatcher.Changed += Watcher_Changed;
 
         // 何かわからないけど、つついておかないと FileSystemWatcher のイベントが発火しない
         _refreshTimer = new Timer(500)
@@ -51,34 +50,23 @@ internal class LogReader : IDisposable
             }
         });
     }
-
-    public bool Enable
+    public void Dispose()
     {
-        set
+        _refreshTimer.Dispose();
+        _fsWatcher.EnableRaisingEvents = false;
+    }
+
+    public void Enable()
+    {
+        if (_enabled)
         {
-            if (value == _enabled)
-            {
-                return;
-            }
-
-            if (s_watcher is not null)
-            {
-                if (value)
-                {
-                    _refreshTimer.Enabled = true;
-                    s_watcher.EnableRaisingEvents = true;
-                    SeeqLog();
-                }
-                else
-                {
-                    _refreshTimer.Enabled = false;
-                    s_watcher.EnableRaisingEvents = false;
-                }
-
-                _enabled = value;
-            }
+            return;
         }
-        get => _enabled;
+        _enabled = true;
+
+        _refreshTimer.Enabled = true;
+        _fsWatcher.EnableRaisingEvents = true;
+        SeeqLog();
     }
 
     private void Watcher_Created(object sender, FileSystemEventArgs e)
@@ -101,7 +89,7 @@ internal class LogReader : IDisposable
     }
 
     private string _lastLine = "";
-    private bool _seeqLogLock = false;
+    private bool _seeqLogLock;
     private void SeeqLog()
     {
         if (_logFile is null || !_logFile.Exists || _seeqLogLock == true)
@@ -142,6 +130,4 @@ internal class LogReader : IDisposable
             .OrderByDescending(f => File.GetCreationTime(f));
         return logFile.Any() ? new FileInfo(logFile.First()) : null;
     }
-
-    public void Dispose() => _refreshTimer.Dispose();
 }

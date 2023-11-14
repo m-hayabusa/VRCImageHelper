@@ -2,6 +2,7 @@
 
 using Microsoft.Win32;
 using System.Diagnostics;
+using VRCImageHelper.Core;
 
 internal static class Program
 {
@@ -19,7 +20,7 @@ internal static class Program
         {
             if (args.Contains("--setup"))
             {
-                new ConfigWindow().ShowDialog();
+                new UI.ConfigWindow().ShowDialog();
                 Process.Start(Application.ExecutablePath);
                 return;
             }
@@ -37,25 +38,29 @@ internal static class Program
             return;
         }
 
-        var toolbarIcon = new ToolbarIcon();
-        toolbarIcon.CreateToolbarIcon();
+        new UI.ToolbarIcon().CreateToolbarIcon();
 
         CancelToken = new CancellationTokenSource();
 
         var bgTask = new Task(Background, CancelToken.Token);
         bgTask.Start();
 
-        SystemEvents.SessionEnding += SystemEvents_SessionEnding;
-        SystemEvents.SessionEnded += SystemEvents_SessionEnded;
+        SystemEvents.SessionEnded += (_, _) => Exit();
 
         Application.Run();
+    }
 
+    public static void Exit()
+    {
+        CancelToken?.Cancel();
+        Thread.Sleep(500);
+        CancelToken?.Dispose();
+        Application.Exit();
     }
 
     private static void Cleanup()
     {
         var basePath = Path.GetDirectoryName(Application.ExecutablePath);
-        Debug.WriteLine(basePath);
         if (Directory.Exists(basePath + "\\exiftool"))
         {
             Directory.Delete(basePath + "\\exiftool", true);
@@ -69,27 +74,7 @@ internal static class Program
             File.Delete(basePath + "\\config.json");
         }
 
-        var key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-
-        if (key is not null && key.GetValue(Application.ProductName) is not null)
-        {
-            key.DeleteValue(Application.ProductName);
-        }
-
-        key?.Dispose();
-    }
-
-    private static void SystemEvents_SessionEnded(object sender, SessionEndedEventArgs e)
-    {
-        CancelToken?.Cancel();
-        Task.Delay(500).Wait();
-        CancelToken?.Dispose();
-        Application.Exit();
-    }
-
-    private static void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
-    {
-        Debug.WriteLine(e.Reason.ToString());
+        AutoStart.Register(false);
     }
 
     public static CancellationTokenSource? CancelToken { get; private set; }
@@ -101,22 +86,22 @@ internal static class Program
         var logReader = new LogReader(CancelToken.Token);
         var oscServer = new OscServer(CancelToken.Token);
         ImageProcess.s_cancellationToken = CancelToken.Token;
-        ExifTool.s_cancellationToken = CancelToken.Token;
-        FFMpeg.s_cancellationToken = CancelToken.Token;
+        Tools.ExifTool.s_cancellationToken = CancelToken.Token;
+        Tools.FFMpeg.s_cancellationToken = CancelToken.Token;
 
-        logReader.NewLine += ImageProcess.Taken;
-        logReader.NewLine += Info.WorldId;
-        logReader.NewLine += Info.JoinRoom;
-        logReader.NewLine += Info.PlayerJoin;
-        logReader.NewLine += Info.PlayerLeft;
-        logReader.NewLine += Info.Quit;
+        logReader.NewLine += StateChecker.Taken;
+        logReader.NewLine += StateChecker.WorldId;
+        logReader.NewLine += StateChecker.JoinRoom;
+        logReader.NewLine += StateChecker.PlayerJoin;
+        logReader.NewLine += StateChecker.PlayerLeft;
+        logReader.NewLine += StateChecker.Quit;
 
-        oscServer.Received += Info.VL2Enable;
-        oscServer.Received += Info.VL2Zoom;
-        oscServer.Received += Info.VL2Aperture;
-        oscServer.Received += Info.ChangeAvater;
+        oscServer.Received += StateChecker.VL2Enable;
+        oscServer.Received += StateChecker.VL2Zoom;
+        oscServer.Received += StateChecker.VL2Aperture;
+        oscServer.Received += StateChecker.ChangeAvater;
 
-        logReader.Enable = true;
-        oscServer.Enable = true;
+        logReader.Enable();
+        oscServer.Enable();
     }
 }

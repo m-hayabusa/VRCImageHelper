@@ -1,4 +1,7 @@
-﻿namespace VRCImageHelper;
+﻿namespace VRCImageHelper.UI;
+
+using VRCImageHelper.Core;
+
 internal class ToolbarIcon
 {
     private readonly ToolStripMenuItem _autostart = new();
@@ -28,18 +31,7 @@ internal class ToolbarIcon
 
         _autostart.Text = "Run when Logon";
 
-        _autostart.CheckState = new Func<CheckState>(() =>
-        {
-            var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            if (key is not null && key.GetValue(Application.ProductName) is not null)
-            {
-                return CheckState.Checked;
-            }
-            else
-            {
-                return CheckState.Unchecked;
-            }
-        })();
+        _autostart.CheckState = AutoStart.IsRegistered() ? CheckState.Checked : CheckState.Unchecked;
         _autostart.CheckOnClick = true;
         _autostart.CheckStateChanged += new EventHandler(Autostart_Toggle);
 
@@ -67,34 +59,11 @@ internal class ToolbarIcon
 
     private void Exit_Click(object? sender, EventArgs e)
     {
-        Program.CancelToken?.Cancel();
-        Thread.Sleep(500);
-        Program.CancelToken?.Dispose();
-        Application.Exit();
+        Program.Exit();
     }
 
     private void Autostart_Toggle(object? sender, EventArgs e)
     {
-        var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-        if (key is null)
-        {
-            key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-        }
-
-        if (key is not null)
-        {
-            if (_autostart.Checked)
-            {
-                key.SetValue(Application.ProductName, Application.ExecutablePath);
-            }
-            else
-            {
-                if (key.GetValue(Application.ProductName) is not null)
-                {
-                    key.DeleteValue(Application.ProductName);
-                }
-            }
-            key.Close();
-        }
+        AutoStart.Register(!AutoStart.IsRegistered());
     }
 }

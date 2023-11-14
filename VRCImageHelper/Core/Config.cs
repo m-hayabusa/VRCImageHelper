@@ -1,6 +1,7 @@
-﻿namespace VRCImageHelper;
+﻿namespace VRCImageHelper.Core;
 
 using System.Text.Json;
+using VRCImageHelper.Tools;
 
 internal class ConfigManager
 {
@@ -67,7 +68,7 @@ internal class ConfigManager
             result.Format = Config.Default.Format;
             result.FilePattern = Path.ChangeExtension(result.FilePattern, result.Format.ToLower());
         }
-        if (result.Format == "AVIF" && !(FFMpeg.GetSupportedEncoder("av1").Contains(result.Encoder)))
+        if (result.Format == "AVIF" && !FFMpeg.GetSupportedEncoder("av1").Contains(result.Encoder))
         {
             result.Encoder = Config.Default.Encoder;
         }

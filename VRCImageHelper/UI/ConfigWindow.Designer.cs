@@ -1,4 +1,4 @@
-﻿namespace VRCImageHelper;
+﻿namespace VRCImageHelper.UI;
 
 partial class ConfigWindow
 {
