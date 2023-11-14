@@ -102,7 +102,10 @@ internal class FFMpeg
         if (File.Exists(destPath + "\\bin\\" + fileName))
             return destPath + "\\bin\\" + fileName;
 
-        var pathes = Environment.GetEnvironmentVariable("PATH");
+        var pathes = Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Process) + ";"
+                     + Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.User) + ";"
+                     + Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine);
+
         if (pathes is not null)
             foreach (var path in pathes.Split(Path.PathSeparator))
             {
