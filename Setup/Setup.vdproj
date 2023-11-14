@@ -211,15 +211,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:VRCImageHelper"
-        "ProductCode" = "8:{3D9C7FBB-CF5A-4069-86CD-A8A328A4B232}"
-        "PackageCode" = "8:{699BA56F-35CB-4527-82D5-4918F2B6FFBC}"
+        "ProductCode" = "8:{1551C745-C438-4DE3-B778-70A3D70C9BFA}"
+        "PackageCode" = "8:{A0208767-6969-4665-B24A-1523663DC1F0}"
         "UpgradeCode" = "8:{A5586A71-6CA5-4F10-9006-D9D01F255FFA}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:0.9.0"
         "Manufacturer" = "8:nekomimiStudio"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -719,7 +719,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_21FADEDBE57D412EAC1CC48D28FFFB1C"
             {
-            "SourcePath" = "8:..\\VRCImageHelper\\obj\\Debug\\net6.0-windows\\apphost.exe"
+            "SourcePath" = "8:..\\VRCImageHelper\\obj\\Release\\net6.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_42BC11FB4B474DD9B968B0CE1B2EB7AE"
