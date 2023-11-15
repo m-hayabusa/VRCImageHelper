@@ -61,7 +61,8 @@ namespace VRCImageHelper.Properties {
         }
         
         /// <summary>
-        ///   FFMpeg is required to compress with this format. \nDo you want to download it? に類似しているローカライズされた文字列を検索します。
+        ///   FFMpeg is required to compress with this format. 
+        ///Do you want to download it? に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string FFMpegDownloadMessage {
             get {

@@ -118,7 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="FFMpegDownloadMessage" xml:space="preserve">
-    <value>FFMpeg is required to compress with this format. \nDo you want to download it?</value>
+    <value>FFMpeg is required to compress with this format. 
+Do you want to download it?</value>
   </data>
   <data name="FFMpegDownloadTitle" xml:space="preserve">
     <value>VRC Image Helper / Download FFMpeg</value>
