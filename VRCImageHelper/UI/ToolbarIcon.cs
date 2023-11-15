@@ -1,6 +1,7 @@
 ﻿namespace VRCImageHelper.UI;
 
 using VRCImageHelper.Core;
+using VRCImageHelper.Properties;
 
 internal class ToolbarIcon
 {
@@ -11,7 +12,7 @@ internal class ToolbarIcon
         var icon = new NotifyIcon
         {
             Icon = new Icon($"{Path.GetDirectoryName(Application.ExecutablePath)}\\icon.ico"),
-            Text = "VRChat Image Helper",
+            Text = Resources.ToolbarTitle,
             Visible = true
         };
 
@@ -19,17 +20,17 @@ internal class ToolbarIcon
 
         var exit = new ToolStripMenuItem
         {
-            Text = "Exit"
+            Text = Resources.ToolbarExit
         };
         exit.Click += new EventHandler(Exit_Click);
 
         var settings = new ToolStripMenuItem
         {
-            Text = "Settings"
+            Text = Resources.ToolbarSettings
         };
         settings.Click += Settings_Click;
 
-        _autostart.Text = "Run when Logon";
+        _autostart.Text = Resources.ToolbarToggleAutoStart;
 
         _autostart.CheckState = AutoStart.IsRegistered() ? CheckState.Checked : CheckState.Unchecked;
         _autostart.CheckOnClick = true;
@@ -37,7 +38,7 @@ internal class ToolbarIcon
 
         var label = new ToolStripLabel
         {
-            Text = "VRChat Image Helper"
+            Text = Resources.ToolbarTitle
         };
 
         strip.Items.AddRange(new ToolStripItem[] { label, new ToolStripSeparator(), _autostart, settings, exit });

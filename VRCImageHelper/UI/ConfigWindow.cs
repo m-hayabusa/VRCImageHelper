@@ -1,6 +1,7 @@
 ﻿namespace VRCImageHelper.UI;
 
 using VRCImageHelper.Core;
+using VRCImageHelper.Properties;
 using VRCImageHelper.Tools;
 
 public partial class ConfigWindow : Form
@@ -46,7 +47,7 @@ public partial class ConfigWindow : Form
     {
         var selectDirectoryDialog = new SaveFileDialog()
         {
-            Filter = "Directory|保存先のフォルダ",
+            Filter = "Directory|" + groupBoxSaveDir.Text,
             FileName = Path.GetFileName(textBoxFilePattern.Text)
         };
         if (selectDirectoryDialog is not null && selectDirectoryDialog.ShowDialog() == DialogResult.OK)
@@ -102,7 +103,7 @@ public partial class ConfigWindow : Form
 
         if (format == "AVIF" && FFMpeg.GetSupportedEncoder("av1").Length == 0)
         {
-            var res = MessageBox.Show("この形式で圧縮するためにはffmpegが必要です。\nダウンロードしますか？", "VRCImageHelper/ffmpegのダウンロード", MessageBoxButtons.OKCancel);
+            var res = MessageBox.Show(Resources.FFMpegDownloadMessage, Resources.FFMpegDownloadTitle, MessageBoxButtons.OKCancel);
             if (res == DialogResult.OK)
             {
                 var downloadingDialog = new DownloadProgressDialog()
