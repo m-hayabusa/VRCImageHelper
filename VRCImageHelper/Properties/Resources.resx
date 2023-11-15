@@ -124,8 +124,21 @@ Do you want to download it?</value>
   <data name="FFMpegDownloadTitle" xml:space="preserve">
     <value>VRC Image Helper / Download FFMpeg</value>
   </data>
+  <data name="ScanAllRestartMessage" xml:space="preserve">
+    <value>Do you want to retroactively perform processing on past VRChat logs?
+OSC messages will discard until complete that.</value>
+  </data>
+  <data name="ScanAllRestartTitle" xml:space="preserve">
+    <value>VRC Image Helper / Past logs</value>
+  </data>
   <data name="ToolbarExit" xml:space="preserve">
     <value>Exit</value>
+  </data>
+  <data name="ToolbarScanAll" xml:space="preserve">
+    <value>Process past logs</value>
+  </data>
+  <data name="ToolbarScanAllProgress" xml:space="preserve">
+    <value>Processing {Progress}/{Total}</value>
   </data>
   <data name="ToolbarSettings" xml:space="preserve">
     <value>Settings</value>

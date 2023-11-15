@@ -80,11 +80,48 @@ namespace VRCImageHelper.Properties {
         }
         
         /// <summary>
+        ///   Do you want to retroactively perform processing on past VRChat logs?
+        ///OSC messages will discard until complete that. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ScanAllRestartMessage {
+            get {
+                return ResourceManager.GetString("ScanAllRestartMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   VRC Image Helper / Past logs に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ScanAllRestartTitle {
+            get {
+                return ResourceManager.GetString("ScanAllRestartTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Exit に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ToolbarExit {
             get {
                 return ResourceManager.GetString("ToolbarExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Process past logs に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ToolbarScanAll {
+            get {
+                return ResourceManager.GetString("ToolbarScanAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Processing {Progress}/{Total} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ToolbarScanAllProgress {
+            get {
+                return ResourceManager.GetString("ToolbarScanAllProgress", resourceCulture);
             }
         }
         

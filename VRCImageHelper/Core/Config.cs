@@ -7,6 +7,7 @@ internal class ConfigManager
 {
     public static Config Config { get; private set; } = Load();
 
+    public static bool ScanAll { get { return Config.ScanAll; } }
     public static string DestDir { get { return Config.DestDir; } }
     public static string FilePattern { get { return Config.FilePattern; } }
     public static string Format { get { return Config.Format; } }
@@ -83,6 +84,7 @@ internal class ConfigManager
 internal class Config
 {
     public static Config Default { get; } = new();
+    public bool ScanAll { get; set; } = false;
     public string DestDir { get; set; } = "";
     public string FilePattern { get; set; } = "yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY.png";
     public string Format { get; set; } = "PNG";

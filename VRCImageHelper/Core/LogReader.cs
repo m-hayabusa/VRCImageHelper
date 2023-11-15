@@ -9,6 +9,18 @@ public class NewLineEventArgs : EventArgs
     public string Line { get; }
 }
 public delegate void NewLineEventHandler(object sender, NewLineEventArgs e);
+public class ScanAllProgressEventArgs : EventArgs
+{
+    public ScanAllProgressEventArgs(int processing, int total)
+    {
+        Processing = processing;
+        Total = total;
+    }
+
+    public int Processing { get; }
+    public int Total { get; }
+}
+public delegate void ScanAllProgressEventHandler(object sender, ScanAllProgressEventArgs e);
 
 internal class LogReader : IDisposable
 {
@@ -21,14 +33,12 @@ internal class LogReader : IDisposable
     private bool _enabled;
 
     public event NewLineEventHandler? NewLine;
+    public event ScanAllProgressEventHandler? ScanAllProgress;
 
     public LogReader(CancellationToken token)
     {
         _cancellationToken = token;
         _logDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "Low\\VRChat\\VRChat\\";
-
-        _logFile = FindLogFile();
-
         _fsWatcher = new FileSystemWatcher(_logDir)
         {
             NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size | NotifyFilters.FileName
@@ -56,7 +66,7 @@ internal class LogReader : IDisposable
         _fsWatcher.EnableRaisingEvents = false;
     }
 
-    public void Enable()
+    public void Enable(bool scanAll)
     {
         if (_enabled)
         {
@@ -64,9 +74,23 @@ internal class LogReader : IDisposable
         }
         _enabled = true;
 
+        var logFile = FindLogFile(null, scanAll);
+        var progress = 0;
+        var total = scanAll ? Directory.EnumerateFiles(_logDir, "output_log_*.txt", SearchOption.TopDirectoryOnly).Count() : 1;
+        do
+        {
+            ScanAllProgress?.Invoke(this, new ScanAllProgressEventArgs(progress, total));
+            if (logFile is null) break;
+            _logFile = logFile;
+            _head = 0;
+            SeeqLog();
+            logFile = FindLogFile(logFile);
+            progress++;
+        } while (scanAll);
+        ScanAllProgress?.Invoke(this, new ScanAllProgressEventArgs(0, 0));
+
         _refreshTimer.Enabled = true;
         _fsWatcher.EnableRaisingEvents = true;
-        SeeqLog();
     }
 
     private void Watcher_Created(object sender, FileSystemEventArgs e)
@@ -123,11 +147,33 @@ internal class LogReader : IDisposable
         _seeqLogLock = false;
     }
 
-    private FileInfo? FindLogFile()
+    private FileInfo? FindLogFile(FileInfo? prev = null, bool old = false)
     {
-        var logFile = Directory.EnumerateFiles(_logDir, "output_log_*.txt", SearchOption.TopDirectoryOnly)
-            .ToList()
-            .OrderByDescending(f => File.GetCreationTime(f));
-        return logFile.Any() ? new FileInfo(logFile.First()) : null;
+        var logFiles = Directory.EnumerateFiles(_logDir, "output_log_*.txt", SearchOption.TopDirectoryOnly)
+                    .ToList()
+                    .OrderBy(f => File.GetCreationTime(f));
+
+        if (!logFiles.Any())
+            return null;
+
+        if (prev is null)
+        {
+            if (old)
+                return new FileInfo(logFiles.First());
+            else
+                return new FileInfo(logFiles.Last());
+        }
+
+        if (!File.Exists(prev.FullName))
+            return new FileInfo(logFiles.Last());
+
+        var logFile = logFiles
+            .SkipWhile(f => File.GetCreationTime(f) <= File.GetCreationTime(prev.FullName))
+            .FirstOrDefault();
+
+        if (!string.IsNullOrEmpty(logFile))
+            return new FileInfo(logFile);
+
+        return null;
     }
 }

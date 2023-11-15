@@ -124,8 +124,21 @@
   <data name="FFMpegDownloadTitle" xml:space="preserve">
     <value>VRC Image Helper / ffmpegをダウンロード</value>
   </data>
+  <data name="ScanAllRestartMessage" xml:space="preserve">
+    <value>過去のVRChatのログについて、さかのぼって処理を実行しますか？
+処理が終わるまではOSCメッセージが無視されます。</value>
+  </data>
+  <data name="ScanAllRestartTitle" xml:space="preserve">
+    <value>VRC Image Helper / 過去ログ</value>
+  </data>
   <data name="ToolbarExit" xml:space="preserve">
     <value>終了</value>
+  </data>
+  <data name="ToolbarScanAll" xml:space="preserve">
+    <value>過去ログを処理</value>
+  </data>
+  <data name="ToolbarScanAllProgress" xml:space="preserve">
+    <value>過去ログを処理中: {Progress}/{Total}</value>
   </data>
   <data name="ToolbarSettings" xml:space="preserve">
     <value>設定</value>

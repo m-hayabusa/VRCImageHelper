@@ -29,8 +29,11 @@ internal static class Program
                 Cleanup();
                 return;
             }
+            if (args.Contains("--scanAll"))
+            {
+                s_scanAll = true;
+            }
         }
-
         var processes = Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName)
             .Where(p => p.Id != Environment.ProcessId);
         if (processes.Any())
@@ -38,7 +41,7 @@ internal static class Program
             return;
         }
 
-        new UI.ToolbarIcon().CreateToolbarIcon();
+        s_toolbarIcon = new UI.ToolbarIcon();
 
         CancelToken = new CancellationTokenSource();
 
@@ -50,6 +53,7 @@ internal static class Program
         Application.Run();
     }
 
+    private static UI.ToolbarIcon? s_toolbarIcon;
     public static void Exit()
     {
         CancelToken?.Cancel();
@@ -76,7 +80,7 @@ internal static class Program
 
         AutoStart.Register(false);
     }
-
+    private static bool s_scanAll;
     public static CancellationTokenSource? CancelToken { get; private set; }
     private static void Background()
     {
@@ -88,6 +92,9 @@ internal static class Program
         ImageProcess.s_cancellationToken = CancelToken.Token;
         Tools.ExifTool.s_cancellationToken = CancelToken.Token;
         Tools.FFMpeg.s_cancellationToken = CancelToken.Token;
+
+        if (s_toolbarIcon is not null)
+            logReader.ScanAllProgress += s_toolbarIcon.Scanning;
 
         logReader.NewLine += StateChecker.Taken;
         logReader.NewLine += StateChecker.WorldId;
@@ -101,7 +108,7 @@ internal static class Program
         oscServer.Received += StateChecker.VL2Aperture;
         oscServer.Received += StateChecker.ChangeAvater;
 
-        logReader.Enable();
+        logReader.Enable(ConfigManager.ScanAll || s_scanAll);
         oscServer.Enable();
     }
 }
