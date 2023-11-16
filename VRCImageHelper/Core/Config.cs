@@ -5,29 +5,32 @@ using VRCImageHelper.Tools;
 
 internal class ConfigManager
 {
-    public static Config Config { get; private set; } = Load();
-
-    public static bool ScanAll { get { return Config.ScanAll; } }
-    public static string DestDir { get { return Config.DestDir; } }
-    public static string FilePattern { get { return Config.FilePattern; } }
-    public static string Format { get { return Config.Format; } }
-    public static string Encoder { get { return Config.Encoder; } }
-    public static string EncoderOption { get { return Config.EncoderOption; } }
-    public static int Quality { get { return Config.Quality; } }
-    public static string AlphaFilePattern { get { return Config.AlphaFilePattern; } }
-    public static string AlphaFormat { get { return Config.AlphaFormat; } }
-    public static string AlphaEncoder { get { return Config.AlphaEncoder; } }
-    public static string AlphaEncoderOption { get { return Config.AlphaEncoderOption; } }
-    public static int AlphaQuality { get { return Config.AlphaQuality; } }
+    public static Config GetConfig()
+    {
+        return s_config.Clone();
+    }
+    private static Config s_config = Load();
+    public static bool ScanAll { get { return s_config.ScanAll; } }
+    public static string DestDir { get { return s_config.DestDir; } }
+    public static string FilePattern { get { return s_config.FilePattern; } }
+    public static string Format { get { return s_config.Format; } }
+    public static string Encoder { get { return s_config.Encoder; } }
+    public static string EncoderOption { get { return s_config.EncoderOption; } }
+    public static int Quality { get { return s_config.Quality; } }
+    public static string AlphaFilePattern { get { return s_config.AlphaFilePattern; } }
+    public static string AlphaFormat { get { return s_config.AlphaFormat; } }
+    public static string AlphaEncoder { get { return s_config.AlphaEncoder; } }
+    public static string AlphaEncoderOption { get { return s_config.AlphaEncoderOption; } }
+    public static int AlphaQuality { get { return s_config.AlphaQuality; } }
 
     internal static class VirtualLens2
     {
-        public static float ApertureMin { get { return Config.VirtualLens2.ApertureMin; } }
-        public static float ApertureMax { get { return Config.VirtualLens2.ApertureMax; } }
-        public static float ApertureDefault { get { return Config.VirtualLens2.ApertureDefault; } }
-        public static float FocalLengthMin { get { return Config.VirtualLens2.FocalLengthMin; } }
-        public static float FocalLengthMax { get { return Config.VirtualLens2.FocalLengthMax; } }
-        public static float FocalLengthDefault { get { return Config.VirtualLens2.FocalLengthDefault; } }
+        public static float ApertureMin { get { return s_config.VirtualLens2.ApertureMin; } }
+        public static float ApertureMax { get { return s_config.VirtualLens2.ApertureMax; } }
+        public static float ApertureDefault { get { return s_config.VirtualLens2.ApertureDefault; } }
+        public static float FocalLengthMin { get { return s_config.VirtualLens2.FocalLengthMin; } }
+        public static float FocalLengthMax { get { return s_config.VirtualLens2.FocalLengthMax; } }
+        public static float FocalLengthDefault { get { return s_config.VirtualLens2.FocalLengthDefault; } }
     }
 
     public static void Save(Config config)
@@ -50,7 +53,7 @@ internal class ConfigManager
         if (config.VirtualLens2.ApertureDefault >= config.VirtualLens2.ApertureMin)
             config.VirtualLens2.ApertureDefault = float.PositiveInfinity;
 
-        Config = config;
+        s_config = config;
     }
 
     public static Config Load()
@@ -83,6 +86,12 @@ internal class ConfigManager
 
 internal class Config
 {
+    public Config Clone()
+    {
+        var clone = (Config)MemberwiseClone();
+        clone.VirtualLens2 = VirtualLens2.Clone();
+        return clone;
+    }
     public static Config Default { get; } = new();
     public bool ScanAll { get; set; } = false;
     public string DestDir { get; set; } = "";
@@ -99,6 +108,10 @@ internal class Config
     public VirtualLens2Config VirtualLens2 { get; set; } = new();
     internal class VirtualLens2Config
     {
+        public VirtualLens2Config Clone()
+        {
+            return (VirtualLens2Config)MemberwiseClone();
+        }
         public float ApertureMin { get; set; } = 22;
         public float ApertureMax { get; set; } = 1;
         public float ApertureDefault { get; set; } = float.PositiveInfinity;

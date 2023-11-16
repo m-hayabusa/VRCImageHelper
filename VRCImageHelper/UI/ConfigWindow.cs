@@ -19,10 +19,13 @@ public partial class ConfigWindow : Form
     }
 
     private Config _config;
+    private string _format = "";
 
     private void ConfigWindow_Load(object sender, EventArgs e)
     {
-        _config = ConfigManager.Config;
+        _config = ConfigManager.GetConfig();
+
+        _format = _config.Format;
 
         numericUpDownQuality.Value = _config.Quality;
         textBoxDir.Text = _config.DestDir;
@@ -95,10 +98,10 @@ public partial class ConfigWindow : Form
 
         var format = fileFormat.SelectedItem.ToString();
 
-        if (format is not null && format != _config.Format)
+        if (format is not null && format != _format)
         {
             textBox.Text = Path.ChangeExtension(textBoxFilePattern.Text, format.ToLower());
-            _config.Format = format;
+            _format = format;
         }
 
         if (format == "AVIF" && FFMpeg.GetSupportedEncoder("av1").Length == 0)
@@ -185,6 +188,11 @@ public partial class ConfigWindow : Form
         _config.AlphaFilePattern = textBoxAlphaFilePattern.Text;
 
         ConfigManager.Save(_config);
+        Dispose();
+    }
+
+    private void ButtonCancel_Click(object sender, EventArgs e)
+    {
         Dispose();
     }
 }

@@ -91,6 +91,7 @@ partial class ConfigWindow
         resources.ApplyResources(buttonCancel, "buttonCancel");
         buttonCancel.Name = "buttonCancel";
         buttonCancel.UseVisualStyleBackColor = true;
+        buttonCancel.Click += ButtonCancel_Click;
         // 
         // bottomPanel
         // 
