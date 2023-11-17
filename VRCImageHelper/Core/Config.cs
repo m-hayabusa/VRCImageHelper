@@ -11,6 +11,8 @@ internal class ConfigManager
     }
     private static Config s_config = Load();
     public static bool ScanAll { get { return s_config.ScanAll; } }
+    public static bool OverwriteDestinationFile { get { return s_config.OverwriteDestinationFile; } }
+    public static bool DeleteOriginalFile { get { return s_config.DeleteOriginalFile; } }
     public static string DestDir { get { return s_config.DestDir; } }
     public static string FilePattern { get { return s_config.FilePattern; } }
     public static string Format { get { return s_config.Format; } }
@@ -94,6 +96,8 @@ internal class Config
     }
     public static Config Default { get; } = new();
     public bool ScanAll { get; set; } = false;
+    public bool OverwriteDestinationFile { get; set; } = false;
+    public bool DeleteOriginalFile { get; set; } = false;
     public string DestDir { get; set; } = "";
     public string FilePattern { get; set; } = "yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY.png";
     public string Format { get; set; } = "PNG";

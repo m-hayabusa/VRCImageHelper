@@ -124,6 +124,30 @@
     <value>キャンセル</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="checkBoxOverwriteDest.Size" type="System.Drawing.Size, System.Drawing">
+    <value>275, 19</value>
+  </data>
+  <data name="checkBoxOverwriteDest.Text" xml:space="preserve">
+    <value>保存先にすでに同名のファイルがあるとき、上書きする</value>
+  </data>
+  <data name="checkBoxDeleteOriginal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 19</value>
+  </data>
+  <data name="checkBoxDeleteOriginal.Text" xml:space="preserve">
+    <value>元ファイルを削除する</value>
+  </data>
+  <data name="labelOptions.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 15</value>
+  </data>
+  <data name="labelOptions.Text" xml:space="preserve">
+    <value>オプション</value>
+  </data>
+  <data name="panelOptions.Size" type="System.Drawing.Size, System.Drawing">
+    <value>471, 30</value>
+  </data>
+  <data name="groupBoxSaveDir.Text" xml:space="preserve">
+    <value>保存先</value>
+  </data>
   <data name="labelSaveDir.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 15</value>
   </data>
@@ -133,8 +157,8 @@
   <data name="buttonSelectDir.Text" xml:space="preserve">
     <value>フォルダ選択</value>
   </data>
-  <data name="groupBoxSaveDir.Text" xml:space="preserve">
-    <value>保存先</value>
+  <data name="groupBoxFileFormat.Text" xml:space="preserve">
+    <value>保存形式</value>
   </data>
   <data name="labelFilePattern.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 15</value>
@@ -175,8 +199,8 @@
   <data name="textBoxEncoderOption.Size" type="System.Drawing.Size, System.Drawing">
     <value>254, 23</value>
   </data>
-  <data name="groupBoxFileFormat.Text" xml:space="preserve">
-    <value>保存形式</value>
+  <data name="groupBoxAlphaFileFormat.Text" xml:space="preserve">
+    <value>保存形式 (透過)</value>
   </data>
   <data name="labelAlphaFilePattern.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 15</value>
@@ -216,9 +240,6 @@
   </data>
   <data name="textBoxAlphaEncoderOption.Size" type="System.Drawing.Size, System.Drawing">
     <value>254, 23</value>
-  </data>
-  <data name="groupBoxAlphaFileFormat.Text" xml:space="preserve">
-    <value>保存形式 (透過)</value>
   </data>
   <data name="buttonQualityTest.Text" xml:space="preserve">
     <value>テスト</value>

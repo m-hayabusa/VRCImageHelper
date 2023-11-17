@@ -33,6 +33,10 @@ partial class ConfigWindow
         buttonCancel = new Button();
         bottomPanel = new FlowLayoutPanel();
         groupBoxSaveDir = new GroupBox();
+        panelOptions = new Panel();
+        checkBoxOverwriteDest = new CheckBox();
+        checkBoxDeleteOriginal = new CheckBox();
+        labelOptions = new Label();
         panelSaveDir = new Panel();
         labelSaveDir = new Label();
         buttonSelectDir = new Button();
@@ -67,6 +71,7 @@ partial class ConfigWindow
         buttonQualityTest = new Button();
         bottomPanel.SuspendLayout();
         groupBoxSaveDir.SuspendLayout();
+        panelOptions.SuspendLayout();
         panelSaveDir.SuspendLayout();
         groupBoxFileFormat.SuspendLayout();
         panelFilePattern.SuspendLayout();
@@ -103,9 +108,36 @@ partial class ConfigWindow
         // groupBoxSaveDir
         // 
         resources.ApplyResources(groupBoxSaveDir, "groupBoxSaveDir");
+        groupBoxSaveDir.Controls.Add(panelOptions);
         groupBoxSaveDir.Controls.Add(panelSaveDir);
         groupBoxSaveDir.Name = "groupBoxSaveDir";
         groupBoxSaveDir.TabStop = false;
+        // 
+        // panelOptions
+        // 
+        resources.ApplyResources(panelOptions, "panelOptions");
+        panelOptions.BackColor = SystemColors.Control;
+        panelOptions.Controls.Add(checkBoxOverwriteDest);
+        panelOptions.Controls.Add(checkBoxDeleteOriginal);
+        panelOptions.Controls.Add(labelOptions);
+        panelOptions.Name = "panelOptions";
+        // 
+        // checkBoxOverwriteDest
+        // 
+        resources.ApplyResources(checkBoxOverwriteDest, "checkBoxOverwriteDest");
+        checkBoxOverwriteDest.Name = "checkBoxOverwriteDest";
+        checkBoxOverwriteDest.UseVisualStyleBackColor = true;
+        // 
+        // checkBoxDeleteOriginal
+        // 
+        resources.ApplyResources(checkBoxDeleteOriginal, "checkBoxDeleteOriginal");
+        checkBoxDeleteOriginal.Name = "checkBoxDeleteOriginal";
+        checkBoxDeleteOriginal.UseVisualStyleBackColor = true;
+        // 
+        // labelOptions
+        // 
+        resources.ApplyResources(labelOptions, "labelOptions");
+        labelOptions.Name = "labelOptions";
         // 
         // panelSaveDir
         // 
@@ -338,6 +370,8 @@ partial class ConfigWindow
         bottomPanel.PerformLayout();
         groupBoxSaveDir.ResumeLayout(false);
         groupBoxSaveDir.PerformLayout();
+        panelOptions.ResumeLayout(false);
+        panelOptions.PerformLayout();
         panelSaveDir.ResumeLayout(false);
         panelSaveDir.PerformLayout();
         groupBoxFileFormat.ResumeLayout(false);
@@ -397,4 +431,8 @@ partial class ConfigWindow
     private ComboBox comboBoxAlphaEncoder;
     private NumericUpDown numericUpDownQuality;
     private NumericUpDown numericUpDownAlphaQuality;
+    private Panel panelOptions;
+    private Label labelOptions;
+    private CheckBox checkBoxOverwriteDest;
+    private CheckBox checkBoxDeleteOriginal;
 }

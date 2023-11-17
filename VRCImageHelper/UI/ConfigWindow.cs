@@ -42,6 +42,9 @@ public partial class ConfigWindow : Form
         textBoxAlphaFilePattern.Text = _config.AlphaFilePattern;
         textBoxAlphaEncoderOption.Text = _config.AlphaEncoderOption;
 
+        checkBoxDeleteOriginal.CheckState = _config.DeleteOriginalFile ? CheckState.Checked : CheckState.Unchecked;
+        checkBoxOverwriteDest.CheckState = _config.OverwriteDestinationFile ? CheckState.Checked : CheckState.Unchecked;
+
         ComboBoxFileFormat_SelectedIndexChanged(comboBoxFileFormat, EventArgs.Empty);
         ComboBoxFileFormat_SelectedIndexChanged(comboBoxAlphaFileFormat, EventArgs.Empty);
     }
@@ -186,6 +189,9 @@ public partial class ConfigWindow : Form
         _config.AlphaQuality = Convert.ToInt32(numericUpDownAlphaQuality.Value);
         _config.AlphaEncoderOption = textBoxAlphaEncoderOption.Text;
         _config.AlphaFilePattern = textBoxAlphaFilePattern.Text;
+
+        _config.DeleteOriginalFile = checkBoxDeleteOriginal.CheckState == CheckState.Checked;
+        _config.OverwriteDestinationFile = checkBoxOverwriteDest.CheckState == CheckState.Checked;
 
         ConfigManager.Save(_config);
         Dispose();

@@ -65,12 +65,12 @@ internal class ImageProcess
         if (Directory.CreateDirectory(destDir).Exists == false)
             return;
 
-        if (!new FileInfo(destPath).Exists)
+        if (ConfigManager.OverwriteDestinationFile || !new FileInfo(destPath).Exists)
         {
             var tmpPath = Compress(sourcePath, hasAlpha);
             if (new FileInfo(tmpPath).Exists)
             {
-                if (WriteMetadata(tmpPath, destPath, state) == true)
+                if (WriteMetadata(tmpPath, destPath, state) == true && ConfigManager.DeleteOriginalFile)
                 {
                     try
                     {
@@ -183,8 +183,7 @@ internal class ImageProcess
 
             if (exifTool.Result)
             {
-                File.Delete(destPath);
-                File.Move(path, destPath);
+                File.Move(path, destPath, ConfigManager.OverwriteDestinationFile);
             }
 
             return exifTool.Result;
