@@ -1,6 +1,7 @@
 ﻿namespace VRCImageHelper.Tools;
 
 using FFMpegCore;
+using Microsoft.Toolkit.Uwp.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -153,7 +154,10 @@ internal class FFMpeg
         }
         catch (Exception ex)
         {
-            Debug.WriteLine(ex);
+            UI.SendNotify.Send(Properties.Resources.NotifyErrorFFMpeg, false, (e) =>
+            {
+                MessageBox.Show(ToastArguments.Parse(e.Argument).Get("Message"));
+            }, new Dictionary<string, string> { { "Message", ex.Message } });
             File.Delete(dest);
             return false;
         }

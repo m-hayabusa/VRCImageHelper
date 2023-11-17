@@ -124,6 +124,19 @@
   <data name="FFMpegDownloadTitle" xml:space="preserve">
     <value>VRC Image Helper / ffmpegをダウンロード</value>
   </data>
+  <data name="NotifyErrorFFMpeg" xml:space="preserve">
+    <value>エラー: FFMpegが正しく終了しませんでした
+(この通知をクリックしてログを確認)</value>
+  </data>
+  <data name="NotifyErrorImageProcessCantCreateDirectory" xml:space="preserve">
+    <value>エラー: 保存先のフォルダが存在せず、かつ作成できませんでした</value>
+  </data>
+  <data name="NotifyErrorImageProcessCantDeleteOriginal" xml:space="preserve">
+    <value>エラー: 元ファイルの削除に失敗しました</value>
+  </data>
+  <data name="NotifyErrorImageProcessFileExist" xml:space="preserve">
+    <value>エラー: 保存先にファイルがすでに存在します</value>
+  </data>
   <data name="ScanAllRestartMessage" xml:space="preserve">
     <value>過去のVRChatのログについて、さかのぼって処理を実行しますか？
 処理が終わるまではOSCメッセージが無視されます。</value>

@@ -80,6 +80,43 @@ namespace VRCImageHelper.Properties {
         }
         
         /// <summary>
+        ///   Error: ffmpeg exited with error
+        ///(Click this to check the output) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NotifyErrorFFMpeg {
+            get {
+                return ResourceManager.GetString("NotifyErrorFFMpeg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Error: Destination directory could not find and also create に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NotifyErrorImageProcessCantCreateDirectory {
+            get {
+                return ResourceManager.GetString("NotifyErrorImageProcessCantCreateDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Error: Could not delete original file に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NotifyErrorImageProcessCantDeleteOriginal {
+            get {
+                return ResourceManager.GetString("NotifyErrorImageProcessCantDeleteOriginal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Error: Destination file has exist に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NotifyErrorImageProcessFileExist {
+            get {
+                return ResourceManager.GetString("NotifyErrorImageProcessFileExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Do you want to retroactively perform processing on past VRChat logs?
         ///OSC messages will discard until complete that. に類似しているローカライズされた文字列を検索します。
         /// </summary>

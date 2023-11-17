@@ -124,6 +124,19 @@ Do you want to download it?</value>
   <data name="FFMpegDownloadTitle" xml:space="preserve">
     <value>VRC Image Helper / Download FFMpeg</value>
   </data>
+  <data name="NotifyErrorFFMpeg" xml:space="preserve">
+    <value>Error: ffmpeg exited with error
+(Click this to check the output)</value>
+  </data>
+  <data name="NotifyErrorImageProcessCantCreateDirectory" xml:space="preserve">
+    <value>Error: Destination directory could not find and also create</value>
+  </data>
+  <data name="NotifyErrorImageProcessCantDeleteOriginal" xml:space="preserve">
+    <value>Error: Could not delete original file</value>
+  </data>
+  <data name="NotifyErrorImageProcessFileExist" xml:space="preserve">
+    <value>Error: Destination file has exist</value>
+  </data>
   <data name="ScanAllRestartMessage" xml:space="preserve">
     <value>Do you want to retroactively perform processing on past VRChat logs?
 OSC messages will discard until complete that.</value>

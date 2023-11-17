@@ -1,5 +1,6 @@
 ﻿namespace VRCImageHelper;
 
+using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.Win32;
 using System.Diagnostics;
 using VRCImageHelper.Core;
@@ -41,6 +42,12 @@ internal static class Program
             return;
         }
 
+        if (ToastNotificationManagerCompat.WasCurrentProcessToastActivated())
+        {
+            UI.SendNotify.Cleanup();
+            return;
+        }
+
         s_toolbarIcon = new UI.ToolbarIcon();
 
         CancelToken = new CancellationTokenSource();
@@ -59,6 +66,7 @@ internal static class Program
         CancelToken?.Cancel();
         Thread.Sleep(500);
         CancelToken?.Dispose();
+        UI.SendNotify.Cleanup();
         Application.Exit();
     }
 
@@ -77,7 +85,7 @@ internal static class Program
         {
             File.Delete(basePath + "\\config.json");
         }
-
+        UI.SendNotify.Cleanup();
         AutoStart.Register(false);
     }
     private static bool s_scanAll;

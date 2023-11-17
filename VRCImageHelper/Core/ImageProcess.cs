@@ -63,23 +63,29 @@ internal class ImageProcess
             return;
 
         if (Directory.CreateDirectory(destDir).Exists == false)
-            return;
-
-        if (ConfigManager.OverwriteDestinationFile || !new FileInfo(destPath).Exists)
         {
-            var tmpPath = Compress(sourcePath, hasAlpha);
-            if (new FileInfo(tmpPath).Exists)
+            UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessCantCreateDirectory, false);
+            return;
+        }
+
+        if (!ConfigManager.OverwriteDestinationFile && new FileInfo(destPath).Exists)
+        {
+            UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessFileExist, false);
+            return;
+        }
+
+        var tmpPath = Compress(sourcePath, hasAlpha);
+        if (new FileInfo(tmpPath).Exists)
+        {
+            if (WriteMetadata(tmpPath, destPath, state) == true && ConfigManager.DeleteOriginalFile)
             {
-                if (WriteMetadata(tmpPath, destPath, state) == true && ConfigManager.DeleteOriginalFile)
+                try
                 {
-                    try
-                    {
-                        File.Delete(sourcePath);
-                    }
-                    catch (IOException ex)
-                    {
-                        Debug.WriteLine(ex); // 他のアプリが掴んでいる状態のはず
-                    }
+                    File.Delete(sourcePath);
+                }
+                catch (IOException ex)
+                {
+                    UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessCantDeleteOriginal + ":\n" + ex.Message, false);
                 }
             }
         }
