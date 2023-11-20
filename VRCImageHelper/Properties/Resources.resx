@@ -117,6 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ConfigWindowOverwriteNotAllowedMessage" xml:space="preserve">
+    <value>In order to save the file with this name in the original directory, it is necessary to overwrite the original file, but the "Overwrite destination file" is disabled.
+(Rather than allowing overwriting, it is recommended to specify a destination folder. When starts this app, if the image is in the same location as the original file, the tag write process is executed again)</value>
+  </data>
+  <data name="ConfigWindowOverwriteNotAllowedTitle" xml:space="preserve">
+    <value>VRC Image Helper / Config</value>
+  </data>
   <data name="FFMpegDownloadMessage" xml:space="preserve">
     <value>FFMpeg is required to compress with this format. 
 Do you want to download it?</value>

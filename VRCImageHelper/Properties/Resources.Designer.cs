@@ -61,6 +61,25 @@ namespace VRCImageHelper.Properties {
         }
         
         /// <summary>
+        ///   In order to save the file with this name in the original directory, it is necessary to overwrite the original file, but the &quot;Overwrite destination file&quot; is disabled.
+        ///(Rather than allowing overwriting, it is recommended to specify a destination folder. When starts this app, if the image is in the same location as the original file, the tag write process is executed again) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ConfigWindowOverwriteNotAllowedMessage {
+            get {
+                return ResourceManager.GetString("ConfigWindowOverwriteNotAllowedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   VRC Image Helper / Config に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ConfigWindowOverwriteNotAllowedTitle {
+            get {
+                return ResourceManager.GetString("ConfigWindowOverwriteNotAllowedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   FFMpeg is required to compress with this format. 
         ///Do you want to download it? に類似しているローカライズされた文字列を検索します。
         /// </summary>

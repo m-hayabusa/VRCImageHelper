@@ -193,6 +193,13 @@ public partial class ConfigWindow : Form
         _config.DeleteOriginalFile = checkBoxDeleteOriginal.CheckState == CheckState.Checked;
         _config.OverwriteDestinationFile = checkBoxOverwriteDest.CheckState == CheckState.Checked;
 
+        if (_config.DestDir == "" && !_config.OverwriteDestinationFile &&
+            ((_config.FilePattern == Config.Default.FilePattern) || (_config.AlphaFilePattern == Config.Default.AlphaFilePattern)))
+        {
+            MessageBox.Show(Resources.ConfigWindowOverwriteNotAllowedMessage, Resources.ConfigWindowOverwriteNotAllowedTitle);
+            return;
+        }
+
         ConfigManager.Save(_config);
         Dispose();
     }

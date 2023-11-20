@@ -117,6 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ConfigWindowOverwriteNotAllowedMessage" xml:space="preserve">
+    <value>このファイル名で元のディレクトリに保存するためには、元ファイルを上書きする必要がありますが、「保存先にすでに同名のファイルがあるとき、上書きする」がオフになっています。
+(上書きを許可するよりも、保存先のフォルダを指定することをおすすめします: このアプリが起動したとき、元のファイルと同じ場所に画像があると、もう一度タグの書き込み処理が実行される)</value>
+  </data>
+  <data name="ConfigWindowOverwriteNotAllowedTitle" xml:space="preserve">
+    <value>VRC Image Helper / 設定</value>
+  </data>
   <data name="FFMpegDownloadMessage" xml:space="preserve">
     <value>この形式で圧縮するためにはffmpegが必要です。
 ダウンロードしますか？</value>
