@@ -12,7 +12,7 @@ VRChatのカメラで撮った画像を圧縮して、
 
 ### インストール
 
-1. [インストーラ](https://github.com/m-hayabusa/VRCImageHelper/releases/download/latest/VRCImageHelper.msi) をダウンロードし、インストールする
+1. インストーラを[Releases](https://github.com/m-hayabusa/VRCImageHelper/releases/)からダウンロードし、インストールする
 
 2. インストール中に設定画面が出てくるので、設定する  
 	![設定画面](https://github.com/m-hayabusa/VRCImageHelper/assets/10593623/8b2b56e3-f31e-4017-9c99-e2ce636e8bfd)
