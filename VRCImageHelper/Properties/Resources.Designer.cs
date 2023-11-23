@@ -155,6 +155,34 @@ namespace VRCImageHelper.Properties {
         }
         
         /// <summary>
+        ///   Found VRChat Exif Writer, is &quot;old version&quot; of this application. Can I uninstall it? に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SetupRemoveVEWMessage {
+            get {
+                return ResourceManager.GetString("SetupRemoveVEWMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Re-login to Windows is required to complete uninstalling.
+        ///Please logout and login manually. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SetupRemoveVEWRestartRequired {
+            get {
+                return ResourceManager.GetString("SetupRemoveVEWRestartRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   VRC Image Helper / Uninstall VRChat Exif Writer に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SetupRemoveVEWTitle {
+            get {
+                return ResourceManager.GetString("SetupRemoveVEWTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Exit に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ToolbarExit {

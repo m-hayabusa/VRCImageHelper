@@ -151,6 +151,16 @@
   <data name="ScanAllRestartTitle" xml:space="preserve">
     <value>VRC Image Helper / 過去ログ</value>
   </data>
+  <data name="SetupRemoveVEWMessage" xml:space="preserve">
+    <value>VRChat Exif Writerが見つかりました。これは、実質的にこのソフトの旧バージョンです。VRChat Exif Writerを削除してもよろしいですか？</value>
+  </data>
+  <data name="SetupRemoveVEWRestartRequired" xml:space="preserve">
+    <value>VRChat Exif Writerの削除を実行するために、再ログインが必要です。
+手動で再ログインしてください。</value>
+  </data>
+  <data name="SetupRemoveVEWTitle" xml:space="preserve">
+    <value>VRC Image Helper / VRChat Exif Writerの削除</value>
+  </data>
   <data name="ToolbarExit" xml:space="preserve">
     <value>終了</value>
   </data>

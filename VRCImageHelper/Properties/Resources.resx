@@ -151,6 +151,16 @@ OSC messages will discard until complete that.</value>
   <data name="ScanAllRestartTitle" xml:space="preserve">
     <value>VRC Image Helper / Past logs</value>
   </data>
+  <data name="SetupRemoveVEWMessage" xml:space="preserve">
+    <value>Found VRChat Exif Writer, is "old version" of this application. Can I uninstall it?</value>
+  </data>
+  <data name="SetupRemoveVEWRestartRequired" xml:space="preserve">
+    <value>Re-login to Windows is required to complete uninstalling.
+Please logout and login manually.</value>
+  </data>
+  <data name="SetupRemoveVEWTitle" xml:space="preserve">
+    <value>VRC Image Helper / Uninstall VRChat Exif Writer</value>
+  </data>
   <data name="ToolbarExit" xml:space="preserve">
     <value>Exit</value>
   </data>

@@ -12,8 +12,6 @@ VRChatのカメラで撮った画像を圧縮して、
 
 ### インストール
 
-0. [VRChat Exif Writer](https://github.com/m-hayabusa/VRChat-Exif-Writer)をセットアップしたことがある場合、削除するか、自動起動を無効に (unregist.lnkをダブルクリック) して終了しておく
-
 1. [インストーラ](https://github.com/m-hayabusa/VRCImageHelper/releases/download/latest/VRCImageHelper.msi) をダウンロードし、インストールする
 
 2. インストール中に設定画面が出てくるので、設定する  
@@ -54,8 +52,9 @@ VRChatのカメラで撮った画像を圧縮して、
 		画像にアルファチャネルが含まれる場合の形式指定で、それ以外は上記 保存形式 と同じ。ただし:
 		* JPEG: 非対応
 		* AVIF: 透過に対応しないAV1エンコーダもある (手元の環境ではlibaom-av1しか透明度を処理できないようだった)
+3. (もしVRChat Exif Writerをインストールしたことがあり、削除していない場合) VRChat Exif Writerを削除することについて確認メッセージが出るので、特に理由がなければ、そのまま削除してください
 
-3. タスクバーにあるアイコン <img style="height:1em" src="https://github.com/m-hayabusa/VRCImageHelper/raw/master/VRCImageHelper/icon.ico"> を右クリックし、自動起動のチェックをつけると、次回からPCにログインした際に自動で起動するようになる
+4. タスクバーにあるアイコン <img style="height:1em" src="https://github.com/m-hayabusa/VRCImageHelper/raw/master/VRCImageHelper/icon.ico"> を右クリックし、自動起動のチェックをつけると、次回からPCにログインした際に自動で起動するようになる
 
 ### アンインストール
 
