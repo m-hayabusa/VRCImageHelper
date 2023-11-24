@@ -69,12 +69,12 @@ internal class ConfigManager
             result = JsonSerializer.Deserialize<Config>(source) ?? result;
         }
 
-        if (result.Format == "AVIF" && FFMpeg.GetSupportedEncoder("av1").Length == 0)
+        if ((result.Format == "AVIF" && FFMpeg.GetSupportedEncoder("av1").Length == 0) || (result.Format == "WEBP" && FFMpeg.GetSupportedEncoder("webp").Length == 0))
         {
             result.Format = Config.Default.Format;
             result.FilePattern = Path.ChangeExtension(result.FilePattern, result.Format.ToLower());
         }
-        if (result.Format == "AVIF" && !FFMpeg.GetSupportedEncoder("av1").Contains(result.Encoder))
+        if ((result.Format == "AVIF" && !FFMpeg.GetSupportedEncoder("av1").Contains(result.Encoder)) || result.Format == "WEBP" && !FFMpeg.GetSupportedEncoder("webp").Contains(result.Encoder))
         {
             result.Encoder = Config.Default.Encoder;
         }
@@ -83,6 +83,17 @@ internal class ConfigManager
             result.VirtualLens2.ApertureDefault = float.PositiveInfinity;
 
         return result;
+    }
+    public static string DefaultEncoderOptions(string encoder, bool hasAlphaChannel)
+    {
+        return encoder switch
+        {
+            "" => "",
+            "libaom-av1" => "-r 1 -still-picture 1" + (hasAlphaChannel ? "-filter:v:1 alphaextract -map 0 -map 0" : ""),
+            "av1_qsv" => "-r 1 -preset veryslow",
+            "libwebp" => "-preset picture",
+            _ => "-r 1",
+        };
     }
 }
 
@@ -101,13 +112,13 @@ internal class Config
     public string DestDir { get; set; } = "";
     public string FilePattern { get; set; } = "yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY.png";
     public string Format { get; set; } = "PNG";
-    public string Encoder { get; set; } = "libaom-av1";
-    public string EncoderOption { get; set; } = "-r 1 -preset veryslow -still-picture 1";
+    public string Encoder { get; set; } = "";
+    public string EncoderOption { get; set; } = "";
     public int Quality { get; set; } = 20;
     public string AlphaFilePattern { get; set; } = "yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY.png";
     public string AlphaFormat { get; set; } = "PNG";
-    public string AlphaEncoder { get; set; } = "libaom-av1";
-    public string AlphaEncoderOption { get; set; } = "-r 1 -preset veryslow -still-picture 1 -filter:v:1 alphaextract -map 0 -map 0";
+    public string AlphaEncoder { get; set; } = "";
+    public string AlphaEncoderOption { get; set; } = "";
     public int AlphaQuality { get; set; } = 20;
     public VirtualLens2Config VirtualLens2 { get; set; } = new();
     internal class VirtualLens2Config

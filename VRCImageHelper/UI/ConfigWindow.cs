@@ -12,10 +12,8 @@ public partial class ConfigWindow : Form
         _config = new Config();
 
         Icon = new Icon($"{Path.GetDirectoryName(Application.ExecutablePath)}\\icon.ico");
-        comboBoxFileFormat.Items.AddRange(new object[] { "PNG", "JPEG", "AVIF" });
-        comboBoxEncoder.Items.AddRange(FFMpeg.GetSupportedEncoder("av1"));
-        comboBoxAlphaFileFormat.Items.AddRange(new object[] { "PNG", "AVIF" });
-        comboBoxAlphaEncoder.Items.AddRange(FFMpeg.GetSupportedEncoder("av1"));
+        comboBoxFileFormat.Items.AddRange(new object[] { "PNG", "JPEG", "AVIF", "WEBP" });
+        comboBoxAlphaFileFormat.Items.AddRange(new object[] { "PNG", "AVIF", "WEBP" });
     }
 
     private Config _config;
@@ -107,7 +105,8 @@ public partial class ConfigWindow : Form
             _format = format;
         }
 
-        if (format == "AVIF" && FFMpeg.GetSupportedEncoder("av1").Length == 0)
+        if ((format == "AVIF" && FFMpeg.GetSupportedEncoder("av1").Length == 0)
+            || (format == "WEBP" && FFMpeg.GetSupportedEncoder("webp").Length == 0))
         {
             var res = MessageBox.Show(Resources.FFMpegDownloadMessage, Resources.FFMpegDownloadTitle, MessageBoxButtons.OKCancel);
             if (res == DialogResult.OK)
@@ -129,10 +128,6 @@ public partial class ConfigWindow : Form
                         FFMpeg.Download();
                         BeginInvoke(new FFMpegDownloadEnd(() =>
                         {
-                            comboBoxEncoder.Items.AddRange(FFMpeg.GetSupportedEncoder("av1"));
-                            comboBoxAlphaEncoder.Items.AddRange(FFMpeg.GetSupportedEncoder("av1"));
-
-                            encoder.SelectedItem = alpha == "" ? Config.Default.Encoder : Config.Default.AlphaEncoder;
                             downloading = false;
                             downloadingDialog.Close();
                         }));
@@ -140,21 +135,24 @@ public partial class ConfigWindow : Form
                 };
                 downloadingDialog.ShowDialog();
             }
-            else
-            {
-                if (alpha == "")
-                    fileFormat.SelectedItem = Config.Default.Format;
-                else
-                    fileFormat.SelectedItem = Config.Default.AlphaFormat;
-            }
         }
 
+        encoder.Items.Clear();
         switch (format)
         {
             case "AVIF":
                 encoder.Enabled = true;
                 encoderOption.Enabled = true;
                 quality.Enabled = true;
+                encoder.Items.AddRange(FFMpeg.GetSupportedEncoder("av1"));
+                encoder.SelectedItem = "libaom-av1";
+                break;
+            case "WEBP":
+                encoder.Enabled = true;
+                encoderOption.Enabled = true;
+                quality.Enabled = true;
+                encoder.Items.AddRange(FFMpeg.GetSupportedEncoder("webp"));
+                encoder.SelectedItem = "libwebp";
                 break;
             case "JPEG":
                 encoder.Enabled = false;
@@ -167,6 +165,7 @@ public partial class ConfigWindow : Form
                 quality.Enabled = false;
                 break;
         }
+        encoderOption.Text = ConfigManager.DefaultEncoderOptions(encoder.Text, alpha != "");
     }
 
     private void ButtonSave_Click(object sender, EventArgs e)
@@ -207,5 +206,16 @@ public partial class ConfigWindow : Form
     private void ButtonCancel_Click(object sender, EventArgs e)
     {
         Dispose();
+    }
+
+    private void ComboBoxEncoder_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        var alpha = "";
+        if (((Control)sender).Name.Contains("Alpha")) alpha = "Alpha";
+        var controls = ((Control)sender).Parent.Parent.Controls;
+        var encoder = (ComboBox)controls.Find($"comboBox{alpha}Encoder", true)[0];
+        var encoderOption = (TextBox)controls.Find($"textBox{alpha}EncoderOption", true)[0];
+        encoderOption.Text = ConfigManager.DefaultEncoderOptions(encoder.Text, alpha != "");
+        Debug.WriteLine(encoderOption.Text);
     }
 }

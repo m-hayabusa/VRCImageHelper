@@ -104,6 +104,10 @@ internal class ImageProcess
                 CompressAVIF(sourcePath, destPath, quality, hasAlpha);
                 break;
 
+            case "WEBP":
+                CompressWEBP(sourcePath, destPath, quality, hasAlpha);
+                break;
+
             case "JPEG":
                 CompressJPEG(sourcePath, destPath, 100 - quality);
                 break;
@@ -135,6 +139,14 @@ internal class ImageProcess
         var option = hasAlpha ? ConfigManager.AlphaEncoderOption : ConfigManager.EncoderOption;
 
         FFMpeg.Encode(src, dest, "avif", encoder, quality, option).Wait();
+    }
+
+    private static void CompressWEBP(string src, string dest, int quality, bool hasAlpha)
+    {
+        var encoder = hasAlpha ? ConfigManager.AlphaEncoder : ConfigManager.Encoder;
+        var option = hasAlpha ? ConfigManager.AlphaEncoderOption : ConfigManager.EncoderOption;
+
+        FFMpeg.Encode(src, dest, "webp", encoder, quality, option).Wait();
     }
 
     private static bool WriteMetadata(string path, string destPath, State state)
