@@ -146,6 +146,10 @@ internal class FFMpeg
                             options
                                 .WithCustomArgument($"-qp_i {quality}");
                             break;
+                        case "libwebp":
+                            options
+                                .WithCustomArgument($"-quality {quality}");
+                            break;
                     }
                     if (option != "")
                         options.WithCustomArgument(option);

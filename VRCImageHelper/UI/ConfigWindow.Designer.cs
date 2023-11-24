@@ -233,6 +233,7 @@ partial class ConfigWindow
         comboBoxEncoder.DropDownStyle = ComboBoxStyle.DropDownList;
         comboBoxEncoder.FormattingEnabled = true;
         comboBoxEncoder.Name = "comboBoxEncoder";
+        comboBoxEncoder.SelectedIndexChanged += ComboBoxEncoder_SelectedIndexChanged;
         // 
         // labelQuality
         // 
@@ -320,6 +321,7 @@ partial class ConfigWindow
         comboBoxAlphaEncoder.DropDownStyle = ComboBoxStyle.DropDownList;
         comboBoxAlphaEncoder.FormattingEnabled = true;
         comboBoxAlphaEncoder.Name = "comboBoxAlphaEncoder";
+        comboBoxAlphaEncoder.SelectedIndexChanged += ComboBoxEncoder_SelectedIndexChanged;
         // 
         // labelAlphaQuality
         // 

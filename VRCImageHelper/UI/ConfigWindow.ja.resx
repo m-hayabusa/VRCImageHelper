@@ -145,9 +145,6 @@
   <data name="panelOptions.Size" type="System.Drawing.Size, System.Drawing">
     <value>471, 30</value>
   </data>
-  <data name="groupBoxSaveDir.Text" xml:space="preserve">
-    <value>保存先</value>
-  </data>
   <data name="labelSaveDir.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 15</value>
   </data>
@@ -157,8 +154,8 @@
   <data name="buttonSelectDir.Text" xml:space="preserve">
     <value>フォルダ選択</value>
   </data>
-  <data name="groupBoxFileFormat.Text" xml:space="preserve">
-    <value>保存形式</value>
+  <data name="groupBoxSaveDir.Text" xml:space="preserve">
+    <value>保存先</value>
   </data>
   <data name="labelFilePattern.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 15</value>
@@ -174,6 +171,12 @@
   </data>
   <data name="labelFileFormat.Text" xml:space="preserve">
     <value>形式</value>
+  </data>
+  <data name="comboBoxEncoder.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 23</value>
+  </data>
+  <data name="labelQuality.Location" type="System.Drawing.Point, System.Drawing">
+    <value>215, 7</value>
   </data>
   <data name="labelQuality.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 15</value>
@@ -199,8 +202,8 @@
   <data name="textBoxEncoderOption.Size" type="System.Drawing.Size, System.Drawing">
     <value>254, 23</value>
   </data>
-  <data name="groupBoxAlphaFileFormat.Text" xml:space="preserve">
-    <value>保存形式 (透過)</value>
+  <data name="groupBoxFileFormat.Text" xml:space="preserve">
+    <value>保存形式</value>
   </data>
   <data name="labelAlphaFilePattern.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 15</value>
@@ -216,6 +219,12 @@
   </data>
   <data name="labelAlphaFormat.Text" xml:space="preserve">
     <value>形式</value>
+  </data>
+  <data name="comboBoxAlphaEncoder.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 23</value>
+  </data>
+  <data name="labelAlphaQuality.Location" type="System.Drawing.Point, System.Drawing">
+    <value>215, 7</value>
   </data>
   <data name="labelAlphaQuality.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 15</value>
@@ -240,6 +249,9 @@
   </data>
   <data name="textBoxAlphaEncoderOption.Size" type="System.Drawing.Size, System.Drawing">
     <value>254, 23</value>
+  </data>
+  <data name="groupBoxAlphaFileFormat.Text" xml:space="preserve">
+    <value>保存形式 (透過)</value>
   </data>
   <data name="buttonQualityTest.Text" xml:space="preserve">
     <value>テスト</value>
