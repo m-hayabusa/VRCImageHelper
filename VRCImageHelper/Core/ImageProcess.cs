@@ -163,8 +163,6 @@ internal class ImageProcess
         {
             "-overwrite_original",
             "-codedcharacterset=utf8",
-            $"-:CreateDate={state.CreationDate}",
-            $"-:DateTimeOriginal={state.CreationDate}",
             $"-:ImageDescription={desc}",
             $"-:Description={desc}",
             $"-:Comment={desc}",
@@ -173,15 +171,19 @@ internal class ImageProcess
             $"-:Keywords={state.RoomInfo.World_name};{string.Join(';', state.Players)}"
         };
 
+        var offset = "";
         if (DateTime.TryParseExact(state.CreationDate, "yyyy:MM:dd HH:mm:ss", CultureInfo.CurrentCulture, DateTimeStyles.None, out var dT))
         {
             var offsetSpan = TimeZoneInfo.Local.GetUtcOffset(dT);
             var sign = offsetSpan > TimeSpan.Zero ? "+" : "";
-            var offset = sign + offsetSpan.ToString();
+            offset = sign + offsetSpan.ToString();
             args.Add($"-:OffsetTime={offset}");
             args.Add($"-:DateCreated={dT:yyyy:MM:dd}:");
             args.Add($"-:TimeCreated={dT:HH:mm:ss}{offset}");
         }
+
+        args.Add($"-:CreateDate={state.CreationDate}{offset}");
+        args.Add($"-:DateTimeOriginal={state.CreationDate}{offset}");
 
         if (state.VL2Enabled)
         {
