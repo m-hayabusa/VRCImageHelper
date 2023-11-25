@@ -161,6 +161,7 @@ internal class ImageProcess
 
         var args = new List<string>
         {
+            "-n",
             "-overwrite_original",
             "-codedcharacterset=utf8",
             $"-:ImageDescription={desc}",
@@ -189,9 +190,57 @@ internal class ImageProcess
         {
             args.Add("-:Make=logilabo");
             args.Add("-:Model=VirtualLens2");
-            args.Add($"-:FocalLength={state.FocalLength}");
-            if (!float.IsInfinity(state.ApertureValue))
-                args.Add($"-:FNumber={state.ApertureValue}");
+            args.Add($"-:FocalLength={state.VirtualLens2.FocalLength}");
+            if (!float.IsInfinity(state.VirtualLens2.ApertureValue))
+                args.Add($"-:FNumber={state.VirtualLens2.ApertureValue}");
+        }
+        else if (state.IntegralEnabled)
+        {
+            args.Add("-:Make=suzufactory");
+            args.Add("-:Model=Integral");
+            if (state.IntegralExposureParams.Count > 0)
+            {
+                var lastItem = state.IntegralExposureParams.Last();
+                args.Add("-:LensMake=suzufactory");
+                args.Add("-:LensManufacturer=suzufactory");
+                args.Add($"-:LensModel={lastItem.LensModel}");
+                args.Add($"-:XMP-microsoft:LensModel={lastItem.LensModel}");
+                args.Add($"-:FocalLength={lastItem.FocalLength}");
+                if (lastItem.ApertureValue != 0)
+                    args.Add($"-:FNumber={lastItem.ApertureValue}");
+                var exposureTimes = state.IntegralExposureParams.Select((param) => param.ExposureTime);
+                var exposureTime = exposureTimes.Sum();
+                args.Add($"-:ExposureTime={exposureTime}");
+                if (!float.IsInfinity(lastItem.ExposureBias))
+                    args.Add($"-:ExposureCompensation={lastItem.ExposureBias}");
+
+                // ëΩèdòIåıÇÃèÓïÒÇãLò^
+                var exposureCount = state.IntegralExposureParams.Count;
+                if (exposureCount == 1)
+                {
+                    args.Add("-:CompositeImage=1");
+                }
+                else
+                {
+                    args.Add("-:CompositeImage=3");
+                    args.Add($"-:CompositeImageCount=\"{exposureCount} {exposureCount}\"");
+                    var minimumExposureTime = exposureTimes.Min();
+                    var maximumExposureTime = exposureTimes.Max();
+                    var list = new List<float>() {
+                        exposureTime,
+                        exposureTime,
+                        exposureTime,
+                        maximumExposureTime,
+                        maximumExposureTime,
+                        minimumExposureTime,
+                        minimumExposureTime,
+                        exposureCount,
+                        exposureCount,
+                    };
+                    args.Add($"-:CompositeImageExposureTimes=\"{string.Join(" ", list.Concat(exposureTimes))}\"");
+
+                }
+            }
         }
         else
         {

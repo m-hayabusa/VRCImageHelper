@@ -34,6 +34,19 @@ internal class ConfigManager
         public static float FocalLengthMax { get { return s_config.VirtualLens2.FocalLengthMax; } }
         public static float FocalLengthDefault { get { return s_config.VirtualLens2.FocalLengthDefault; } }
     }
+    internal static class Integral
+    {
+        public static float[] Apatures { get { return s_config.Integral.Apatures; } }
+        public static float ApertureDefault { get { return s_config.Integral.ApertureDefault; } }
+        public static float[] Fovs { get { return s_config.Integral.Fovs; } }
+        public static float FocalLengthDefault { get { return s_config.Integral.FocalLengthDefault; } }
+        public static float[] ShutterSpeeds { get { return s_config.Integral.ShutterSpeeds; } }
+        public static float ExposureTimeDefault { get { return s_config.Integral.ExposureTimeDefault; } }
+        public static float[] Exposures { get { return s_config.Integral.Exposures; } }
+        public static float ExposureDefault { get { return s_config.Integral.ExposureDefault; } }
+        public static int BokehShapeDefault { get { return s_config.Integral.BokehShapeDefault; } }
+        public static string[] BokehShapeNames { get { return s_config.Integral.BokehShapeNames; } }
+    }
 
     public static void Save(Config config)
     {
@@ -133,5 +146,23 @@ internal class Config
         public float FocalLengthMin { get; set; } = 12;
         public float FocalLengthMax { get; set; } = 300;
         public float FocalLengthDefault { get; set; } = 50;
+    }
+    public IntegralConfig Integral { get; set; } = new();
+    internal class IntegralConfig
+    {
+        public IntegralConfig Clone()
+        {
+            return (IntegralConfig)MemberwiseClone();
+        }
+        public float[] Apatures { get; set; } = { 0f, 0.01f, 0.025f, 0.05f, 0.1f };
+        public float ApertureDefault { get; set; } = 0;
+        public float[] Fovs { get; set; } = { 73.7398f, 37.8493f, 19.4552f, 6.86726f, 1.14588f };
+        public float FocalLengthDefault { get; set; } = 30f;
+        public float[] ShutterSpeeds { get; set; } = { 0.01f, 1f, 30f };
+        public float ExposureTimeDefault { get; set; } = 1;
+        public float[] Exposures { get; set; } = { 0f, 1f, 10f };
+        public float ExposureDefault { get; set; } = 0;
+        public int BokehShapeDefault { get; set; } = 0;
+        public string[] BokehShapeNames { get; set; } = { "Circle", "Hexagon", "Star", "Heart", "Bubble" };
     }
 }
