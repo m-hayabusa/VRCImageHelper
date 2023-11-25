@@ -141,6 +141,14 @@ internal static class Program
         oscServer.Received += StateChecker.VL2Aperture;
         oscServer.Received += StateChecker.ChangeAvater;
 
+        oscServer.Received += StateChecker.IntegralEnable;
+        oscServer.Received += StateChecker.IntegralMode;
+        oscServer.Received += StateChecker.IntegralZoom;
+        oscServer.Received += StateChecker.IntegralAperture;
+        oscServer.Received += StateChecker.IntegralShutterSpeed;
+        oscServer.Received += StateChecker.IntegralExposure;
+        oscServer.Received += StateChecker.IntegralBokehShape;
+
         logReader.Enable(ConfigManager.ScanAll || s_scanAll);
         oscServer.Enable();
     }

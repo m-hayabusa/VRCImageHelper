@@ -51,6 +51,15 @@ internal class OscServer : IDisposable
         _oscQuery.AddEndpoint<float>("/avatar/parameters/VirtualLens2_Zoom", Attributes.AccessValues.WriteOnly);
         _oscQuery.AddEndpoint<float>("/avatar/parameters/VirtualLens2_Aperture", Attributes.AccessValues.WriteOnly);
 
+        _oscQuery.AddEndpoint<bool>("/avatar/parameters/Integral_Enable", Attributes.AccessValues.WriteOnly);
+        _oscQuery.AddEndpoint<int>("/avatar/parameters/Integral_Mode", Attributes.AccessValues.WriteOnly);
+        _oscQuery.AddEndpoint<float>("/avatar/parameters/Integral_Zoom", Attributes.AccessValues.WriteOnly);
+        _oscQuery.AddEndpoint<float>("/avatar/parameters/Integral_Aperture", Attributes.AccessValues.WriteOnly);
+        _oscQuery.AddEndpoint<float>("/avatar/parameters/Integral_ShutterSpeed", Attributes.AccessValues.WriteOnly);
+        _oscQuery.AddEndpoint<float>("/avatar/parameters/Integral_Exposure", Attributes.AccessValues.WriteOnly);
+        _oscQuery.AddEndpoint<int>("/avatar/parameters/Integral_BokehShape", Attributes.AccessValues.WriteOnly);
+        _oscQuery.AddEndpoint<float>("/avatar/parameters/Integral_BokehShapeRotation", Attributes.AccessValues.WriteOnly);
+
         _oscQuery.OnOscServiceAdded += OscQuery_OnOscServiceAdded;
 
         _oscQuery.RefreshServices();
