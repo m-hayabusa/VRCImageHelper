@@ -216,6 +216,5 @@ public partial class ConfigWindow : Form
         var encoder = (ComboBox)controls.Find($"comboBox{alpha}Encoder", true)[0];
         var encoderOption = (TextBox)controls.Find($"textBox{alpha}EncoderOption", true)[0];
         encoderOption.Text = ConfigManager.DefaultEncoderOptions(encoder.Text, alpha != "");
-        Debug.WriteLine(encoderOption.Text);
     }
 }
