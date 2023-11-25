@@ -175,9 +175,12 @@ internal class ImageProcess
 
         if (DateTime.TryParseExact(state.CreationDate, "yyyy:MM:dd HH:mm:ss", CultureInfo.CurrentCulture, DateTimeStyles.None, out var dT))
         {
-            var offset = TimeZoneInfo.Local.GetUtcOffset(dT);
-            var sign = offset > TimeSpan.Zero ? "+" : "";
-            args.Add($"-:OffsetTime={sign}{offset}");
+            var offsetSpan = TimeZoneInfo.Local.GetUtcOffset(dT);
+            var sign = offsetSpan > TimeSpan.Zero ? "+" : "";
+            var offset = sign + offsetSpan.ToString();
+            args.Add($"-:OffsetTime={offset}");
+            args.Add($"-:DateCreated={dT:yyyy:MM:dd}:");
+            args.Add($"-:TimeCreated={dT:HH:mm:ss}{offset}");
         }
 
         if (state.VL2Enabled)
