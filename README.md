@@ -13,6 +13,7 @@ VRChatのカメラで撮った画像を圧縮して、
 ### インストール
 
 1. インストーラを[Releases](https://github.com/m-hayabusa/VRCImageHelper/releases/)からダウンロードし、インストールする  
+(インストール中に "You must install or update .NET to run this application." から始まるメッセージが出てきた場合、「はい」をクリックすると必要なライブラリ (.NET 6.0 Desktop Runtime) のダウンロードページが開くので、それをインストールしてからもう一度VRCImageHelperのインストール操作をしてください)
 
 2. インストール中に設定画面が出てくるので、設定する  
 	![設定画面](https://github.com/m-hayabusa/VRCImageHelper/assets/10593623/8b2b56e3-f31e-4017-9c99-e2ce636e8bfd)
