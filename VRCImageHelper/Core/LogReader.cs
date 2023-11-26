@@ -143,9 +143,22 @@ internal class LogReader : IDisposable
                 {
                     newline = logStream.ReadLine();
                 }
-                catch (OutOfMemoryException)
+                catch (OutOfMemoryException) // 長すぎる行は読み飛ばす
                 {
-                    continue; //OOMを吐く長さの行が必要になることはないはず
+                    var lineEnd = false;
+                    while (!lineEnd)
+                    {
+                        try
+                        {
+                            logStream.ReadLine();
+                            lineEnd = true;
+                        }
+                        catch (OutOfMemoryException)
+                        {
+                            lineEnd = false;
+                        }
+                    }
+                    continue;
                 }
                 if (newline is null)
                 {
