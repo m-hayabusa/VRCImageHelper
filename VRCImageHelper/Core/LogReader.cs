@@ -123,22 +123,67 @@ internal class LogReader : IDisposable
         var logStream = new StreamReader(_logFile.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
 
         _ = logStream.BaseStream.Seek(_head, SeekOrigin.Current);
-
-        var log = logStream.ReadToEnd().Split('\n');
-        log[0] = _lastLine + log[0];
-        for (var i = 0; i < log.Length - 1; i++)
+        while (!logStream.EndOfStream)
         {
             if (_cancellationToken.IsCancellationRequested)
-            { break; }
+            {
+                break;
+            }
 
-            var newline = log[i];
+            var newline = "";
+            if (_lastLine != "" && logStream.Peek() == '\r')
+            {
+                logStream.Read();
+                if (logStream.Peek() == '\n')
+                    logStream.Read();
+            }
+            else
+            {
+                try
+                {
+                    newline = logStream.ReadLine();
+                }
+                catch (OutOfMemoryException) // 長すぎる行は読み飛ばす
+                {
+                    var lineEnd = false;
+                    while (!lineEnd)
+                    {
+                        try
+                        {
+                            logStream.ReadLine();
+                            lineEnd = true;
+                        }
+                        catch (OutOfMemoryException)
+                        {
+                            lineEnd = false;
+                        }
+                    }
+                    continue;
+                }
+                if (newline is null)
+                {
+                    break;
+                }
+                if (logStream.EndOfStream)
+                {
+                    logStream.BaseStream.Seek(-1, SeekOrigin.End);
+                    if (logStream.Read() != '\n')
+                    {
+                        _lastLine = newline;
+                        break;
+                    }
+                }
+            }
+
+            newline = _lastLine + newline;
+            _lastLine = "";
+
             if (newline.Length < 500 && !newline.StartsWith(" ") && newline.Trim() != "" && !newline.Contains("Error      -  ") && !newline.Contains("Warning    -  "))
             {
                 var e = new NewLineEventArgs(newline);
                 NewLine?.Invoke(this, e);
             }
         }
-        _lastLine = log[^1];
 
         _head = logStream.BaseStream.Position;
 
