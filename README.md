@@ -12,7 +12,7 @@ VRChatのカメラで撮った画像を圧縮して、
 
 ### インストール
 
-1. インストーラを[Releases](https://github.com/m-hayabusa/VRCImageHelper/releases/)からダウンロードし、インストールする
+1. インストーラを[Releases](https://github.com/m-hayabusa/VRCImageHelper/releases/)からダウンロードし、インストールする  
 
 2. インストール中に設定画面が出てくるので、設定する  
 	![設定画面](https://github.com/m-hayabusa/VRCImageHelper/assets/10593623/8b2b56e3-f31e-4017-9c99-e2ce636e8bfd)
@@ -33,21 +33,21 @@ VRChatのカメラで撮った画像を圧縮して、
 			|XXXX|画像のピクセル数 (縦)|
 			|YYYY|画像のピクセル数 (横)|
 
-		* 形式・品質・オプション: PNG / JPEG / AVIFが選択できる
+		* 形式・品質・オプション: PNG / JPEG / WEBP / AVIFが選択できる
 			* PNG: 品質設定とオプションは、無視される
 			* JPEG: 品質設定は、0が最高、100が最低となる。オプションは無視される
-			* AVIF: 品質設定は、ffmpegでそれぞれのエンコーダの
-				|エンコーダ|引数|
-				|:-|:-|
-				|libaom-av1|`-crf`|
-				|libsvtav1|`-crf`|
-				|av1_qsv|`-q`|
-				|av1_nvenc|`-cq`|
-				|av1_amf|`-qp_i`|
+			* WEBP / AVIF: 品質設定は、ffmpegでそれぞれのエンコーダの
+				|エンコーダ|引数|最高品質|最高圧縮|
+				|:-|:-|:-|:-|
+				|libwebp|`-quality`|0|100|
+				|libaom-av1|`-crf`|0|63|
+				|libsvtav1|`-crf`|0|63|
+				|av1_qsv|`-q`|?|?|
+				|av1_nvenc|`-cq`|1|51|
+				|av1_amf|`-qp_i`|0|255|
 
-				に指定する数値で、0とすると画質が最高となる(はず)  
-				CPUでlibaom-av1とlibsvtav1を利用する場合と、Intel Arcでav1_qsvを利用した場合のみ確認 (NvEnc / AMFの場合の動作については一切検証できていないので、正しいパラメータの指定などあれば[教えてください](https://github.com/m-hayabusa/VRCImageHelper/issues/new))  
-				オプションは、ffmpegに追加で渡す引数を入力できる
+				CPUでlibwebp、libaom-av1とlibsvtav1を利用する場合と、Intel Arcでav1_qsvを利用した場合のみ確認 (NvEnc / AMFの場合の動作については一切検証できていないので、正しいパラメータの指定などあれば[教えてください](https://github.com/m-hayabusa/VRCImageHelper/issues/new))  
+				オプションは、ffmpegに追加で渡す引数を入力できる たとえばlibwebpで `-lossless 1` など
 	* 保存形式(透過)  
 		画像にアルファチャネルが含まれる場合の形式指定で、それ以外は上記 保存形式 と同じ。ただし:
 		* JPEG: 非対応
