@@ -1,6 +1,5 @@
 ﻿namespace VRCImageHelper.UI;
 
-using System.Diagnostics;
 using VRCImageHelper.Core;
 using VRCImageHelper.Properties;
 using VRCImageHelper.Tools;
@@ -176,7 +175,16 @@ public partial class ConfigWindow : Form
                 quality.Enabled = false;
                 break;
         }
-        encoderOption.Text = ConfigManager.DefaultEncoderOptions(encoder.Text, alpha != "");
+        encoderOption.Text = GetEncoderOptions(encoder.Text, alpha == "Alpha");
+    }
+
+    private string GetEncoderOptions(string encoder, bool hasAlpha)
+    {
+        var key = encoder + (hasAlpha ? "Alpha" : "");
+        if (_selectedEncoderOption.ContainsKey(key))
+            return _selectedEncoderOption[key];
+        else
+            return ConfigManager.DefaultEncoderOptions(encoder, hasAlpha);
     }
 
     private void ButtonSave_Click(object sender, EventArgs e)
@@ -221,7 +229,6 @@ public partial class ConfigWindow : Form
 
     private void ComboBoxEncoder_SelectedIndexChanged(object sender, EventArgs e)
     {
-        Debug.WriteLine("ComboBoxEncoder_SelectedIndexChanged");
         var alpha = "";
         if (((Control)sender).Name.Contains("Alpha")) alpha = "Alpha";
         var controls = ((Control)sender).Parent.Parent.Controls;
@@ -229,15 +236,12 @@ public partial class ConfigWindow : Form
         var encoder = (ComboBox)controls.Find($"comboBox{alpha}Encoder", true)[0];
         var encoderOption = (TextBox)controls.Find($"textBox{alpha}EncoderOption", true)[0];
 
-        encoderOption.Text = _selectedEncoderOption.ContainsKey(encoder.Text + alpha) ?
-            _selectedEncoderOption[encoder.Text + alpha] :
-            ConfigManager.DefaultEncoderOptions(encoder.Text, alpha != "");
+        encoderOption.Text = GetEncoderOptions(encoder.Text, alpha == "Alpha");
         _selectedEncoder[fileFormat.Text + alpha] = encoder.Text;
     }
 
     private void TextBoxEncoderOption_TextChanged(object sender, EventArgs e)
     {
-        Debug.WriteLine("TextBoxEncoderOption_TextChanged");
         var alpha = "";
         if (((Control)sender).Name.Contains("Alpha")) alpha = "Alpha";
         var controls = ((Control)sender).Parent.Parent.Controls;
