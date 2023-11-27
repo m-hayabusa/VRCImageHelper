@@ -131,6 +131,14 @@ Do you want to download it?</value>
   <data name="FFMpegDownloadTitle" xml:space="preserve">
     <value>VRC Image Helper / Download FFMpeg</value>
   </data>
+  <data name="NotifyError" xml:space="preserve">
+    <value>Error: Something went wrong
+(Click this to copy the error)</value>
+  </data>
+  <data name="NotifyErrorExiftool" xml:space="preserve">
+    <value>Error: Exiftool exited with error
+(Click this to check the output)</value>
+  </data>
   <data name="NotifyErrorFFMpeg" xml:space="preserve">
     <value>Error: ffmpeg exited with error
 (Click this to check the output)</value>
@@ -140,6 +148,9 @@ Do you want to download it?</value>
   </data>
   <data name="NotifyErrorImageProcessCantDeleteOriginal" xml:space="preserve">
     <value>Error: Could not delete original file</value>
+  </data>
+  <data name="NotifyErrorImageProcessExiftoolResultNotFound" xml:space="preserve">
+    <value>Error: Could not find the result file</value>
   </data>
   <data name="NotifyErrorImageProcessFileExist" xml:space="preserve">
     <value>Error: Destination file has exist</value>

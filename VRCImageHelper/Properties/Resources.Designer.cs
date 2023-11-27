@@ -99,6 +99,26 @@ namespace VRCImageHelper.Properties {
         }
         
         /// <summary>
+        ///   Error: Something went wrong
+        ///(Click this to copy the error) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NotifyError {
+            get {
+                return ResourceManager.GetString("NotifyError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Error: Exiftool exited with error
+        ///(Click this to check the output) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NotifyErrorExiftool {
+            get {
+                return ResourceManager.GetString("NotifyErrorExiftool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Error: ffmpeg exited with error
         ///(Click this to check the output) に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -123,6 +143,15 @@ namespace VRCImageHelper.Properties {
         internal static string NotifyErrorImageProcessCantDeleteOriginal {
             get {
                 return ResourceManager.GetString("NotifyErrorImageProcessCantDeleteOriginal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Error: Could not find the result file に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NotifyErrorImageProcessExiftoolResultNotFound {
+            get {
+                return ResourceManager.GetString("NotifyErrorImageProcessExiftoolResultNotFound", resourceCulture);
             }
         }
         
