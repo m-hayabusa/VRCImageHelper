@@ -185,6 +185,7 @@ internal class ImageProcess
 
         args.Add($"-:CreateDate={state.CreationDate}{offset}");
         args.Add($"-:DateTimeOriginal={state.CreationDate}{offset}");
+        args.Add($"-xmp-Photoshop:DateCreated={state.CreationDate}{offset}");
 
         if (state.VL2Enabled)
         {
