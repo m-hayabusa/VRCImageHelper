@@ -131,6 +131,14 @@
   <data name="FFMpegDownloadTitle" xml:space="preserve">
     <value>VRC Image Helper / ffmpegをダウンロード</value>
   </data>
+  <data name="NotifyError" xml:space="preserve">
+    <value>エラー: 何らかのエラーが発生しました 
+(この通知をクリックしてログをコピーできます)</value>
+  </data>
+  <data name="NotifyErrorExiftool" xml:space="preserve">
+    <value>エラー: Exiftoolが正しく終了しませんでした
+(この通知をクリックしてログを確認)</value>
+  </data>
   <data name="NotifyErrorFFMpeg" xml:space="preserve">
     <value>エラー: FFMpegが正しく終了しませんでした
 (この通知をクリックしてログを確認)</value>
