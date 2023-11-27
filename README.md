@@ -4,8 +4,15 @@ VRChatのカメラで撮った画像を圧縮して、
 
 * ワールド名
 * インスタンスにいたプレイヤー名
-* VirtualLens2の絞り値
-* VirtualLens2の焦点距離
+* [VirtualLens2](https://logilabo.booth.pm/items/2280136)の
+	* 絞り値
+	* 焦点距離
+* [Integral](https://suzufactory.booth.pm/items/4724145)の
+    * 絞り値
+	* 焦点距離
+    * 露出補正
+    * (多重露光時) 露光時間
+    * レンズのボケの形状
 * (MakerNotesに、Base64でエンコードされたJSONとして) World Name / World ID / Instance Owner / Permission / Playerのリスト
 
 を書き込むツールです。
