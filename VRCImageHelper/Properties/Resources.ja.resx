@@ -141,6 +141,9 @@
   <data name="NotifyErrorImageProcessCantDeleteOriginal" xml:space="preserve">
     <value>エラー: 元ファイルの削除に失敗しました</value>
   </data>
+  <data name="NotifyErrorImageProcessExiftoolResultNotFound" xml:space="preserve">
+    <value>エラー: 処理結果のファイルが存在しませんでした</value>
+  </data>
   <data name="NotifyErrorImageProcessFileExist" xml:space="preserve">
     <value>エラー: 保存先にファイルがすでに存在します</value>
   </data>

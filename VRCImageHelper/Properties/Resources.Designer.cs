@@ -127,6 +127,15 @@ namespace VRCImageHelper.Properties {
         }
         
         /// <summary>
+        ///   Error: Could not find the result file に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NotifyErrorImageProcessExiftoolResultNotFound {
+            get {
+                return ResourceManager.GetString("NotifyErrorImageProcessExiftoolResultNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Error: Destination file has exist に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string NotifyErrorImageProcessFileExist {

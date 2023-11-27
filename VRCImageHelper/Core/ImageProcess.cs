@@ -256,7 +256,18 @@ internal class ImageProcess
 
             if (exifTool.Result)
             {
-                File.Move(path, destPath, ConfigManager.OverwriteDestinationFile);
+                try
+                {
+                    File.Move(path, destPath, ConfigManager.OverwriteDestinationFile);
+                }
+                catch (FileNotFoundException ex)
+                {
+                    UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessExiftoolResultNotFound + ":\n" + ex.Message, false);
+                }
+                catch (IOException ex)
+                {
+                    UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessFileExist + ":\n" + ex.Message, false);
+                }
             }
 
             return exifTool.Result;
