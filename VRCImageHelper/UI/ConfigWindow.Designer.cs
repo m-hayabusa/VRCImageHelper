@@ -254,6 +254,7 @@ partial class ConfigWindow
         // 
         resources.ApplyResources(textBoxEncoderOption, "textBoxEncoderOption");
         textBoxEncoderOption.Name = "textBoxEncoderOption";
+        textBoxEncoderOption.TextChanged += TextBoxEncoderOption_TextChanged;
         // 
         // groupBoxAlphaFileFormat
         // 

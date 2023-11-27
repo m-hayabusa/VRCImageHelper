@@ -18,6 +18,11 @@ public partial class ConfigWindow : Form
 
     private Config _config;
     private string _format = "";
+    private readonly Dictionary<string, string> _selectedEncoder = new() {
+        { "AVIF", "libaom-av1" }, { "WEBP", "libwebp" },
+        { "AVIFAlpha", "libaom-av1" }, { "WEBPAlpha", "libwebp" }
+    };
+    private readonly Dictionary<string, string> _selectedEncoderOption = new();
 
     private void ConfigWindow_Load(object sender, EventArgs e)
     {
@@ -42,6 +47,11 @@ public partial class ConfigWindow : Form
 
         checkBoxDeleteOriginal.CheckState = _config.DeleteOriginalFile ? CheckState.Checked : CheckState.Unchecked;
         checkBoxOverwriteDest.CheckState = _config.OverwriteDestinationFile ? CheckState.Checked : CheckState.Unchecked;
+
+        _selectedEncoder[_config.Format] = _config.Encoder;
+        _selectedEncoder[_config.AlphaFormat + "Alpha"] = _config.AlphaEncoder;
+        _selectedEncoderOption[_config.Format] = _config.EncoderOption;
+        _selectedEncoderOption[_config.Format + "Alpha"] = _config.AlphaEncoderOption;
 
         ComboBoxFileFormat_SelectedIndexChanged(comboBoxFileFormat, EventArgs.Empty);
         ComboBoxFileFormat_SelectedIndexChanged(comboBoxAlphaFileFormat, EventArgs.Empty);
@@ -145,14 +155,14 @@ public partial class ConfigWindow : Form
                 encoderOption.Enabled = true;
                 quality.Enabled = true;
                 encoder.Items.AddRange(FFMpeg.GetSupportedEncoder("av1"));
-                encoder.SelectedItem = "libaom-av1";
+                encoder.SelectedItem = _selectedEncoder["AVIF" + alpha];
                 break;
             case "WEBP":
                 encoder.Enabled = true;
                 encoderOption.Enabled = true;
                 quality.Enabled = true;
                 encoder.Items.AddRange(FFMpeg.GetSupportedEncoder("webp"));
-                encoder.SelectedItem = "libwebp";
+                encoder.SelectedItem = _selectedEncoder["WEBP" + alpha];
                 break;
             case "JPEG":
                 encoder.Enabled = false;
@@ -165,7 +175,16 @@ public partial class ConfigWindow : Form
                 quality.Enabled = false;
                 break;
         }
-        encoderOption.Text = ConfigManager.DefaultEncoderOptions(encoder.Text, alpha != "");
+        encoderOption.Text = GetEncoderOptions(encoder.Text, alpha == "Alpha");
+    }
+
+    private string GetEncoderOptions(string encoder, bool hasAlpha)
+    {
+        var key = encoder + (hasAlpha ? "Alpha" : "");
+        if (_selectedEncoderOption.ContainsKey(key))
+            return _selectedEncoderOption[key];
+        else
+            return ConfigManager.DefaultEncoderOptions(encoder, hasAlpha);
     }
 
     private void ButtonSave_Click(object sender, EventArgs e)
@@ -213,8 +232,21 @@ public partial class ConfigWindow : Form
         var alpha = "";
         if (((Control)sender).Name.Contains("Alpha")) alpha = "Alpha";
         var controls = ((Control)sender).Parent.Parent.Controls;
+        var fileFormat = (ComboBox)controls.Find($"comboBox{alpha}FileFormat", true)[0];
         var encoder = (ComboBox)controls.Find($"comboBox{alpha}Encoder", true)[0];
         var encoderOption = (TextBox)controls.Find($"textBox{alpha}EncoderOption", true)[0];
-        encoderOption.Text = ConfigManager.DefaultEncoderOptions(encoder.Text, alpha != "");
+
+        encoderOption.Text = GetEncoderOptions(encoder.Text, alpha == "Alpha");
+        _selectedEncoder[fileFormat.Text + alpha] = encoder.Text;
+    }
+
+    private void TextBoxEncoderOption_TextChanged(object sender, EventArgs e)
+    {
+        var alpha = "";
+        if (((Control)sender).Name.Contains("Alpha")) alpha = "Alpha";
+        var controls = ((Control)sender).Parent.Parent.Controls;
+        var encoder = (ComboBox)controls.Find($"comboBox{alpha}Encoder", true)[0];
+        var encoderOption = (TextBox)controls.Find($"textBox{alpha}EncoderOption", true)[0];
+        _selectedEncoderOption[encoder.Text + alpha] = encoderOption.Text;
     }
 }
