@@ -57,7 +57,6 @@ internal class FFMpeg
         var extracted = Directory.EnumerateDirectories(dir).First();
         foreach (var item in Directory.EnumerateFileSystemEntries(extracted))
         {
-            Debug.WriteLine(item.ToString());
             if (File.Exists(item))
             {
                 File.Move(item, dir + "\\" + Path.GetFileName(item));
