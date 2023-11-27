@@ -54,6 +54,20 @@ internal class FFMpeg
         var url = "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip";
         var dir = Executables.Download("ffmpeg.exe", url, s_cancellationToken);
 
+        var extracted = Directory.EnumerateDirectories(dir).First();
+        foreach (var item in Directory.EnumerateFileSystemEntries(extracted))
+        {
+            if (File.Exists(item))
+            {
+                File.Move(item, dir + "\\" + Path.GetFileName(item));
+            }
+            else if (Directory.Exists(item))
+            {
+                Directory.Move(item, dir + "\\" + Path.GetFileName(item));
+            }
+        }
+        Directory.Delete(extracted);
+
         var readme = new StreamWriter(File.Create(dir + "\\README.txt"));
         readme.Write($"this files are downloaded from https://github.com/BtbN/FFmpeg-Builds");
         readme.Close();

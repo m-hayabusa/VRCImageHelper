@@ -38,6 +38,9 @@ internal class Executables
         if (File.Exists(destPath + "\\" + fileName))
             return destPath + "\\" + fileName;
 
+        if (File.Exists(destPath + "\\bin\\" + fileName))
+            return destPath + "\\bin\\" + fileName;
+
         return null;
     }
 }
