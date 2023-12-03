@@ -31,6 +31,7 @@ public partial class ConfigWindow : Form
         _format = _config.Format;
 
         numericUpDownQuality.Value = _config.Quality;
+        numericUpDownAlphaQuality.Value = _config.AlphaQuality;
         textBoxDir.Text = _config.DestDir;
 
         comboBoxFileFormat.SelectedItem = _config.Format;
