@@ -47,6 +47,7 @@ public partial class ConfigWindow : Form
 
         checkBoxDeleteOriginal.CheckState = _config.DeleteOriginalFile ? CheckState.Checked : CheckState.Unchecked;
         checkBoxOverwriteDest.CheckState = _config.OverwriteDestinationFile ? CheckState.Checked : CheckState.Unchecked;
+        numericUpDownParallel.Value = _config.ParallelCompressionProcesses;
 
         _selectedEncoder[_config.Format] = _config.Encoder;
         _selectedEncoder[_config.AlphaFormat + "Alpha"] = _config.AlphaEncoder;
@@ -202,6 +203,7 @@ public partial class ConfigWindow : Form
         if (alphaEncoder is not null) _config.AlphaEncoder = alphaEncoder;
 
         _config.Quality = Convert.ToInt32(numericUpDownQuality.Value);
+        _config.ParallelCompressionProcesses = Convert.ToInt32(numericUpDownParallel.Value);
         _config.EncoderOption = textBoxEncoderOption.Text;
         _config.FilePattern = textBoxFilePattern.Text;
         _config.AlphaQuality = Convert.ToInt32(numericUpDownAlphaQuality.Value);

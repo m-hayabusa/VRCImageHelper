@@ -12,6 +12,16 @@ using VRCImageHelper.Tools;
 internal class ImageProcess
 {
     public static CancellationToken s_cancellationToken;
+    public static SemaphoreSlimWrapper? s_compressSemaphore;
+
+    static ImageProcess()
+    {
+        if (ConfigManager.ParallelCompressionProcesses > 0)
+        {
+            s_compressSemaphore = new SemaphoreSlimWrapper(ConfigManager.ParallelCompressionProcesses, ConfigManager.ParallelCompressionProcesses);
+        }
+    }
+
     public static void Process(string sourcePath, State state)
     {
         if (!new FileInfo(sourcePath).Exists) return;
@@ -73,19 +83,21 @@ internal class ImageProcess
             UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessFileExist, false);
             return;
         }
-
-        var tmpPath = Compress(sourcePath, hasAlpha);
-        if (new FileInfo(tmpPath).Exists)
+        using (s_compressSemaphore?.Wait())
         {
-            if (WriteMetadata(tmpPath, destPath, state) == true && ConfigManager.DeleteOriginalFile)
+            var tmpPath = Compress(sourcePath, hasAlpha);
+            if (new FileInfo(tmpPath).Exists)
             {
-                try
+                if (WriteMetadata(tmpPath, destPath, state) == true && ConfigManager.DeleteOriginalFile)
                 {
-                    File.Delete(sourcePath);
-                }
-                catch (IOException ex)
-                {
-                    UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessCantDeleteOriginal + ":\n" + ex.Message, false);
+                    try
+                    {
+                        File.Delete(sourcePath);
+                    }
+                    catch (IOException ex)
+                    {
+                        UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessCantDeleteOriginal + ":\n" + ex.Message, false);
+                    }
                 }
             }
         }

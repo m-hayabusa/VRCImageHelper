@@ -69,6 +69,8 @@ partial class ConfigWindow
         textBoxAlphaEncoderOption = new TextBox();
         mainTableLayoutPanel = new TableLayoutPanel();
         buttonQualityTest = new Button();
+        labelParallel = new Label();
+        numericUpDownParallel = new NumericUpDown();
         bottomPanel.SuspendLayout();
         groupBoxSaveDir.SuspendLayout();
         panelOptions.SuspendLayout();
@@ -82,6 +84,7 @@ partial class ConfigWindow
         panelAlphaFormat.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)numericUpDownAlphaQuality).BeginInit();
         mainTableLayoutPanel.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)numericUpDownParallel).BeginInit();
         SuspendLayout();
         // 
         // buttonSave
@@ -117,6 +120,8 @@ partial class ConfigWindow
         // 
         resources.ApplyResources(panelOptions, "panelOptions");
         panelOptions.BackColor = SystemColors.Control;
+        panelOptions.Controls.Add(numericUpDownParallel);
+        panelOptions.Controls.Add(labelParallel);
         panelOptions.Controls.Add(checkBoxOverwriteDest);
         panelOptions.Controls.Add(checkBoxDeleteOriginal);
         panelOptions.Controls.Add(labelOptions);
@@ -359,6 +364,16 @@ partial class ConfigWindow
         buttonQualityTest.Name = "buttonQualityTest";
         buttonQualityTest.UseVisualStyleBackColor = true;
         // 
+        // labelParallel
+        // 
+        resources.ApplyResources(labelParallel, "labelParallel");
+        labelParallel.Name = "labelParallel";
+        // 
+        // numericUpDownParallel
+        // 
+        resources.ApplyResources(numericUpDownParallel, "numericUpDownParallel");
+        numericUpDownParallel.Name = "numericUpDownParallel";
+        // 
         // ConfigWindow
         // 
         AcceptButton = buttonSave;
@@ -393,6 +408,7 @@ partial class ConfigWindow
         ((System.ComponentModel.ISupportInitialize)numericUpDownAlphaQuality).EndInit();
         mainTableLayoutPanel.ResumeLayout(false);
         mainTableLayoutPanel.PerformLayout();
+        ((System.ComponentModel.ISupportInitialize)numericUpDownParallel).EndInit();
         ResumeLayout(false);
     }
 
@@ -438,4 +454,6 @@ partial class ConfigWindow
     private Label labelOptions;
     private CheckBox checkBoxOverwriteDest;
     private CheckBox checkBoxDeleteOriginal;
+    private NumericUpDown numericUpDownParallel;
+    private Label labelParallel;
 }
