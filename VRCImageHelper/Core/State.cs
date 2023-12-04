@@ -51,4 +51,3 @@ internal class State
     [JsonPropertyName("roominfo")]
     public RoomInfo RoomInfo { get; set; }
 }
-
