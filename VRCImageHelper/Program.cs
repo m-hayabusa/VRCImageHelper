@@ -5,6 +5,8 @@ using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using VRCImageHelper.Core;
+using VRCImageHelper.Core.StateChecker;
+using VRCImageHelper.Utils;
 
 internal static class Program
 {
@@ -23,30 +25,8 @@ internal static class Program
             if (args.Contains("--setup"))
             {
                 new UI.ConfigWindow().ShowDialog();
-
-                var vrcExifWriterPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Programs\\VRChat-Exif-Writer";
-                if (Directory.Exists(vrcExifWriterPath) && MessageBox.Show(Properties.Resources.SetupRemoveVEWMessage, Properties.Resources.SetupRemoveVEWTitle, MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    Process.Start("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", $"-ExecutionPolicy Bypass -Command \"{vrcExifWriterPath}\\utils\\stop.ps1\"").WaitForExit();
-                    var unregist = new ProcessStartInfo("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe") { Verb = "runAs", UseShellExecute = true, Arguments = $"-Command \"Unregister-ScheduledTask -Confirm:$false -TaskName:VRChat-Exif-Writer\"" };
-                    Process.Start(unregist);
-                    try
-                    {
-                        Directory.Delete(vrcExifWriterPath + "\\.git", true);
-                        Directory.Delete(vrcExifWriterPath, true);
-                        Directory.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Microsoft\\Windows\\Start Menu\\Programs\\VRChat-Exif-Writer", true);
-                    }
-                    catch (Exception)
-                    {
-                        var key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce", true);
-                        key ??= Registry.CurrentUser.CreateSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce", true);
-                        key.SetValue("Uninstall VRChat-Exif-Writer", "C:\\Windows\\System32\\cmd.exe /c rmdir /q /s \"%AppData%\\Microsoft\\Windows\\Start Menu\\Programs\\VRChat-Exif-Writer\" \"%LocalAppData%\\Programs\\VRChat-Exif-Writer\"");
-                        key.Dispose();
-                        MessageBox.Show(Properties.Resources.SetupRemoveVEWRestartRequired);
-                        return;
-                    }
-                }
-
+                if (VRCExifWriter.Remove())
+                    return;
                 Process.Start(Application.ExecutablePath);
                 return;
             }
@@ -85,6 +65,8 @@ internal static class Program
         Application.Run();
     }
 
+    private static bool s_scanAll;
+    public static CancellationTokenSource? CancelToken { get; private set; }
     private static UI.ToolbarIcon? s_toolbarIcon;
     public static void Exit()
     {
@@ -113,8 +95,7 @@ internal static class Program
         UI.SendNotify.Cleanup();
         AutoStart.Register(false);
     }
-    private static bool s_scanAll;
-    public static CancellationTokenSource? CancelToken { get; private set; }
+
     private static void Background()
     {
         if (CancelToken is null)
@@ -129,25 +110,27 @@ internal static class Program
         if (s_toolbarIcon is not null)
             logReader.ScanAllProgress += s_toolbarIcon.Scanning;
 
-        logReader.NewLine += StateChecker.Taken;
-        logReader.NewLine += StateChecker.WorldId;
-        logReader.NewLine += StateChecker.JoinRoom;
-        logReader.NewLine += StateChecker.PlayerJoin;
-        logReader.NewLine += StateChecker.PlayerLeft;
-        logReader.NewLine += StateChecker.Quit;
+        logReader.NewLine += ImageProcess.Taken;
 
-        oscServer.Received += StateChecker.VL2Enable;
-        oscServer.Received += StateChecker.VL2Zoom;
-        oscServer.Received += StateChecker.VL2Aperture;
-        oscServer.Received += StateChecker.ChangeAvater;
+        logReader.NewLine += VRChat.WorldId;
+        logReader.NewLine += VRChat.JoinRoom;
+        logReader.NewLine += VRChat.PlayerJoin;
+        logReader.NewLine += VRChat.PlayerLeft;
+        logReader.NewLine += VRChat.Quit;
 
-        oscServer.Received += StateChecker.IntegralEnable;
-        oscServer.Received += StateChecker.IntegralMode;
-        oscServer.Received += StateChecker.IntegralZoom;
-        oscServer.Received += StateChecker.IntegralAperture;
-        oscServer.Received += StateChecker.IntegralShutterSpeed;
-        oscServer.Received += StateChecker.IntegralExposure;
-        oscServer.Received += StateChecker.IntegralBokehShape;
+        oscServer.Received += VRChat.ChangeAvater;
+
+        oscServer.Received += VirtualLens2.Enable;
+        oscServer.Received += VirtualLens2.Zoom;
+        oscServer.Received += VirtualLens2.Aperture;
+
+        oscServer.Received += Integral.Enable;
+        oscServer.Received += Integral.Mode;
+        oscServer.Received += Integral.Zoom;
+        oscServer.Received += Integral.Aperture;
+        oscServer.Received += Integral.ShutterSpeed;
+        oscServer.Received += Integral.Exposure;
+        oscServer.Received += Integral.BokehShape;
 
         logReader.Enable(ConfigManager.ScanAll || s_scanAll);
         oscServer.Enable();
