@@ -103,10 +103,14 @@ internal class ConfigManager
         return encoder switch
         {
             "" => "",
-            "libaom-av1" => "-r 1 -still-picture 1 -thread 1" + (hasAlphaChannel ? "-filter:v:1 alphaextract -map 0 -map 0" : ""),
-            "av1_qsv" => "-r 1 -preset veryslow -thread 1",
-            "libwebp" => "-preset picture -thread 1",
-            _ => "-r 1 -thread 1",
+            "libaom-av1" => "-threads 1 -cpu-used 8 -still-picture 1 " + (hasAlphaChannel ? "-filter:v:1 alphaextract -map 0 -map 0" : ""),
+            "libsvtav1" => "-threads 1 -preset 10",
+            "librav1e" => "-threads 1 -speed 10",
+            "av1_qsv" => "-preset veryslow",
+            "av1_nvenc" => "-preset p7",
+            "av1_amf" => "-quality high_quality",
+            "libwebp" => "-threads 1 -preset picture",
+            _ => "-threads 1",
         };
     }
 }
