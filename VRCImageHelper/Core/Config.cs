@@ -24,6 +24,7 @@ internal class ConfigManager
     public static string AlphaEncoder { get { return s_config.AlphaEncoder; } }
     public static string AlphaEncoderOption { get { return s_config.AlphaEncoderOption; } }
     public static int AlphaQuality { get { return s_config.AlphaQuality; } }
+    public static int ParallelCompressionProcesses { get { return s_config.ParallelCompressionProcesses; } }
 
     internal static class VirtualLens2
     {
@@ -110,10 +111,10 @@ internal class ConfigManager
         return encoder switch
         {
             "" => "",
-            "libaom-av1" => "-r 1 -still-picture 1" + (hasAlphaChannel ? "-filter:v:1 alphaextract -map 0 -map 0" : ""),
-            "av1_qsv" => "-r 1 -preset veryslow",
-            "libwebp" => "-preset picture",
-            _ => "-r 1",
+            "libaom-av1" => "-r 1 -still-picture 1 -thread 1" + (hasAlphaChannel ? "-filter:v:1 alphaextract -map 0 -map 0" : ""),
+            "av1_qsv" => "-r 1 -preset veryslow -thread 1",
+            "libwebp" => "-preset picture -thread 1",
+            _ => "-r 1 -thread 1",
         };
     }
 }
@@ -141,6 +142,7 @@ internal class Config
     public string AlphaEncoder { get; set; } = "";
     public string AlphaEncoderOption { get; set; } = "";
     public int AlphaQuality { get; set; } = 20;
+    public int ParallelCompressionProcesses { get;set; } = 1;
     public VirtualLens2Config VirtualLens2 { get; set; } = new();
     internal class VirtualLens2Config
     {

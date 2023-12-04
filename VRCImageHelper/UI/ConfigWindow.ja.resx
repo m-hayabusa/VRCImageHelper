@@ -143,7 +143,7 @@
     <value>オプション</value>
   </data>
   <data name="panelOptions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>471, 30</value>
+    <value>590, 30</value>
   </data>
   <data name="labelSaveDir.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 15</value>
@@ -255,6 +255,35 @@
   </data>
   <data name="buttonQualityTest.Text" xml:space="preserve">
     <value>テスト</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="labelParallel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelParallel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>474, 7</value>
+  </data>
+  <data name="labelParallel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 15</value>
+  </data>
+  <data name="labelParallel.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="labelParallel.Text" xml:space="preserve">
+    <value>同時変換数</value>
+  </data>
+  <data name="numericUpDownParallel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>547, 3</value>
+  </data>
+  <data name="numericUpDownParallel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 23</value>
+  </data>
+  <data name="numericUpDownParallel.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="numericUpDownParallel.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>VRC Image Helper / 設定</value>

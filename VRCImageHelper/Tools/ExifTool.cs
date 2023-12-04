@@ -1,5 +1,6 @@
 ﻿namespace VRCImageHelper.Tools;
 
+using Microsoft.Toolkit.Uwp.Notifications;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -54,8 +55,12 @@ internal class ExifTool
         {
             process = Process.Start(exifTool);
         }
-        catch
+        catch (Exception ex)
         {
+            UI.SendNotify.Send(Properties.Resources.NotifyError + ":\n" + ex.Message, false, (e) =>
+            {
+                MessageBox.Show(ToastArguments.Parse(e.Argument).Get("Message"));
+            }, new Dictionary<string, string> { { "Message", ex.Message } });
             return false;
         }
 
@@ -72,6 +77,14 @@ internal class ExifTool
             File.Delete(argsFilePath);
             return true;
         }
-        return false;
+        else
+        {
+            var log = process.StandardOutput.ReadToEnd();
+            UI.SendNotify.Send(Properties.Resources.NotifyErrorExiftool + ":\n", false, (e) =>
+            {
+                MessageBox.Show(ToastArguments.Parse(e.Argument).Get("Message"));
+            }, new Dictionary<string, string> { { "Message", log } });
+            return false;
+        }
     }
 }

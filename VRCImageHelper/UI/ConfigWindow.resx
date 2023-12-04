@@ -1345,6 +1345,42 @@
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>ConfigWindow</value>
   </data>
+  <data name="&gt;&gt;labelParallel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="numericUpDownParallel.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;numericUpDownParallel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;labelParallel.Name" xml:space="preserve">
+    <value>labelParallel</value>
+  </data>
+  <data name="&gt;&gt;numericUpDownParallel.Name" xml:space="preserve">
+    <value>numericUpDownParallel</value>
+  </data>
+  <data name="&gt;&gt;labelParallel.Parent" xml:space="preserve">
+    <value>panelOptions</value>
+  </data>
+  <data name="numericUpDownParallel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>547, 3</value>
+  </data>
+  <data name="&gt;&gt;numericUpDownParallel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelParallel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="labelParallel.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="labelParallel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>474, 7</value>
+  </data>
+  <data name="&gt;&gt;numericUpDownParallel.Parent" xml:space="preserve">
+    <value>panelOptions</value>
+  </data>
   <metadata name="$this.Language" type="System.Globalization.CultureInfo, System.Private.CoreLib, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
     <value>ja</value>
   </metadata>

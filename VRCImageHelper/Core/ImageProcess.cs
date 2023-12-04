@@ -27,6 +27,16 @@ internal class ImageProcess
     }
 
     public static CancellationToken s_cancellationToken;
+    public static SemaphoreSlimWrapper? s_compressSemaphore;
+
+    static ImageProcess()
+    {
+        if (ConfigManager.ParallelCompressionProcesses > 0)
+        {
+            s_compressSemaphore = new SemaphoreSlimWrapper(ConfigManager.ParallelCompressionProcesses, ConfigManager.ParallelCompressionProcesses);
+        }
+    }
+
     public static void Process(string sourcePath, State state)
     {
         if (!new FileInfo(sourcePath).Exists) return;
@@ -88,19 +98,21 @@ internal class ImageProcess
             UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessFileExist, false);
             return;
         }
-
-        var tmpPath = Compress(sourcePath, hasAlpha);
-        if (new FileInfo(tmpPath).Exists)
+        using (s_compressSemaphore?.Wait())
         {
-            if (WriteMetadata(tmpPath, destPath, state) && ConfigManager.DeleteOriginalFile)
+            var tmpPath = Compress(sourcePath, hasAlpha);
+            if (new FileInfo(tmpPath).Exists)
             {
-                try
+                if (WriteMetadata(tmpPath, destPath, state) == true && ConfigManager.DeleteOriginalFile)
                 {
-                    File.Delete(sourcePath);
-                }
-                catch (IOException ex)
-                {
-                    UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessCantDeleteOriginal + ":\n" + ex.Message, false);
+                    try
+                    {
+                        File.Delete(sourcePath);
+                    }
+                    catch (IOException ex)
+                    {
+                        UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessCantDeleteOriginal + ":\n" + ex.Message, false);
+                    }
                 }
             }
         }
@@ -170,7 +182,7 @@ internal class ImageProcess
     /// <param name="path"></param>
     /// <param name="destPath"></param>
     /// <param name="state"></param>
-    /// <returns>ExiftoolÇÃExit CodeÇ™0Ç»ÇÁTrue ÇªÇÍà»äOÇ»ÇÁFalse</returns>
+    /// <returns>Exiftool„ÅÆExit Code„Åå0„Å™„ÇâTrue „Åù„Çå‰ª•Â§ñ„Å™„ÇâFalse</returns>
     private static bool WriteMetadata(string path, string destPath, State state)
     {
         var desc = $"Taken at {state.RoomInfo.World_name}, with {string.Join(",", state.Players)}.";
@@ -225,7 +237,18 @@ internal class ImageProcess
 
             if (exifTool.Result)
             {
-                File.Move(path, destPath, ConfigManager.OverwriteDestinationFile);
+                try
+                {
+                    File.Move(path, destPath, ConfigManager.OverwriteDestinationFile);
+                }
+                catch (FileNotFoundException ex)
+                {
+                    UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessExiftoolResultNotFound + ":\n" + ex.Message, false);
+                }
+                catch (IOException ex)
+                {
+                    UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessFileExist + ":\n" + ex.Message, false);
+                }
             }
 
             return exifTool.Result;
