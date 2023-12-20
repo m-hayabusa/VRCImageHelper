@@ -1,9 +1,6 @@
 ﻿namespace VRCImageHelper.Core;
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 internal sealed class SemaphoreSlimWrapper
 {
@@ -34,5 +31,4 @@ internal sealed class SemaphoreSlimWrapper
             _semaphoreWrapper._semaphore.Release();
         }
     }
-
 }

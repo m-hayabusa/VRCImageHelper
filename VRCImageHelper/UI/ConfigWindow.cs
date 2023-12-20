@@ -1,5 +1,6 @@
 ﻿namespace VRCImageHelper.UI;
 
+using System.Windows.Forms;
 using VRCImageHelper.Core;
 using VRCImageHelper.Properties;
 using VRCImageHelper.Tools;
@@ -23,6 +24,24 @@ public partial class ConfigWindow : Form
         { "AVIFAlpha", "libaom-av1" }, { "WEBPAlpha", "libwebp" }
     };
     private readonly Dictionary<string, string> _selectedEncoderOption = new();
+
+    private string GetEncoderOptions(string encoder, bool hasAlpha)
+    {
+        var key = encoder + (hasAlpha ? "Alpha" : "");
+        if (_selectedEncoderOption.ContainsKey(key))
+            return _selectedEncoderOption[key];
+        else
+            return ConfigManager.DefaultEncoderOptions(encoder, hasAlpha);
+    }
+
+    private static type GetControl<type>(Control sender, string name)
+    where type : Control
+    {
+        var root = sender.Parent.Parent.Controls;
+        var typename = typeof(type).Name;
+        typename = char.ToLower(typename[0]) + typename[1..];
+        return (type)root.Find($"{typename}{name}", true)[0];
+    }
 
     private void ConfigWindow_Load(object sender, EventArgs e)
     {
@@ -77,15 +96,15 @@ public partial class ConfigWindow : Form
         }
     }
 
-
     private void ButtonResetFilePattern_Click(object sender, EventArgs e)
     {
-        var alpha = false;
-        if (((Control)sender).Name.Contains("Alpha")) alpha = true;
+        var control = (Control)sender;
 
-        var controls = ((Control)sender).Parent.Parent.Controls;
-        var textBox = (TextBox)controls.Find("textBoxFilePattern", true)[0];
-        var comboBox = (ComboBox)controls.Find("fileFormat", true)[0];
+        var alpha = false;
+        if ((control).Name.Contains("Alpha")) alpha = true;
+
+        var textBox = GetControl<TextBox>(control, "FilePattern");
+        var comboBox = GetControl<ComboBox>(control, "FileFormat");
 
         if (textBox is not null && comboBox is not null)
         {
@@ -97,17 +116,19 @@ public partial class ConfigWindow : Form
             }
         }
     }
+
     public delegate void FFMpegDownloadEnd();
     private void ComboBoxFileFormat_SelectedIndexChanged(object sender, EventArgs e)
     {
+        var control = (Control)sender;
         var alpha = "";
-        if (((Control)sender).Name.Contains("Alpha")) alpha = "Alpha";
-        var controls = ((Control)sender).Parent.Parent.Controls;
-        var textBox = (TextBox)controls.Find($"textBox{alpha}FilePattern", true)[0];
-        var fileFormat = (ComboBox)controls.Find($"comboBox{alpha}FileFormat", true)[0];
-        var encoder = (ComboBox)controls.Find($"comboBox{alpha}Encoder", true)[0];
-        var encoderOption = (TextBox)controls.Find($"textBox{alpha}EncoderOption", true)[0];
-        var quality = (NumericUpDown)controls.Find($"numericUpDown{alpha}Quality", true)[0];
+        if (control.Name.Contains("Alpha")) alpha = "Alpha";
+
+        var textBox = GetControl<TextBox>(control, $"{alpha}FilePattern");
+        var fileFormat = GetControl<ComboBox>(control, $"{alpha}FileFormat");
+        var encoder = GetControl<ComboBox>(control, $"{alpha}Encoder");
+        var encoderOption = GetControl<TextBox>(control, $"{alpha}EncoderOption");
+        var quality = GetControl<NumericUpDown>(control, $"{alpha}Quality");
 
         var format = fileFormat.SelectedItem.ToString();
 
@@ -180,13 +201,32 @@ public partial class ConfigWindow : Form
         encoderOption.Text = GetEncoderOptions(encoder.Text, alpha == "Alpha");
     }
 
-    private string GetEncoderOptions(string encoder, bool hasAlpha)
+    private void ComboBoxEncoder_SelectedIndexChanged(object sender, EventArgs e)
     {
-        var key = encoder + (hasAlpha ? "Alpha" : "");
-        if (_selectedEncoderOption.ContainsKey(key))
-            return _selectedEncoderOption[key];
-        else
-            return ConfigManager.DefaultEncoderOptions(encoder, hasAlpha);
+        var control = (Control)sender;
+
+        var alpha = "";
+        if (control.Name.Contains("Alpha")) alpha = "Alpha";
+
+        var fileFormat = GetControl<ComboBox>(control, $"{alpha}FileFormat");
+        var encoder = GetControl<ComboBox>(control, $"{alpha}Encoder");
+        var encoderOption = GetControl<TextBox>(control, $"{alpha}EncoderOption");
+
+        encoderOption.Text = GetEncoderOptions(encoder.Text, alpha == "Alpha");
+        _selectedEncoder[fileFormat.Text + alpha] = encoder.Text;
+    }
+
+    private void TextBoxEncoderOption_TextChanged(object sender, EventArgs e)
+    {
+        var control = (Control)sender;
+
+        var alpha = "";
+        if (control.Name.Contains("Alpha")) alpha = "Alpha";
+
+        var encoder = GetControl<ComboBox>(control, $"{alpha}Encoder");
+        var encoderOption = GetControl<TextBox>(control, $"{alpha}EncoderOption");
+
+        _selectedEncoderOption[encoder.Text + alpha] = encoderOption.Text;
     }
 
     private void ButtonSave_Click(object sender, EventArgs e)
@@ -228,28 +268,5 @@ public partial class ConfigWindow : Form
     private void ButtonCancel_Click(object sender, EventArgs e)
     {
         Dispose();
-    }
-
-    private void ComboBoxEncoder_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        var alpha = "";
-        if (((Control)sender).Name.Contains("Alpha")) alpha = "Alpha";
-        var controls = ((Control)sender).Parent.Parent.Controls;
-        var fileFormat = (ComboBox)controls.Find($"comboBox{alpha}FileFormat", true)[0];
-        var encoder = (ComboBox)controls.Find($"comboBox{alpha}Encoder", true)[0];
-        var encoderOption = (TextBox)controls.Find($"textBox{alpha}EncoderOption", true)[0];
-
-        encoderOption.Text = GetEncoderOptions(encoder.Text, alpha == "Alpha");
-        _selectedEncoder[fileFormat.Text + alpha] = encoder.Text;
-    }
-
-    private void TextBoxEncoderOption_TextChanged(object sender, EventArgs e)
-    {
-        var alpha = "";
-        if (((Control)sender).Name.Contains("Alpha")) alpha = "Alpha";
-        var controls = ((Control)sender).Parent.Parent.Controls;
-        var encoder = (ComboBox)controls.Find($"comboBox{alpha}Encoder", true)[0];
-        var encoderOption = (TextBox)controls.Find($"textBox{alpha}EncoderOption", true)[0];
-        _selectedEncoderOption[encoder.Text + alpha] = encoderOption.Text;
     }
 }

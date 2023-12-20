@@ -1,4 +1,5 @@
 ﻿namespace VRCImageHelper.Tools;
+
 using Microsoft.Toolkit.Uwp.Notifications;
 using System.Collections.Generic;
 using System.Diagnostics;

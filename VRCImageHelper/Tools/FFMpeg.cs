@@ -182,4 +182,3 @@ internal class FFMpeg
         return true;
     }
 }
-

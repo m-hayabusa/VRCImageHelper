@@ -1,7 +1,6 @@
 namespace VRCImageHelper.Core;
 
 using System;
-using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.Text.Encodings.Web;
@@ -11,6 +10,22 @@ using VRCImageHelper.Tools;
 
 internal class ImageProcess
 {
+    public static void Taken(object sender, NewLineEventArgs e)
+    {
+        var match = Regex.Match(e.Line, "([0-9\\.\\: ]*) Log        -  \\[VRC Camera\\] Took screenshot to\\: (.*)");
+        if (match.Success)
+        {
+            var state = State.Current.Clone();
+
+            var creationDate = match.Groups[1].ToString().Replace('.', ':');
+            state.CreationDate = creationDate;
+
+            var path = match.Groups[2].ToString();
+
+            new Task(() => Process(path, state)).Start();
+        }
+    }
+
     public static CancellationToken s_cancellationToken;
     public static SemaphoreSlimWrapper? s_compressSemaphore;
 
@@ -161,6 +176,13 @@ internal class ImageProcess
         FFMpeg.Encode(src, dest, "webp", encoder, quality, option).Wait();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="destPath"></param>
+    /// <param name="state"></param>
+    /// <returns>Exiftool„ÅÆExit Code„Åå0„Å™„ÇâTrue „Åù„Çå‰ª•Â§ñ„Å™„ÇâFalse</returns>
     private static bool WriteMetadata(string path, string destPath, State state)
     {
         var desc = $"Taken at {state.RoomInfo.World_name}, with {string.Join(",", state.Players)}.";
@@ -199,63 +221,10 @@ internal class ImageProcess
         args.Add($"-:DateTimeOriginal={state.CreationDate}{offset}");
         args.Add($"-xmp-Photoshop:DateCreated={state.CreationDate}{offset}");
 
-        if (state.VL2Enabled)
-        {
-            args.Add("-:Make=logilabo");
-            args.Add("-:Model=VirtualLens2");
-            args.Add($"-:FocalLength={state.VirtualLens2.FocalLength}");
-            if (!float.IsInfinity(state.VirtualLens2.ApertureValue))
-                args.Add($"-:FNumber={state.VirtualLens2.ApertureValue}");
-        }
-        else if (state.IntegralEnabled)
-        {
-            args.Add("-:Make=suzufactory");
-            args.Add("-:Model=Integral");
-            if (state.IntegralExposureParams.Count > 0)
-            {
-                var lastItem = state.IntegralExposureParams.Last();
-                args.Add("-:LensMake=suzufactory");
-                args.Add("-:LensManufacturer=suzufactory");
-                args.Add($"-:LensModel={lastItem.LensModel}");
-                args.Add($"-:XMP-microsoft:LensModel={lastItem.LensModel}");
-                args.Add($"-:FocalLength={lastItem.FocalLength}");
-                if (lastItem.ApertureValue != 0)
-                    args.Add($"-:FNumber={lastItem.ApertureValue}");
-                var exposureTimes = state.IntegralExposureParams.Select((param) => param.ExposureTime);
-                var exposureTime = exposureTimes.Sum();
-                args.Add($"-:ExposureTime={exposureTime}");
-                if (!float.IsInfinity(lastItem.ExposureBias))
-                    args.Add($"-:ExposureCompensation={lastItem.ExposureBias}");
+        args.AddRange(StateChecker.VirtualLens2.Publish(state.VirtualLens2));
+        args.AddRange(StateChecker.Integral.Publish(state.Integral));
 
-                // ëΩèdòIåıÇÃèÓïÒÇãLò^
-                var exposureCount = state.IntegralExposureParams.Count;
-                if (exposureCount == 1)
-                {
-                    args.Add("-:CompositeImage=1");
-                }
-                else
-                {
-                    args.Add("-:CompositeImage=3");
-                    args.Add($"-:CompositeImageCount=\"{exposureCount} {exposureCount}\"");
-                    var minimumExposureTime = exposureTimes.Min();
-                    var maximumExposureTime = exposureTimes.Max();
-                    var list = new List<float>() {
-                        exposureTime,
-                        exposureTime,
-                        exposureTime,
-                        maximumExposureTime,
-                        maximumExposureTime,
-                        minimumExposureTime,
-                        minimumExposureTime,
-                        exposureCount,
-                        exposureCount,
-                    };
-                    args.Add($"-:CompositeImageExposureTimes=\"{string.Join(" ", list.Concat(exposureTimes))}\"");
-
-                }
-            }
-        }
-        else
+        if (!(state.VirtualLens2.Enabled || state.Integral.Enabled))
         {
             args.Add("-:Make=VRChat");
             args.Add("-:Model=VRChat Camera");

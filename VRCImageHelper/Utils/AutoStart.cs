@@ -1,4 +1,4 @@
-﻿namespace VRCImageHelper.Core;
+﻿namespace VRCImageHelper.Utils;
 
 using Microsoft.Win32;
 

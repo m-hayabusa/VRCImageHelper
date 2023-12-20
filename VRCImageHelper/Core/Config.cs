@@ -49,6 +49,10 @@ internal class ConfigManager
         public static string[] BokehShapeNames { get { return s_config.Integral.BokehShapeNames; } }
     }
 
+    /// <summary>
+    /// 取得できるConfigを更新し、JSONに保存する
+    /// </summary>
+    /// <param name="config"></param>
     public static void Save(Config config)
     {
         var path = $"{Path.GetDirectoryName(Application.ExecutablePath)}\\config.json";
@@ -72,6 +76,10 @@ internal class ConfigManager
         s_config = config;
     }
 
+    /// <summary>
+    /// ConfigをJSONから読み出す
+    /// </summary>
+    /// <param name="config"></param>
     public static Config Load()
     {
         var path = $"{Path.GetDirectoryName(Application.ExecutablePath)}\\config.json";
