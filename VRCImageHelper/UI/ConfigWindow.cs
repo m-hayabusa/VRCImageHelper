@@ -18,7 +18,7 @@ public partial class ConfigWindow : Form
     }
 
     private Config _config;
-    private string _format = "";
+    private readonly Dictionary<string, string> _format = new();
     private readonly Dictionary<string, string> _selectedEncoder = new() {
         { "AVIF", "libaom-av1" }, { "WEBP", "libwebp" },
         { "AVIFAlpha", "libaom-av1" }, { "WEBPAlpha", "libwebp" }
@@ -47,7 +47,8 @@ public partial class ConfigWindow : Form
     {
         _config = ConfigManager.GetConfig();
 
-        _format = _config.Format;
+        _format.Add("", _config.Format);
+        _format.Add("Alpha", _config.AlphaFormat);
 
         numericUpDownQuality.Value = _config.Quality;
         numericUpDownAlphaQuality.Value = _config.AlphaQuality;
@@ -132,10 +133,10 @@ public partial class ConfigWindow : Form
 
         var format = fileFormat.SelectedItem.ToString();
 
-        if (format is not null && format != _format)
+        if (format is not null && format != _format[alpha])
         {
             textBox.Text = Path.ChangeExtension(textBoxFilePattern.Text, format.ToLower());
-            _format = format;
+            _format[alpha] = format;
         }
 
         if ((format == "AVIF" && FFMpeg.GetSupportedEncoder("av1").Length == 0)
