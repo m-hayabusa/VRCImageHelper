@@ -20,7 +20,7 @@ internal static class VRChat
 
     public static void JoinRoom(object sender, NewLineEventArgs e)
     {
-        var match = Regex.Match(e.Line, "Joining or Creating Room: (.*)");
+        var match = Regex.Match(e.Line, "\\[Behaviour\\] Joining or Creating Room: (.*)");
         if (match.Success)
         {
             Debug.WriteLine($"Joining {match.Groups[1]}");
@@ -30,7 +30,7 @@ internal static class VRChat
 
     public static void PlayerJoin(object sender, NewLineEventArgs e)
     {
-        var match = Regex.Match(e.Line, "OnPlayerJoined (.*)");
+        var match = Regex.Match(e.Line, "\\[Behaviour\\] OnPlayerJoined (.*)");
         if (match.Success)
         {
             Debug.WriteLine($"Join {match.Groups[1]}");
@@ -40,7 +40,7 @@ internal static class VRChat
 
     public static void PlayerLeft(object sender, NewLineEventArgs e)
     {
-        var match = Regex.Match(e.Line, "OnPlayerLeft (.*)");
+        var match = Regex.Match(e.Line, "\\[Behaviour\\] OnPlayerLeft (.*)");
         if (match.Success)
         {
             Debug.WriteLine($"Left {match.Groups[1]}");
