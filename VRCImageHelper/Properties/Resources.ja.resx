@@ -155,6 +155,10 @@
   <data name="NotifyErrorImageProcessFileExist" xml:space="preserve">
     <value>エラー: 保存先にファイルがすでに存在します</value>
   </data>
+  <data name="NotifyErrorLogFileNotBeWritten" xml:space="preserve">
+    <value>エラー: VRChatのログファイルに10秒間何も書き込まれませんでした。VRChatのログ出力がオフになっていませんか？
+VRChat内QuickMenu最下部 Debug セクションの Logging を有効にしないと、このプログラムは正しく動作しません。</value>
+  </data>
   <data name="ScanAllRestartMessage" xml:space="preserve">
     <value>過去のVRChatのログについて、さかのぼって処理を実行しますか？
 処理が終わるまではOSCメッセージが無視されます。</value>

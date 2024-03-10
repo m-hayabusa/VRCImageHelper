@@ -165,6 +165,15 @@ namespace VRCImageHelper.Properties {
         }
         
         /// <summary>
+        ///   NotifyErrorLogFileNotBeWritten に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NotifyErrorLogFileNotBeWritten {
+            get {
+                return ResourceManager.GetString("NotifyErrorLogFileNotBeWritten", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Do you want to retroactively perform processing on past VRChat logs?
         ///OSC messages will discard until complete that. に類似しているローカライズされた文字列を検索します。
         /// </summary>

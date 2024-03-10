@@ -155,6 +155,9 @@ Do you want to download it?</value>
   <data name="NotifyErrorImageProcessFileExist" xml:space="preserve">
     <value>Error: Destination file has exist</value>
   </data>
+  <data name="NotifyErrorLogFileNotBeWritten" xml:space="preserve">
+    <value>NotifyErrorLogFileNotBeWritten</value>
+  </data>
   <data name="ScanAllRestartMessage" xml:space="preserve">
     <value>Do you want to retroactively perform processing on past VRChat logs?
 OSC messages will discard until complete that.</value>
