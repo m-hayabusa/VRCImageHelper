@@ -6,15 +6,18 @@ internal class VirtualLens2State
     {
         FocalLength = ConfigManager.VirtualLens2.FocalLengthDefault;
         ApertureValue = ConfigManager.VirtualLens2.ApertureDefault;
+        ExposureBias = ConfigManager.VirtualLens2.ExposureDefault;
     }
     public VirtualLens2State(VirtualLens2State virtualLens2State)
     {
         FocalLength = virtualLens2State.FocalLength;
         ApertureValue = virtualLens2State.ApertureValue;
+        ExposureBias = virtualLens2State.ExposureBias;
         Enabled = virtualLens2State.Enabled;
     }
     public float FocalLength { get; set; }
     public float ApertureValue { get; set; }
+    public float ExposureBias { get; set; }
     public bool Enabled { get; set; }
 }
 
@@ -31,6 +34,8 @@ internal static class VirtualLens2
             args.Add($"-:FocalLength={state.FocalLength}");
             if (!float.IsInfinity(state.ApertureValue))
                 args.Add($"-:FNumber={state.ApertureValue}");
+            if (!float.IsInfinity(state.ExposureBias))
+                args.Add($"-:ExposureCompensation={state.ExposureBias}");
         }
         return args;
     }
@@ -64,6 +69,14 @@ internal static class VirtualLens2
                 State.Current.VirtualLens2.ApertureValue = float.PositiveInfinity;
             else
                 State.Current.VirtualLens2.ApertureValue = min * MathF.Exp(raw * MathF.Log(max / min));
+        }
+    }
+    public static void Exposure(object sender, OscEventArgs e)
+    {
+        if (e.Path == "/avatar/parameters/VirtualLens2_Exposure")
+        {
+            var raw = float.Parse(e.Data.Trim()[..^1]);
+            State.Current.VirtualLens2.ExposureBias = (2 * raw - 1) * ConfigManager.VirtualLens2.ExposureRange;
         }
     }
 }
