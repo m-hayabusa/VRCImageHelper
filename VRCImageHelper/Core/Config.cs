@@ -34,6 +34,8 @@ internal class ConfigManager
         public static float FocalLengthMin { get { return s_config.VirtualLens2.FocalLengthMin; } }
         public static float FocalLengthMax { get { return s_config.VirtualLens2.FocalLengthMax; } }
         public static float FocalLengthDefault { get { return s_config.VirtualLens2.FocalLengthDefault; } }
+        public static float ExposureDefault { get { return s_config.VirtualLens2.ExposureDefault; } }
+        public static float ExposureRange { get { return s_config.VirtualLens2.ExposureRange; } }
     }
     internal static class Integral
     {
@@ -160,6 +162,8 @@ internal class Config
         public float FocalLengthMin { get; set; } = 12;
         public float FocalLengthMax { get; set; } = 300;
         public float FocalLengthDefault { get; set; } = 50;
+        public float ExposureDefault { get; set; } = 0;
+        public float ExposureRange { get; set; } = 3;
     }
     public IntegralConfig Integral { get; set; } = new();
     internal class IntegralConfig

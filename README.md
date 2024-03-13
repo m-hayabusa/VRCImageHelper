@@ -7,6 +7,7 @@ VRChatのカメラで撮った画像を圧縮して、
 * [VirtualLens2](https://logilabo.booth.pm/items/2280136)の
     * 絞り値
     * 焦点距離
+    * 露出補正
 * [Integral](https://suzufactory.booth.pm/items/4724145)の
     * 絞り値
     * 焦点距離

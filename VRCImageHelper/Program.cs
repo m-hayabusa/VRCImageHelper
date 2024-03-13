@@ -123,6 +123,7 @@ internal static class Program
         oscServer.Received += VirtualLens2.Enable;
         oscServer.Received += VirtualLens2.Zoom;
         oscServer.Received += VirtualLens2.Aperture;
+        oscServer.Received += VirtualLens2.Exposure;
 
         oscServer.Received += Integral.Enable;
         oscServer.Received += Integral.Mode;
