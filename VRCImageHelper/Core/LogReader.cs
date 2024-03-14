@@ -94,7 +94,6 @@ internal class LogReader : IDisposable
         _fsWatcher.EnableRaisingEvents = true;
     }
 
-    private bool _islogFileEmpty = true;
     private void Watcher_Created(object sender, FileSystemEventArgs e)
     {
         var newLogFile = FindLogFile();
@@ -102,13 +101,12 @@ internal class LogReader : IDisposable
         {
             _logFile = newLogFile;
             _head = 0;
-            _islogFileEmpty = true;
             SeeqLog();
 
             var logChk = new Timer(10000);
             logChk.Elapsed += (s, e) =>
             {
-                if (_islogFileEmpty)
+                if (newLogFile.Exists && newLogFile.CreationTime == newLogFile.LastWriteTime)
                 {
                     UI.SendNotify.Send(Properties.Resources.NotifyErrorLogFileNotBeWritten, false);
                 }
@@ -192,15 +190,10 @@ internal class LogReader : IDisposable
             newline = _lastLine + newline;
             _lastLine = "";
 
-            if (newline.Trim() != "")
+            if (newline.Trim() != "" && newline.Length < 500 && !newline.StartsWith(" ") && !newline.Contains("Error      -  ") && !newline.Contains("Warning    -  "))
             {
-                _islogFileEmpty = false;
-
-                if (newline.Length < 500 && !newline.StartsWith(" ") && !newline.Contains("Error      -  ") && !newline.Contains("Warning    -  "))
-                {
-                    var e = new NewLineEventArgs(newline);
-                    NewLine?.Invoke(this, e);
-                }
+                var e = new NewLineEventArgs(newline);
+                NewLine?.Invoke(this, e);
             }
         }
 
