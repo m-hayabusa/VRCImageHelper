@@ -1,6 +1,5 @@
 ﻿namespace VRCImageHelper.Core;
 
-using System.Diagnostics;
 using System.Timers;
 
 public class NewLineEventArgs : EventArgs
@@ -190,7 +189,7 @@ internal class LogReader : IDisposable
             newline = _lastLine + newline;
             _lastLine = "";
 
-            if (newline.Trim() != "" && newline.Length < 500 && !newline.StartsWith(" ") && !newline.Contains("Error      -  ") && !newline.Contains("Warning    -  "))
+            if (newline.Length < 500 && !newline.StartsWith(" ") && newline.Trim() != "" && !newline.Contains("Error      -  ") && !newline.Contains("Warning    -  "))
             {
                 var e = new NewLineEventArgs(newline);
                 NewLine?.Invoke(this, e);
