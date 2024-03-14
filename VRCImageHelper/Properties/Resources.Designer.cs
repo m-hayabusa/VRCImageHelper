@@ -165,7 +165,8 @@ namespace VRCImageHelper.Properties {
         }
         
         /// <summary>
-        ///   NotifyErrorLogFileNotBeWritten に類似しているローカライズされた文字列を検索します。
+        ///   Error: Nothing was written to the VRChat&apos;s log file for 10 seconds. Check VRChat&apos;s log output is enabled.
+        ///This program will not work if that is disabled. Enable &quot;Logging&quot; in the Debug section at the bottom of the Quick Menu of VRChat. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string NotifyErrorLogFileNotBeWritten {
             get {
