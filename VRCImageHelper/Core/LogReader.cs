@@ -25,7 +25,7 @@ public delegate void ScanAllProgressEventHandler(object sender, ScanAllProgressE
 internal class LogReader : IDisposable
 {
     private readonly Timer _refreshTimer;
-    private readonly string _logDir;
+    private static readonly string s_logDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "Low\\VRChat\\VRChat\\";
     private readonly CancellationToken _cancellationToken;
     private readonly FileSystemWatcher _fsWatcher;
     private FileInfo? _logFile;
@@ -38,8 +38,7 @@ internal class LogReader : IDisposable
     public LogReader(CancellationToken token)
     {
         _cancellationToken = token;
-        _logDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "Low\\VRChat\\VRChat\\";
-        _fsWatcher = new FileSystemWatcher(_logDir)
+        _fsWatcher = new FileSystemWatcher(s_logDir)
         {
             NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size | NotifyFilters.FileName
         };
@@ -76,7 +75,7 @@ internal class LogReader : IDisposable
 
         var logFile = FindLogFile(null, scanAll);
         var progress = 0;
-        var total = scanAll ? Directory.EnumerateFiles(_logDir, "output_log_*.txt", SearchOption.TopDirectoryOnly).Count() : 1;
+        var total = scanAll ? Directory.EnumerateFiles(s_logDir, "output_log_*.txt", SearchOption.TopDirectoryOnly).Count() : 1;
         do
         {
             ScanAllProgress?.Invoke(this, new ScanAllProgressEventArgs(progress, total));
@@ -203,9 +202,9 @@ internal class LogReader : IDisposable
         _seeqLogLock = false;
     }
 
-    private FileInfo? FindLogFile(FileInfo? prev = null, bool old = false)
+    public static FileInfo? FindLogFile(FileInfo? prev = null, bool old = false)
     {
-        var logFiles = Directory.EnumerateFiles(_logDir, "output_log_*.txt", SearchOption.TopDirectoryOnly)
+        var logFiles = Directory.EnumerateFiles(s_logDir, "output_log_*.txt", SearchOption.TopDirectoryOnly)
                     .ToList()
                     .OrderBy(f => File.GetCreationTime(f));
 

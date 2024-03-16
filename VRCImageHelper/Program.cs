@@ -27,6 +27,10 @@ internal static class Program
                 new UI.ConfigWindow().ShowDialog();
                 if (VRCExifWriter.Remove())
                     return;
+                FileInfo? logFile = LogReader.FindLogFile();
+                if (logFile != null && logFile.Exists && logFile.CreationTime == logFile.LastWriteTime) {
+                    UI.SendNotify.Send(Properties.Resources.NotifyErrorLogFileSeemsEmptyOnSetup, false);
+                }
                 Process.Start(Application.ExecutablePath);
                 return;
             }

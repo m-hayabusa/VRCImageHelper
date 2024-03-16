@@ -159,6 +159,10 @@ Do you want to download it?</value>
     <value>Error: Nothing was written to the VRChat's log file for 10 seconds. Check VRChat's log output is enabled.
 This program will not work if that is disabled. Enable "Logging" in the Debug section at the bottom of the Quick Menu of VRChat.</value>
   </data>
+  <data name="NotifyErrorLogFileSeemsEmptyOnSetup" xml:space="preserve">
+    <value>Error: Last log file of the VRChat seems empty. Check VRChat's log output is enabled.
+This program will not work if that is disabled. Enable "Logging" in the Debug section at the bottom of the Quick Menu of VRChat.</value>
+  </data>
   <data name="ScanAllRestartMessage" xml:space="preserve">
     <value>Do you want to retroactively perform processing on past VRChat logs?
 OSC messages will discard until complete that.</value>

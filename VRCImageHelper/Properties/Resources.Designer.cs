@@ -175,6 +175,16 @@ namespace VRCImageHelper.Properties {
         }
         
         /// <summary>
+        ///   Error: Last log file of the VRChat seems empty. Check VRChat&apos;s log output is enabled.
+        ///This program will not work if that is disabled. Enable &quot;Logging&quot; in the Debug section at the bottom of the Quick Menu of VRChat. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NotifyErrorLogFileSeemsEmptyOnSetup {
+            get {
+                return ResourceManager.GetString("NotifyErrorLogFileSeemsEmptyOnSetup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Do you want to retroactively perform processing on past VRChat logs?
         ///OSC messages will discard until complete that. に類似しているローカライズされた文字列を検索します。
         /// </summary>
