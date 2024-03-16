@@ -156,11 +156,13 @@
     <value>エラー: 保存先にファイルがすでに存在します</value>
   </data>
   <data name="NotifyErrorLogFileNotBeWritten" xml:space="preserve">
-    <value>エラー: VRChatのログファイルに10秒間何も書き込まれませんでした。VRChatのログ出力がオフになっていませんか？
+    <value>VRChatのログ出力がオフになっていませんか？
+VRChatのログファイルに10秒間何も書き込まれませんでした。
 VRChat内QuickMenu最下部 Debug セクションの Logging を有効にしないと、このプログラムは正しく動作しません。</value>
   </data>
   <data name="NotifyErrorLogFileSeemsEmptyOnSetup" xml:space="preserve">
-    <value>エラー: 最後にVRChatを起動したときのログファイルに何も書き込まれていないようです。VRChatのログ出力がオフになっていませんか？
+    <value>VRChatのログ出力がオフになっていませんか？
+最後にVRChatを起動したときのログファイルに何も書き込まれていないようです。
 VRChat内QuickMenu最下部 Debug セクションの Logging を有効にしないと、このプログラムは正しく動作しません。</value>
   </data>
   <data name="ScanAllRestartMessage" xml:space="preserve">
