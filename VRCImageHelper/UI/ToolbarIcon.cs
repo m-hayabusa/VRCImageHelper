@@ -10,6 +10,7 @@ internal class ToolbarMenu : ContextMenuStrip
 {
     private readonly ToolStripMenuItem _autostart = new();
     private readonly ToolStripMenuItem _scanAll = new();
+    private readonly ToolStripMenuItem _version = new();
     public ToolbarMenu()
     {
         var exit = new ToolStripMenuItem
@@ -36,11 +37,31 @@ internal class ToolbarMenu : ContextMenuStrip
         {
             Text = Resources.ToolbarTitle
         };
+        label.Click += Label_Click;
 
-        Items.AddRange(new ToolStripItem[] { label, new ToolStripSeparator(), _autostart, _scanAll, settings, exit });
+        _version.Text = "v" + Application.ProductVersion.Split('+')[0];
+        _version.Click += Version_Click;
+
+        Items.AddRange(new ToolStripItem[] { label, _version, new ToolStripSeparator(), _autostart, _scanAll, settings, exit });
         Opening += (_, _) => UpdateScanAll();
     }
 
+    private void Label_Click(object? sender, EventArgs e)
+    {
+        Process.Start(new ProcessStartInfo()
+        {
+            FileName = "https://github.com/m-hayabusa/VRCImageHelper",
+            UseShellExecute = true,
+        });
+    }
+    private void Version_Click(object? sender, EventArgs e)
+    {
+        Process.Start(new ProcessStartInfo()
+        {
+            FileName = "https://github.com/m-hayabusa/VRCImageHelper/releases",
+            UseShellExecute = true,
+        });
+    }
     public delegate void ScanningUpdate();
     private void ScanAll_Click(object? sender, EventArgs e)
     {
@@ -86,6 +107,22 @@ internal class ToolbarMenu : ContextMenuStrip
         }
     }
 
+    public delegate void UpdateVersionString();
+    public void FoundNewerVersion(string latest)
+    {
+        if (Visible)
+        {
+            BeginInvoke(new UpdateVersionString(() =>
+            {
+                _version.Text += " (latest: v" + latest + ")";
+            }));
+        }
+        else
+        {
+            _version.Text += " (latest: v" + latest + ")";
+        }
+    }
+
     private ConfigWindow? _configWindow;
     private void Settings_Click(object? sender, EventArgs e)
     {
@@ -127,5 +164,9 @@ internal class ToolbarIcon
     public void Scanning(object? sender, ScanAllProgressEventArgs e)
     {
         _menu.Scanning(e.Processing, e.Total);
+    }
+    public void FoundNewerVersion(string version)
+    {
+        _menu.FoundNewerVersion(version);
     }
 }
