@@ -155,6 +155,16 @@ Do you want to download it?</value>
   <data name="NotifyErrorImageProcessFileExist" xml:space="preserve">
     <value>Error: Destination file has exist</value>
   </data>
+  <data name="NotifyErrorLogFileNotBeWritten" xml:space="preserve">
+    <value>Check VRChat's log output is enabled.
+Nothing was written to the VRChat's log file for 10 seconds.
+This program will not work if that is disabled. Enable "Logging" in the Debug section at the bottom of the Quick Menu of VRChat.</value>
+  </data>
+  <data name="NotifyErrorLogFileSeemsEmptyOnSetup" xml:space="preserve">
+    <value>Check VRChat's log output is enabled.
+Last log file of the VRChat seems empty.
+This program will not work if that is disabled. Enable "Logging" in the Debug section at the bottom of the Quick Menu of VRChat.</value>
+  </data>
   <data name="ScanAllRestartMessage" xml:space="preserve">
     <value>Do you want to retroactively perform processing on past VRChat logs?
 OSC messages will discard until complete that.</value>

@@ -65,6 +65,11 @@ VRChatのカメラで撮った画像を圧縮して、
 
 4. スタートメニューからVRCImageHelperを起動し、タスクバーに出てくるアイコン <img style="height:1em" src="https://github.com/m-hayabusa/VRCImageHelper/raw/master/VRCImageHelper/icon.ico"> を右クリック、自動起動のチェックをつけると、次回からPCにログインした際に自動で起動するようになる
 
+### 「VRChatのログ出力がオフになっていませんか？」から始まる通知が表示された場合
+
+VRChatの設定から、「Logging」を有効にする必要がある可能性があるので、確認が必要
+![image](https://github.com/m-hayabusa/VRCImageHelper/assets/10593623/b4a22571-bf88-4353-80e3-908323dd2470)
+
 ### アンインストール
 
 Windowsの 設定/アプリ/インストールされているアプリ からアンインストールできる (同時に設定ファイルも削除される)
