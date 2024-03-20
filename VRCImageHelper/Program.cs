@@ -105,6 +105,19 @@ internal static class Program
         if (CancelToken is null)
             return;
 
+        GitHub.GetLatestRelease().ContinueWith(task =>
+        {
+            if (task.Result.HasValue)
+            {
+                var latestVersion = task.Result.Value.tag_name;
+                var version = Application.ProductVersion.Split('+')[0];
+                if (latestVersion != version)
+                {
+                    s_toolbarIcon?.FoundNewerVersion(latestVersion);
+                }
+            }
+        });
+
         var logReader = new LogReader(CancelToken.Token);
         var oscServer = new OscServer(CancelToken.Token);
         ImageProcess.s_cancellationToken = CancelToken.Token;
