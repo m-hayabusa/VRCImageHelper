@@ -1,5 +1,6 @@
 ﻿namespace VRCImageHelper;
 
+using Microsoft.Extensions.Logging;
 using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.Win32;
 using System;
@@ -10,14 +11,14 @@ using VRCImageHelper.Utils;
 
 internal static class Program
 {
+    private static readonly ILogger s_logger = Log.GetLogger("APP");
     /// <summary>
     ///  The main entry point for the application.
     /// </summary>
     [STAThread]
     private static void Main()
     {
-        var logger = Log.GetLogger("APP");
-        Log.Startup(logger);
+        Log.Startup(s_logger);
 
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.
