@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <PackageReference Include="FFMpegCore" Version="5.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.1.3" />
     <PackageReference Include="Rug.Osc" Version="1.2.5" />
     <PackageReference Include="VRChat.OSCQuery" Version="0.0.7" />
