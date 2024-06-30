@@ -31,7 +31,8 @@ internal static class Program
                 if (VRCExifWriter.Remove())
                     return;
                 var logFile = LogReader.FindLogFile();
-                if (logFile != null && logFile.Exists && logFile.CreationTime == logFile.LastWriteTime) {
+                if (logFile != null && logFile.Exists && logFile.CreationTime == logFile.LastWriteTime)
+                {
                     UI.SendNotify.Send(Properties.Resources.NotifyErrorLogFileSeemsEmptyOnSetup, false);
                 }
                 Process.Start(Application.ExecutablePath);
