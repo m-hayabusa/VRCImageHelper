@@ -1,11 +1,15 @@
 ﻿namespace VRCImageHelper.Utils;
 
+using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
 using System;
 using System.Diagnostics;
+using VRCImageHelper.Core;
 
 internal class VRCExifWriter
 {
+    private static readonly ILogger s_logger = Log.GetLogger("VRCExifWriter");
+
     /// <summary>
     /// VRChat Exif Writerを削除する
     /// </summary>
@@ -23,6 +27,7 @@ internal class VRCExifWriter
                 Directory.Delete(vrcExifWriterPath + "\\.git", true);
                 Directory.Delete(vrcExifWriterPath, true);
                 Directory.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Microsoft\\Windows\\Start Menu\\Programs\\VRChat-Exif-Writer", true);
+                Log.VRCExifWriter_Removed(s_logger, false);
             }
             catch (Exception)
             {
@@ -31,6 +36,7 @@ internal class VRCExifWriter
                 key.SetValue("Uninstall VRChat-Exif-Writer", "C:\\Windows\\System32\\cmd.exe /c rmdir /q /s \"%AppData%\\Microsoft\\Windows\\Start Menu\\Programs\\VRChat-Exif-Writer\" \"%LocalAppData%\\Programs\\VRChat-Exif-Writer\"");
                 key.Dispose();
                 MessageBox.Show(Properties.Resources.SetupRemoveVEWRestartRequired);
+                Log.VRCExifWriter_Removed(s_logger, true);
                 return true;
             }
         }

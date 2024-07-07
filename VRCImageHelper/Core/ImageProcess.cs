@@ -1,5 +1,6 @@
 namespace VRCImageHelper.Core;
 
+using Microsoft.Extensions.Logging;
 using System;
 using System.Drawing.Imaging;
 using System.Globalization;
@@ -7,9 +8,13 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using VRCImageHelper.Tools;
+using VRCImageHelper.Core;
+
 
 internal class ImageProcess
 {
+    private static readonly ILogger s_logger = Log.GetLogger("IMG");
+
     public static void Taken(object sender, NewLineEventArgs e)
     {
         var match = Regex.Match(e.Line, "([0-9\\.\\: ]*) Log        -  \\[VRC Camera\\] Took screenshot to\\: (.*)");
@@ -39,7 +44,13 @@ internal class ImageProcess
 
     public static void Process(string sourcePath, State state)
     {
-        if (!new FileInfo(sourcePath).Exists) return;
+        Log.ImageProcess(s_logger, sourcePath);
+
+        if (!new FileInfo(sourcePath).Exists)
+        {
+            Log.Failed(s_logger, sourcePath, "元ファイルが存在しない (すでに処理済み？)");
+            return;
+        }
 
         var fileName = Path.GetFileName(sourcePath);
 
@@ -74,45 +85,62 @@ internal class ImageProcess
         {
             var sourceDir = Path.GetDirectoryName(sourcePath);
             if (sourceDir is null)
+            {
+                Log.Failed(s_logger, sourcePath, "入力ファイルパスからディレクトリを取得できない");
                 return;
+            }
 
             destPath = new DirectoryInfo(sourceDir)?.Parent?.FullName;
             if (destPath is null)
+            {
+                Log.Failed(s_logger, sourcePath, "入力ファイルディレクトリから保存先ディレクトリを取得できない");
                 return;
+            }
         }
 
         destPath = destPath + "\\" + fileName;
         var destDir = Path.GetDirectoryName(destPath);
 
         if (destDir is null)
+        {
+            Log.Failed(s_logger, sourcePath, "保存先ファイルパスからディレクトリを取得できない");
             return;
+        }
 
         if (Directory.CreateDirectory(destDir).Exists == false)
         {
             UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessCantCreateDirectory, false);
+            Log.Failed(s_logger, sourcePath, "保存先ディレクトリが存在しない");
             return;
         }
 
         if (!ConfigManager.OverwriteDestinationFile && new FileInfo(destPath).Exists)
         {
             UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessFileExist, false);
+            Log.Failed(s_logger, sourcePath, "保存先ファイルが重複していて、上書きは許可されていない");
             return;
         }
         using (s_compressSemaphore?.Wait())
         {
+            Log.ImageProcessStart(s_logger, sourcePath);
             var tmpPath = Compress(sourcePath, hasAlpha);
             if (new FileInfo(tmpPath).Exists)
             {
-                if (WriteMetadata(tmpPath, destPath, state) == true && ConfigManager.DeleteOriginalFile)
+                if (WriteMetadata(tmpPath, destPath, state))
                 {
-                    try
+                    if (ConfigManager.DeleteOriginalFile)
                     {
-                        File.Delete(sourcePath);
+                        try
+                        {
+                            File.Delete(sourcePath);
+                        }
+                        catch (IOException ex)
+                        {
+                            Log.Failed(s_logger, sourcePath, "保存には成功したが、入力ファイルを削除できなかった");
+                            UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessCantDeleteOriginal + ":\n" + ex.Message, false);
+                        }
                     }
-                    catch (IOException ex)
-                    {
-                        UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessCantDeleteOriginal + ":\n" + ex.Message, false);
-                    }
+                    Log.Done(s_logger, fileName);
                 }
             }
         }
@@ -124,6 +152,7 @@ internal class ImageProcess
         File.Delete(destPath);
         var format = hasAlpha ? ConfigManager.AlphaFormat : ConfigManager.Format;
         var quality = hasAlpha ? ConfigManager.AlphaQuality : ConfigManager.Quality;
+        Log.ImageProcessCompressionStart(s_logger, sourcePath, format, quality);
 
         switch (format)
         {
@@ -143,6 +172,7 @@ internal class ImageProcess
                 File.Copy(sourcePath, destPath);
                 break;
         }
+        Log.ImageProcessCompressionEnd(s_logger, sourcePath, destPath);
 
         return destPath;
     }

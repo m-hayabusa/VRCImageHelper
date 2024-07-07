@@ -148,7 +148,7 @@ internal class Config
     public string AlphaEncoder { get; set; } = "";
     public string AlphaEncoderOption { get; set; } = "";
     public int AlphaQuality { get; set; } = 20;
-    public int ParallelCompressionProcesses { get;set; } = 1;
+    public int ParallelCompressionProcesses { get; set; } = 1;
     public VirtualLens2Config VirtualLens2 { get; set; } = new();
     internal class VirtualLens2Config
     {
