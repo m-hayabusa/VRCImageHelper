@@ -1,7 +1,9 @@
 ﻿namespace VRCImageHelper.Tools;
 
 using FFMpegCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.Toolkit.Uwp.Notifications;
+using VRCImageHelper.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,6 +13,8 @@ using System.Threading.Tasks;
 
 internal class FFMpeg
 {
+    private static readonly ILogger s_logger = Log.GetLogger("FFMPEG");
+
     public static CancellationToken s_cancellationToken;
     private static string? s_ffMpegPath;
     private static bool s_ffMpegDownloading;
@@ -126,8 +130,13 @@ internal class FFMpeg
 
     public static async Task<bool> Encode(string src, string dest, string format, string encoder, int quality, string option)
     {
+        Log.FFmpegEncode(s_logger, src, format);
+
         if (ExecDir is null)
+        {
+            Log.FFmpegEncodeFailed(s_logger, src, encoder, "ffmpegが存在せず、ダウンロードにも失敗しました");
             return false;
+        }
         try
         {
             await FFMpegArguments
@@ -177,8 +186,10 @@ internal class FFMpeg
                 MessageBox.Show(ToastArguments.Parse(e.Argument).Get("Message"));
             }, new Dictionary<string, string> { { "Message", ex.Message } });
             File.Delete(dest);
+            Log.FFmpegEncodeFailed(s_logger, src, encoder, ex.Message);
             return false;
         }
+        Log.FFmpegEncodeEnd(s_logger, src, format);
         return true;
     }
 }

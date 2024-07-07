@@ -1,14 +1,18 @@
 ﻿namespace VRCImageHelper.Tools;
 
+using Microsoft.Extensions.Logging;
 using Microsoft.Toolkit.Uwp.Notifications;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using VRCImageHelper.Core;
 
 internal class ExifTool
 {
+    private static readonly ILogger s_logger = Log.GetLogger("EXIFTOOL");
+
     public static CancellationToken s_cancellationToken;
     private static string? s_exitToolPath;
     private static bool s_exitToolDownloading;
@@ -44,6 +48,7 @@ internal class ExifTool
 
     public static async Task<bool> Write(string path, List<string> args)
     {
+        Log.Start(s_logger, path);
         var argsFilePath = Path.GetTempFileName();
         var argsFile = new StreamWriter(argsFilePath);
         argsFile.Write(string.Join("\n", args));
@@ -75,6 +80,7 @@ internal class ExifTool
         {
             argsFile.Dispose();
             File.Delete(argsFilePath);
+            Log.Done(s_logger, path);
             return true;
         }
         else
@@ -84,6 +90,7 @@ internal class ExifTool
             {
                 MessageBox.Show(ToastArguments.Parse(e.Argument).Get("Message"));
             }, new Dictionary<string, string> { { "Message", log } });
+            Log.Failed(s_logger, path, log);
             return false;
         }
     }

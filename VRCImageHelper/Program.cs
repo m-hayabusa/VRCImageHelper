@@ -28,6 +28,7 @@ internal static class Program
         {
             if (args.Contains("--setup"))
             {
+                Log.Setup(s_logger);
                 new UI.ConfigWindow().ShowDialog();
                 if (VRCExifWriter.Remove())
                     return;
@@ -36,6 +37,7 @@ internal static class Program
                 {
                     UI.SendNotify.Send(Properties.Resources.NotifyErrorLogFileSeemsEmptyOnSetup, false);
                 }
+                Log.Restart(s_logger);
                 Process.Start(Application.ExecutablePath);
                 return;
             }
