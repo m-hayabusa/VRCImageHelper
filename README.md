@@ -55,7 +55,7 @@ VRChatのカメラで撮った画像を圧縮して、
                 |av1_nvenc|`-cq`|1|51|
                 |av1_amf|`-qp_i`|0|255|
 
-                CPUでlibwebp、libaom-av1とlibsvtav1を利用する場合と、Intel Arcでav1_qsvを利用した場合のみ確認 (NvEnc / AMFの場合の動作については一切検証できていないので、正しいパラメータの指定などあれば[教えてください](https://github.com/m-hayabusa/VRCImageHelper/issues/new))  
+                CPUでlibwebp、libaom-av1とlibsvtav1を利用する場合と、Intel Arc A770でav1_qsvを利用した場合、AMD Radeon 780Mでav1_amfを利用した場合について動作を確認 (NvEncでの動作は検証していません)  
                 オプションは、ffmpegに追加で渡す引数を入力できる たとえばlibwebpで `-lossless 1` など
     * 保存形式(透過)  
         画像にアルファチャネルが含まれる場合の形式指定で、それ以外は上記 保存形式 と同じ。ただし:
