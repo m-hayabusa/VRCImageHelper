@@ -41,6 +41,7 @@ internal class ExifTool
         var extracted = Directory.GetDirectories(dir).First();
 
         File.Move(extracted + "\\exiftool(-k).exe", dir + "\\exiftool.exe");
+        Directory.Move(extracted + "\\exiftool_files", dir + "\\exiftool_files");
 
         return dir + "\\exiftool.exe";
     }
