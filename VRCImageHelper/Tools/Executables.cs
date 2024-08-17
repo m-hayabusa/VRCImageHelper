@@ -17,7 +17,7 @@ internal class Executables
         Directory.CreateDirectory(destPath);
 
         var archive = new ZipArchive(request.Result);
-        archive.ExtractToDirectory(destPath);
+        archive.ExtractToDirectory(destPath, true);
 
         return destPath;
     }
