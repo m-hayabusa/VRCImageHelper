@@ -117,7 +117,7 @@ internal class ConfigManager
             "libsvtav1" => "-threads 1 -preset 10",
             "librav1e" => "-threads 1 -speed 10",
             "av1_qsv" => "-preset veryslow",
-            "av1_nvenc" => "-preset p7",
+            "av1_nvenc" => "-preset p7 -pix_fmt yuv420p",
             "av1_amf" => "-quality high_quality",
             "libwebp" => "-threads 1 -preset picture",
             _ => "-threads 1",
