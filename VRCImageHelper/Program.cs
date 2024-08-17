@@ -7,6 +7,7 @@ using System.Diagnostics;
 using VRCImageHelper.Core;
 using VRCImageHelper.Core.StateChecker;
 using VRCImageHelper.Utils;
+using VRCImageHelper.Tools;
 
 internal static class Program
 {
@@ -24,11 +25,17 @@ internal static class Program
         {
             if (args.Contains("--setup"))
             {
+                new UI.DownloadProgressDialog().Download("exiftool", () =>
+                {
+                    ExifTool.GetExifTool();
+                    return true;
+                });
                 new UI.ConfigWindow().ShowDialog();
                 if (VRCExifWriter.Remove())
                     return;
                 var logFile = LogReader.FindLogFile();
-                if (logFile != null && logFile.Exists && logFile.CreationTime == logFile.LastWriteTime) {
+                if (logFile != null && logFile.Exists && logFile.CreationTime == logFile.LastWriteTime)
+                {
                     UI.SendNotify.Send(Properties.Resources.NotifyErrorLogFileSeemsEmptyOnSetup, false);
                 }
                 Process.Start(Application.ExecutablePath);

@@ -12,7 +12,7 @@ internal class ExifTool
     public static CancellationToken s_cancellationToken;
     private static string? s_exitToolPath;
     private static bool s_exitToolDownloading;
-    private static string GetExifTool()
+    public static string GetExifTool()
     {
         while (s_exitToolDownloading)
         {
@@ -37,7 +37,10 @@ internal class ExifTool
         if (path is not null) return path;
 
         var dir = Executables.Download(fileName, url, s_cancellationToken);
-        File.Move(dir + "\\exiftool(-k).exe", dir + "\\exiftool.exe");
+
+        var extracted = Directory.GetDirectories(dir).First();
+
+        File.Move(extracted + "\\exiftool(-k).exe", dir + "\\exiftool.exe");
 
         return dir + "\\exiftool.exe";
     }

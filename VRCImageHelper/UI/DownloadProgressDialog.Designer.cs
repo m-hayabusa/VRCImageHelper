@@ -36,18 +36,19 @@ partial class DownloadProgressDialog
         progressBar1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
         progressBar1.Location = new Point(12, 12);
         progressBar1.Name = "progressBar1";
-        progressBar1.Size = new Size(210, 23);
+        progressBar1.Size = new Size(260, 23);
         progressBar1.Style = ProgressBarStyle.Marquee;
         progressBar1.TabIndex = 0;
+        progressBar1.UseWaitCursor = true;
         // 
-        // DownloadProgressBar
+        // DownloadProgressDialog
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(234, 47);
+        ClientSize = new Size(284, 47);
         Controls.Add(progressBar1);
         FormBorderStyle = FormBorderStyle.FixedDialog;
-        Name = "DownloadProgressBar";
+        Name = "DownloadProgressDialog";
         Text = "DownloadProgressBar";
         UseWaitCursor = true;
         ResumeLayout(false);

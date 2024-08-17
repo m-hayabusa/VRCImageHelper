@@ -118,7 +118,6 @@ public partial class ConfigWindow : Form
         }
     }
 
-    public delegate void FFMpegDownloadEnd();
     private void ComboBoxFileFormat_SelectedIndexChanged(object sender, EventArgs e)
     {
         var control = (Control)sender;
@@ -145,29 +144,18 @@ public partial class ConfigWindow : Form
             var res = MessageBox.Show(Resources.FFMpegDownloadMessage, Resources.FFMpegDownloadTitle, MessageBoxButtons.OKCancel);
             if (res == DialogResult.OK)
             {
-                var downloadingDialog = new DownloadProgressDialog()
+                new DownloadProgressDialog().Download("ffmpeg", () =>
                 {
-                    Text = "Downloading...",
-                };
-                var downloading = true;
-                downloadingDialog.FormClosing += (sender, e) =>
-                {
-                    if (downloading)
-                        e.Cancel = true;
-                };
-                downloadingDialog.Load += (sender, e) =>
-                {
-                    new Task(() =>
+                    try
                     {
                         FFMpeg.Download();
-                        BeginInvoke(new FFMpegDownloadEnd(() =>
-                        {
-                            downloading = false;
-                            downloadingDialog.Close();
-                        }));
-                    }).Start();
-                };
-                downloadingDialog.ShowDialog();
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                });
             }
         }
 
