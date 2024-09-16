@@ -144,6 +144,7 @@ internal static class Program
 
         oscServer.Received += VRChat.ChangeAvater;
 
+        oscServer.Received += VirtualLens2.Initialize;
         oscServer.Received += VirtualLens2.Enable;
         oscServer.Received += VirtualLens2.Zoom;
         oscServer.Received += VirtualLens2.Aperture;
