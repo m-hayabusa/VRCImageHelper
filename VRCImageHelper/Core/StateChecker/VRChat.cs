@@ -30,20 +30,20 @@ internal static class VRChat
 
     public static void PlayerJoin(object sender, NewLineEventArgs e)
     {
-        var match = Regex.Match(e.Line, "\\[Behaviour\\] OnPlayerJoined (.*)");
+        var match = Regex.Match(e.Line, "\\[Behaviour\\] OnPlayerJoined (.*?) \\((usr_.*)\\)");
         if (match.Success)
         {
-            Debug.WriteLine($"Join {match.Groups[1]}");
+            Debug.WriteLine($"Join {match.Groups[1]}, {match.Groups[2]}");
             State.Current.Players.Add(match.Groups[1].Value);
         }
     }
 
     public static void PlayerLeft(object sender, NewLineEventArgs e)
     {
-        var match = Regex.Match(e.Line, "\\[Behaviour\\] OnPlayerLeft (.*)");
+        var match = Regex.Match(e.Line, "\\[Behaviour\\] OnPlayerLeft (.*) \\((usr_.*)\\)");
         if (match.Success)
         {
-            Debug.WriteLine($"Left {match.Groups[1]}");
+            Debug.WriteLine($"Left {match.Groups[1]}, {match.Groups[2]}");
             State.Current.Players.Remove(match.Groups[1].Value);
         }
     }
