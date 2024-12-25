@@ -7,6 +7,11 @@ internal class VirtualLens2State
         FocalLength = ConfigManager.VirtualLens2.FocalLengthDefault;
         ApertureValue = ConfigManager.VirtualLens2.ApertureDefault;
         ExposureBias = ConfigManager.VirtualLens2.ExposureDefault;
+        FocalLengthMin = ConfigManager.VirtualLens2.FocalLengthMin;
+        FocalLengthMax = ConfigManager.VirtualLens2.FocalLengthMax;
+        ApertureMin = ConfigManager.VirtualLens2.ApertureMin;
+        ApertureMax = ConfigManager.VirtualLens2.ApertureMax;
+        ExposureRange = ConfigManager.VirtualLens2.ExposureRange;
     }
     public VirtualLens2State(VirtualLens2State virtualLens2State)
     {
@@ -19,6 +24,11 @@ internal class VirtualLens2State
     public float ApertureValue { get; set; }
     public float ExposureBias { get; set; }
     public bool Enabled { get; set; }
+    public float FocalLengthMin { get; set; }
+    public float FocalLengthMax { get; set; }
+    public float ApertureMin { get; set; }
+    public float ApertureMax { get; set; }
+    public float ExposureRange { get; set; }
 }
 
 internal static class VirtualLens2
@@ -39,6 +49,29 @@ internal static class VirtualLens2
         }
         return args;
     }
+    public static void Initialize(object sender, OscEventArgs e)
+    {
+        if (e.Path == "/avatar/parameters/VirtualLens2_Zoom_Min")
+        {
+            State.Current.VirtualLens2.FocalLengthMin = float.Parse(e.Data.Trim()[..^1]);
+        }
+        else if (e.Path == "/avatar/parameters/VirtualLens2_Zoom_Max")
+        {
+            State.Current.VirtualLens2.FocalLengthMax = float.Parse(e.Data.Trim()[..^1]);
+        }
+        else if (e.Path == "/avatar/parameters/VirtualLens2_Aperture_Min")
+        {
+            State.Current.VirtualLens2.ApertureMin = float.Parse(e.Data.Trim()[..^1]);
+        }
+        else if (e.Path == "/avatar/parameters/VirtualLens2_Aperture_Max")
+        {
+            State.Current.VirtualLens2.ApertureMax = float.Parse(e.Data.Trim()[..^1]);
+        }
+        else if (e.Path == "/avatar/parameters/VirtualLens2_Exposure_Range")
+        {
+            State.Current.VirtualLens2.ExposureRange = float.Parse(e.Data.Trim()[..^1]);
+        }
+    }
     public static void Enable(object sender, OscEventArgs e)
     {
         if (e.Path == "/avatar/parameters/VirtualLens2_Enable")
@@ -52,8 +85,8 @@ internal static class VirtualLens2
         if (e.Path == "/avatar/parameters/VirtualLens2_Zoom")
         {
             var raw = float.Parse(e.Data.Trim()[..^1]);
-            var min = ConfigManager.VirtualLens2.FocalLengthMin;
-            var max = ConfigManager.VirtualLens2.FocalLengthMax;
+            var min = State.Current.VirtualLens2.FocalLengthMin;
+            var max = State.Current.VirtualLens2.FocalLengthMax;
             State.Current.VirtualLens2.FocalLength = min * MathF.Exp(raw * MathF.Log(max / min));
         }
     }
@@ -63,8 +96,8 @@ internal static class VirtualLens2
         if (e.Path == "/avatar/parameters/VirtualLens2_Aperture")
         {
             var raw = float.Parse(e.Data.Trim()[..^1]);
-            var min = ConfigManager.VirtualLens2.ApertureMin;
-            var max = ConfigManager.VirtualLens2.ApertureMax;
+            var min = State.Current.VirtualLens2.ApertureMin;
+            var max = State.Current.VirtualLens2.ApertureMax;
             if (raw == 0)
                 State.Current.VirtualLens2.ApertureValue = float.PositiveInfinity;
             else
@@ -76,7 +109,7 @@ internal static class VirtualLens2
         if (e.Path == "/avatar/parameters/VirtualLens2_Exposure")
         {
             var raw = float.Parse(e.Data.Trim()[..^1]);
-            State.Current.VirtualLens2.ExposureBias = (2 * raw - 1) * ConfigManager.VirtualLens2.ExposureRange;
+            State.Current.VirtualLens2.ExposureBias = (2 * raw - 1) * State.Current.VirtualLens2.ExposureRange;
         }
     }
 }
