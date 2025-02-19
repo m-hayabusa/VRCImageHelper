@@ -12,7 +12,7 @@ internal class ImageProcess
 {
     public static void Taken(object sender, NewLineEventArgs e)
     {
-        var match = Regex.Match(e.Line, "([0-9\\.\\: ]*) Log        -  \\[VRC Camera\\] Took screenshot to\\: (.*)");
+        var match = Regex.Match(e.Line, @"([0-9.: ]*) (?:Log|Debug) +? -  \[VRC Camera\] Took screenshot to: (.*)");
         if (match.Success)
         {
             var state = State.Current.Clone();
