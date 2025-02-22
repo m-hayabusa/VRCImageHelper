@@ -9,7 +9,7 @@
     <Authors>m-hayabusa</Authors>
     <Company>nekomimiStudio</Company>
     <ApplicationIcon>icon.ico</ApplicationIcon>
-    <VersionPrefix>0.9.6</VersionPrefix>
+    <VersionPrefix>0.9.7</VersionPrefix>
     <PackageId>studio.nekomimi.$(AssemblyName)</PackageId>
     <SatelliteResourceLanguages>en;ja</SatelliteResourceLanguages>
   </PropertyGroup>
