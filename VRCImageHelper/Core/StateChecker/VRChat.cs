@@ -10,7 +10,7 @@ internal static class VRChat
         var match = Regex.Match(e.Line, @".*\[Behaviour\] Joining (?<WorldName>wrld_.*?):(?<InstanceID>.*?)~(?<Options>.*)?");
         if (match.Success)
         {
-            Debug.WriteLine($"Joining {match.Groups[1]}, {match.Groups[2]}, {match.Groups[3]}");
+            Debug.WriteLine($"Joining {match.Groups["WorldName"]}, {match.Groups["InstanceID"]}, {match.Groups["Options"]}");
             State.Current.RoomInfo.World_id = match.Groups["WorldName"].Value;
             State.Current.RoomInfo.Instance_id = match.Groups["InstanceID"].Value;
 
