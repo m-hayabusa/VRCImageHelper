@@ -69,6 +69,42 @@ internal class ImageProcess
                 .Replace("YYYY", match.Groups[9].Value);
         }
 
+        {
+            if (state.VirtualLens2.Enabled)
+            {
+                fileName = fileName.Replace("%CAMERA%", "VirtualLens2");
+            }
+            else if (state.Integral.Enabled)
+            {
+                fileName = fileName.Replace("%CAMERA%", "Integral");
+            }
+            else
+            {
+                fileName = fileName.Replace("%CAMERA%", "VRCCamera");
+            }
+
+            fileName = fileName.Replace("%WORLD_ID%", state.RoomInfo.World_id)
+                .Replace("%INSTANCE_ID%", state.RoomInfo.Instance_id)
+                .Replace("%WORLD%", state.RoomInfo.World_name == "" ? "WORLD_UNKNOWN" : state.RoomInfo.World_name);
+
+            var instanceType = state.RoomInfo.Permission switch
+            {
+                "hidden" => "Friends+",
+                "friends" => "Friends",
+                "private" => "Invite",
+                "private_plus" => "Invite+",
+                "group_public" => "GroupPublic",
+                "group_members" => "Group",
+                "group_plus" => "Group+",
+                _ => "Public",
+            };
+
+            fileName = fileName.Replace("%INSTANCE_TYPE%", instanceType)
+                .Replace("%OWNER_ID%", state.RoomInfo.Organizer);
+        }
+
+        fileName = Regex.Replace(fileName, @"[<>:""|?*]", "_");
+
         var destPath = ConfigManager.DestDir;
         if (destPath == "")
         {
@@ -81,7 +117,15 @@ internal class ImageProcess
                 return;
         }
 
-        destPath = destPath + "\\" + fileName;
+        var basePath = Path.GetFullPath(destPath);
+
+        destPath = Path.Combine(destPath, fileName);
+
+        if (!Path.GetFullPath(destPath).StartsWith(basePath, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
         var destDir = Path.GetDirectoryName(destPath);
 
         if (destDir is null)
