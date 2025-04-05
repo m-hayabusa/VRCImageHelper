@@ -7,13 +7,46 @@ internal static class VRChat
 {
     public static void WorldId(object sender, NewLineEventArgs e)
     {
-        var match = Regex.Match(e.Line, ".*\\[Behaviour\\] Joining (wrld_.*?):(?:.*?(private|friends|hidden|group)\\((.*?)\\))?(~canRequestInvite|~groupAccessType\\(plus\\))?");
+        var match = Regex.Match(e.Line, @".*\[Behaviour\] Joining (?<WorldName>wrld_.*?):(?<InstanceID>.*?)~(?<Options>.*)?");
         if (match.Success)
         {
-            Debug.WriteLine($"Joining {match.Groups[1]}, {match.Groups[2]}, {match.Groups[3]}, {match.Groups[4]}");
-            State.Current.RoomInfo.World_id = match.Groups[1].Value;
-            State.Current.RoomInfo.Permission = match.Groups[2].Value + (match.Groups[4].Success ? "+" : "");
-            State.Current.RoomInfo.Organizer = match.Groups[3].Value;
+            Debug.WriteLine($"Joining {match.Groups["WorldName"]}, {match.Groups["InstanceID"]}, {match.Groups["Options"]}");
+            State.Current.RoomInfo.World_id = match.Groups["WorldName"].Value;
+            State.Current.RoomInfo.Instance_id = match.Groups["InstanceID"].Value;
+
+            if (match.Groups["Options"].Success)
+            {
+                var options = match.Groups["Options"].Value.Split("~").Select(param =>
+                {
+                    var match = Regex.Match(param, @"^(.*?)(?:\((.*?)\))?$");
+                    return new[] { match.Groups[1].Value, match.Groups[2].Value };
+                });
+
+                State.Current.RoomInfo.Permission = "public";
+                State.Current.RoomInfo.Organizer = "public";
+
+                foreach (var option in options)
+                {
+                    var key = option[0];
+                    var value = option[1];
+
+                    if (key == "private" || key == "friends" || key == "hidden" || key == "group")
+                    {
+                        State.Current.RoomInfo.Permission = key;
+                        State.Current.RoomInfo.Organizer = value;
+                    }
+
+                    if (key == "canRequestInvite")
+                    {
+                        State.Current.RoomInfo.Permission += "_plus";
+                    }
+
+                    if (key == "groupAccessType")
+                    {
+                        State.Current.RoomInfo.Permission += "_" + value;
+                    }
+                }
+            }
             State.Current.Players.Clear();
         }
     }

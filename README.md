@@ -30,30 +30,39 @@ VRChatのカメラで撮った画像を圧縮して、
 
     * 保存形式
         * ファイル名: 保存するときのファイル名。デフォルトの場合はVRChatの出力したファイルと同等となるはず
-            |フォーマット|置換内容|
-            |:-|:-|
-            |yyyy|年|
-            |MM|月|
-            |dd|日|
-            |hh|時|
-            |mm|分|
-            |ss|秒|
-            |fff|秒(小数点下)|
-            |XXXX|画像のピクセル数 (縦)|
-            |YYYY|画像のピクセル数 (横)|
+            | フォーマット | 置換内容 | 例 |
+            |:-|:-|:-|
+            | `yyyy` | 年 | `2025` |
+            | `MM` | 月 | `04` |
+            | `dd` | 日 | `05` |
+            | `hh` | 時 | `14` |
+            | `mm` | 分 | `19` |
+            | `ss` | 秒 | `53` |
+            | `fff` | 秒(小数点下) | `375` |
+            | `XXXX` | 画像のピクセル数 (縦) | `3840` |
+            | `YYYY` | 画像のピクセル数 (横) | `2160` |
+            | `%CAMERA%` | カメラの種類 | `VRCCamera` |
+            | `%WORLD_ID%` | ワールドID | `wrld_3208d019-7310-4c35-b12e-e4278c2689c7` |
+            | `%INSTANCE_ID%` | インスタンス番号 | `99424` |
+            | `%WORLD%` | ワールド名 | `nS／TownScaper` |
+            | `%INSTANCE_TYPE%` | インスタンスの種類 | `Friends+` |
+            | `%OWNER_ID%` | インスタンスオーナーのID | `usr_cbced732-f21a-46cd-a6a6-61990bceea14` |
+
+            例えば、`yyyy-MM\%WORLD_ID%-%WORLD%\%OWNER_ID%\%INSTANCE_TYPE%\%INSTANCE_ID%\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY_%CAMERA%.jpeg` と指定したとき、
+            保存先フォルダが `D:\Pictures\VRChat` なら、`D:\Pictures\VRChat\2025-04\wrld_3208d019-7310-4c35-b12e-e4278c2689c7-nS／TownScaper\usr_cbced732-f21a-46cd-a6a6-61990bceea14\Friends+\99424\VRChat_2025-04-05_14-19-53.375_3840x2160_VRCCamera.jpeg` に保存される
 
         * 形式・品質・オプション: PNG / JPEG / WEBP / AVIFが選択できる
             * PNG: 品質設定とオプションは、無視される
             * JPEG: 品質設定は、0が最高、100が最低となる。オプションは無視される
             * WEBP / AVIF: 品質設定は、ffmpegでそれぞれのエンコーダの
-                |エンコーダ|引数|最高品質|最高圧縮|
+                | エンコーダ | 引数 | 最高品質 | 最高圧縮 |
                 |:-|:-|:-|:-|
-                |libwebp|`-quality`|0|100|
-                |libaom-av1|`-crf`|0|63|
-                |libsvtav1|`-crf`|0|63|
-                |av1_qsv|`-q`|?|?|
-                |av1_nvenc|`-cq`|1|51|
-                |av1_amf|`-qp_i`|0|255|
+                | `libwebp` | `-quality` | `0` | `100` |
+                | `libaom-av1` | `-crf` | `0` | `63` |
+                | `libsvtav1` | `-crf` | `0` | `63` |
+                | `av1_qsv` | `-q` | `?` | `?` |
+                | `av1_nvenc` | `-cq` | `1` | `51` |
+                | `av1_amf` | `-qp_i` | `0` | `255` |
 
                 CPUでlibwebp、libaom-av1とlibsvtav1を利用する場合と、Intel Arc A770でav1_qsvを利用した場合、AMD Radeon 780Mでav1_amfを利用した場合について動作を確認  
                 (NvEncでの動作は検証していませんが、デフォルトで指定しているオプションの `--pix-fmt yuv420p` の影響で、色情報が間引かれる挙動になるはずです (https://github.com/m-hayabusa/VRCImageHelper/issues/40))  

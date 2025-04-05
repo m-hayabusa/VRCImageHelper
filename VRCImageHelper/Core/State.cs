@@ -5,18 +5,27 @@ using StateChecker;
 
 internal class RoomInfo
 {
-    public RoomInfo() { }
+    public RoomInfo()
+    {
+        World_id = "";
+        World_name = "";
+        Permission = "";
+        Instance_id = "";
+        Organizer = "";
+    }
     public RoomInfo(RoomInfo roomInfo)
     {
         World_id = roomInfo.World_id;
         World_name = roomInfo.World_name;
         Permission = roomInfo.Permission;
+        Instance_id = roomInfo.Instance_id;
         Organizer = roomInfo.Organizer;
     }
-    public string? World_id { get; set; }
-    public string? World_name { get; set; }
-    public string? Permission { get; set; }
-    public string? Organizer { get; set; }
+    public string World_id { get; set; }
+    public string World_name { get; set; }
+    public string Permission { get; set; }
+    public string Instance_id { get; set; }
+    public string Organizer { get; set; }
 }
 
 internal class State
