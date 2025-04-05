@@ -41,7 +41,7 @@ internal static class VRChat
                         State.Current.RoomInfo.Permission += "_plus";
                     }
 
-                    if (key == "groupaccessType")
+                    if (key == "groupAccessType")
                     {
                         State.Current.RoomInfo.Permission += "_" + value;
                     }
