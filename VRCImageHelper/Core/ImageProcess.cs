@@ -1,6 +1,7 @@
 namespace VRCImageHelper.Core;
 
 using System;
+using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.Text.Encodings.Web;
@@ -169,6 +170,7 @@ internal class ImageProcess
         var format = hasAlpha ? ConfigManager.AlphaFormat : ConfigManager.Format;
         var quality = hasAlpha ? ConfigManager.AlphaQuality : ConfigManager.Quality;
 
+        Debug.WriteLine(format);
         switch (format)
         {
             case "AVIF":
@@ -181,6 +183,10 @@ internal class ImageProcess
 
             case "JPEG":
                 CompressJPEG(sourcePath, destPath, 100 - quality);
+                break;
+
+            case "MJPEG":
+                CompressMJPEG(sourcePath, destPath, quality);
                 break;
 
             case "PNG":
@@ -202,6 +208,14 @@ internal class ImageProcess
         encodeParams.Param[0] = new EncoderParameter(Encoder.Quality, quality);
 
         image.Save(dest, encoder, encodeParams);
+    }
+
+    private static void CompressMJPEG(string src, string dest, int quality)
+    {
+        var encoder = ConfigManager.Encoder;
+        var option = ConfigManager.EncoderOption;
+
+        FFMpeg.Encode(src, dest, "mjpeg", encoder, quality, option).Wait();
     }
 
     private static void CompressAVIF(string src, string dest, int quality, bool hasAlpha)

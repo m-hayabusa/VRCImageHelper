@@ -13,7 +13,7 @@ public partial class ConfigWindow : Form
         _config = new Config();
 
         Icon = new Icon($"{Path.GetDirectoryName(Application.ExecutablePath)}\\icon.ico");
-        comboBoxFileFormat.Items.AddRange(new object[] { "PNG", "JPEG", "AVIF", "WEBP" });
+        comboBoxFileFormat.Items.AddRange(new object[] { "PNG", "JPEG", "MJPEG", "AVIF", "WEBP" });
         comboBoxAlphaFileFormat.Items.AddRange(new object[] { "PNG", "AVIF", "WEBP" });
     }
 
@@ -21,7 +21,8 @@ public partial class ConfigWindow : Form
     private readonly Dictionary<string, string> _format = new();
     private readonly Dictionary<string, string> _selectedEncoder = new() {
         { "AVIF", "libaom-av1" }, { "WEBP", "libwebp" },
-        { "AVIFAlpha", "libaom-av1" }, { "WEBPAlpha", "libwebp" }
+        { "AVIFAlpha", "libaom-av1" }, { "WEBPAlpha", "libwebp" },
+        { "MJPEG", "mjpeg" }
     };
     private readonly Dictionary<string, string> _selectedEncoderOption = new();
 
@@ -134,12 +135,14 @@ public partial class ConfigWindow : Form
 
         if (format is not null && format != _format[alpha])
         {
-            textBox.Text = Path.ChangeExtension(textBoxFilePattern.Text, format.ToLower());
+            var extension = format == "MJPEG" ? "jpeg" : format.ToLower();
+            textBox.Text = Path.ChangeExtension(textBoxFilePattern.Text, extension);
             _format[alpha] = format;
         }
 
         if ((format == "AVIF" && FFMpeg.GetSupportedEncoder("av1").Length == 0)
-            || (format == "WEBP" && FFMpeg.GetSupportedEncoder("webp").Length == 0))
+            || (format == "WEBP" && FFMpeg.GetSupportedEncoder("webp").Length == 0)
+            || (format == "MJPEG" && FFMpeg.GetSupportedEncoder("mjpeg").Length == 0))
         {
             var res = MessageBox.Show(Resources.FFMpegDownloadMessage, Resources.FFMpegDownloadTitle, MessageBoxButtons.OKCancel);
             if (res == DialogResult.OK)
@@ -180,6 +183,13 @@ public partial class ConfigWindow : Form
                 encoder.Enabled = false;
                 encoderOption.Enabled = false;
                 quality.Enabled = true;
+                break;
+            case "MJPEG":
+                encoder.Enabled = true;
+                encoderOption.Enabled = true;
+                quality.Enabled = true;
+                encoder.Items.AddRange(FFMpeg.GetSupportedEncoder("mjpeg"));
+                encoder.SelectedItem = _selectedEncoder["MJPEG"];
                 break;
             default:
                 encoder.Enabled = false;

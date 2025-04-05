@@ -112,7 +112,6 @@ internal class ConfigManager
     {
         return encoder switch
         {
-            "" => "",
             "libaom-av1" => "-threads 1 -cpu-used 8 -still-picture 1 " + (hasAlphaChannel ? "-filter:v:1 alphaextract -map 0 -map 0" : ""),
             "libsvtav1" => "-threads 1 -preset 10",
             "librav1e" => "-threads 1 -speed 10",
@@ -120,7 +119,8 @@ internal class ConfigManager
             "av1_nvenc" => "-preset p7 -pix_fmt yuv420p",
             "av1_amf" => "-quality high_quality",
             "libwebp" => "-threads 1 -preset picture",
-            _ => "-threads 1",
+            "mjpeg" => "-threads 1",
+            _ => "",
         };
     }
 }
@@ -148,7 +148,7 @@ internal class Config
     public string AlphaEncoder { get; set; } = "";
     public string AlphaEncoderOption { get; set; } = "";
     public int AlphaQuality { get; set; } = 20;
-    public int ParallelCompressionProcesses { get;set; } = 1;
+    public int ParallelCompressionProcesses { get; set; } = 1;
     public VirtualLens2Config VirtualLens2 { get; set; } = new();
     internal class VirtualLens2Config
     {
