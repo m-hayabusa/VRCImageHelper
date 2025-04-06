@@ -84,7 +84,7 @@ public partial class ConfigWindow : Form
         var selectDirectoryDialog = new SaveFileDialog()
         {
             Filter = "Directory|" + groupBoxSaveDir.Text,
-            FileName = Path.GetFileName(textBoxFilePattern.Text)
+            FileName = "image"
         };
         if (selectDirectoryDialog is not null && selectDirectoryDialog.ShowDialog() == DialogResult.OK)
         {

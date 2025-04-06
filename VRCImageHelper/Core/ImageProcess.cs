@@ -37,11 +37,75 @@ internal class ImageProcess
         }
     }
 
+    private static string FormatFilePath(string sourceFile, State state, bool hasAlpha)
+    {
+
+        var joinMatch = Regex.Match(state.RoomInfo.JoinDateTime, @"(?<Year>\d+)\.(?<Month>\d+)\.(?<Day>\d+) (?<Hour>\d+):(?<Minute>\d+):(?<Second>\d+)");
+        var takenMatch = Regex.Match(sourceFile, @"(?<Year>\d+)-(?<Month>\d+)-(?<Day>\d+)_(?<Hour>\d+)-(?<Minute>\d+)-(?<Second>\d+)\.(?<Millisecond>\d+)_(?<Width>\d+)x(?<Height>\d+)");
+        var instanceType = state.RoomInfo.Permission switch
+        {
+            "hidden" => "Friends+",
+            "friends" => "Friends",
+            "private" => "Invite",
+            "private_plus" => "Invite+",
+            "group_public" => "GroupPublic",
+            "group_members" => "Group",
+            "group_plus" => "Group+",
+            _ => "Public",
+        };
+        var cameraType = state.VirtualLens2.Enabled ? "VirtualLens2"
+                         : state.Integral.Enabled ? "Integral"
+                         : "VRCCamera";
+
+        var placeholders = new Dictionary<string, string>
+        {
+            { "%TAKEN:yyyy%", takenMatch.Groups["Year"].Value },
+            { "%TAKEN:MM%", takenMatch.Groups["Month"].Value },
+            { "%TAKEN:dd%", takenMatch.Groups["Day"].Value },
+            { "%TAKEN:hh%", takenMatch.Groups["Hour"].Value },
+            { "%TAKEN:mm%", takenMatch.Groups["Minute"].Value },
+            { "%TAKEN:ss%", takenMatch.Groups["Second"].Value },
+            { "%TAKEN:fff%", takenMatch.Groups["Millisecond"].Value },
+
+            { "%JOIN:yyyy%", joinMatch.Groups["Year"].Value },
+            { "%JOIN:MM%", joinMatch.Groups["Month"].Value },
+            { "%JOIN:dd%", joinMatch.Groups["Day"].Value },
+            { "%JOIN:hh%", joinMatch.Groups["Hour"].Value },
+            { "%JOIN:mm%", joinMatch.Groups["Minute"].Value },
+            { "%JOIN:ss%", joinMatch.Groups["Second"].Value },
+
+            { "yyyy", takenMatch.Groups["Year"].Value },
+            { "MM", takenMatch.Groups["Month"].Value },
+            { "dd", takenMatch.Groups["Day"].Value },
+            { "hh", takenMatch.Groups["Hour"].Value },
+            { "mm", takenMatch.Groups["Minute"].Value },
+            { "ss", takenMatch.Groups["Second"].Value },
+            { "fff", takenMatch.Groups["Millisecond"].Value },
+            { "XXXX", takenMatch.Groups["Width"].Value },
+            { "YYYY", takenMatch.Groups["Height"].Value },
+
+            { "%WORLD%", string.IsNullOrEmpty(state.RoomInfo.World_name) ? "UNKNOWN WORLD" : state.RoomInfo.World_name },
+            { "%WORLD:ID%", state.RoomInfo.World_id },
+            { "%INSTANCE:ID%", state.RoomInfo.Instance_id},
+            { "%INSTANCE:TYPE%", instanceType  },
+            { "%OWNER:ID%", state.RoomInfo.Organizer },
+
+            { "%CAMERA%", cameraType}
+        };
+
+        var filePath = hasAlpha ? ConfigManager.AlphaFilePattern : ConfigManager.FilePattern;
+
+        foreach (var entry in placeholders)
+        {
+            filePath = filePath.Replace(entry.Key, entry.Value);
+        }
+
+        return filePath;
+    }
+
     public static void Process(string sourcePath, State state)
     {
         if (!new FileInfo(sourcePath).Exists) return;
-
-        var fileName = Path.GetFileName(sourcePath);
 
         var hasAlpha = false;
         {
@@ -54,56 +118,9 @@ internal class ImageProcess
             }
         }
 
-        var match = Regex.Match(fileName, "(\\d+)-(\\d+)-(\\d+)_(\\d+)-(\\d+)-(\\d+)\\.(\\d+)_(\\d+)x(\\d+)");
-        if (match.Success)
-        {
-            fileName = (hasAlpha ? ConfigManager.AlphaFilePattern : ConfigManager.FilePattern)
-                .Replace("yyyy", match.Groups[1].Value)
-                .Replace("MM", match.Groups[2].Value)
-                .Replace("dd", match.Groups[3].Value)
-                .Replace("hh", match.Groups[4].Value)
-                .Replace("mm", match.Groups[5].Value)
-                .Replace("ss", match.Groups[6].Value)
-                .Replace("fff", match.Groups[7].Value)
-                .Replace("XXXX", match.Groups[8].Value)
-                .Replace("YYYY", match.Groups[9].Value);
-        }
+        var filePath = FormatFilePath(Path.GetFileName(sourcePath), state, hasAlpha);
 
-        {
-            if (state.VirtualLens2.Enabled)
-            {
-                fileName = fileName.Replace("%CAMERA%", "VirtualLens2");
-            }
-            else if (state.Integral.Enabled)
-            {
-                fileName = fileName.Replace("%CAMERA%", "Integral");
-            }
-            else
-            {
-                fileName = fileName.Replace("%CAMERA%", "VRCCamera");
-            }
-
-            fileName = fileName.Replace("%WORLD_ID%", state.RoomInfo.World_id)
-                .Replace("%INSTANCE_ID%", state.RoomInfo.Instance_id)
-                .Replace("%WORLD%", state.RoomInfo.World_name == "" ? "WORLD_UNKNOWN" : state.RoomInfo.World_name);
-
-            var instanceType = state.RoomInfo.Permission switch
-            {
-                "hidden" => "Friends+",
-                "friends" => "Friends",
-                "private" => "Invite",
-                "private_plus" => "Invite+",
-                "group_public" => "GroupPublic",
-                "group_members" => "Group",
-                "group_plus" => "Group+",
-                _ => "Public",
-            };
-
-            fileName = fileName.Replace("%INSTANCE_TYPE%", instanceType)
-                .Replace("%OWNER_ID%", state.RoomInfo.Organizer);
-        }
-
-        fileName = Regex.Replace(fileName, @"[<>:""|?*]", "_");
+        filePath = Regex.Replace(filePath, @"[<>:""|?*]", "_");
 
         var destPath = ConfigManager.DestDir;
         if (destPath == "")
@@ -119,7 +136,7 @@ internal class ImageProcess
 
         var basePath = Path.GetFullPath(destPath);
 
-        destPath = Path.Combine(destPath, fileName);
+        destPath = Path.Combine(destPath, filePath);
 
         if (!Path.GetFullPath(destPath).StartsWith(basePath, StringComparison.OrdinalIgnoreCase))
         {
