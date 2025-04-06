@@ -7,20 +7,25 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Timers;
 
-internal class FileWatcher
+internal class FileWatcher : IDisposable
 {
     // <撮影時刻のDateTime, フルパス>
     public static SortedDictionary<DateTime, string> s_queue = new();
 
     // TODO: VRChatのconfig.json見る
     private readonly string _targetDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "VRChat");
-    private readonly FileSystemWatcher _fileSystemWatcher;
-
+    private readonly FileSystemWatcher _fsWatcher;
     private readonly Timer _refreshTimer;
+
+    public void Dispose()
+    {
+        _refreshTimer.Dispose();
+        _fsWatcher.EnableRaisingEvents = false;
+    }
     public FileWatcher(CancellationToken token)
     {
         // FileSystemWatcherを初期化
-        _fileSystemWatcher = new()
+        _fsWatcher = new()
         {
             Path = _targetDirectory,
             Filter = "*.*", // 全てのファイルを監視（特定の拡張子は後でフィルタ）
@@ -30,35 +35,33 @@ internal class FileWatcher
         Debug.WriteLine(_targetDirectory);
 
         // イベントハンドラを追加
-        _fileSystemWatcher.Created += OnFileCreated;
-        _fileSystemWatcher.Renamed += OnFileCreated;
-        _fileSystemWatcher.Changed += OnFileCreated;
+        _fsWatcher.Created += OnFileCreated;
+        _fsWatcher.Renamed += OnFileCreated;
+        _fsWatcher.Changed += OnFileCreated;
 
         // サブディレクトリも監視
-        _fileSystemWatcher.IncludeSubdirectories = true;
+        _fsWatcher.IncludeSubdirectories = true;
 
         // 監視を開始
-        _fileSystemWatcher.EnableRaisingEvents = true;
+        _fsWatcher.EnableRaisingEvents = true;
 
         // 何かわからないけど、つついておかないと FileSystemWatcher のイベントが発火しない
-        _refreshTimer = new Timer(5000)
+        _refreshTimer = new Timer(10000)
         {
             AutoReset = true
         };
         _refreshTimer.Elapsed += new ElapsedEventHandler((_, _) =>
         {
-            _fileSystemWatcher.EnableRaisingEvents = false;
-            _fileSystemWatcher.EnableRaisingEvents = true;
+            _fsWatcher.EnableRaisingEvents = false;
+            _fsWatcher.EnableRaisingEvents = true;
         });
+        _refreshTimer.Start();
 
         Debug.WriteLine("監視を開始しました");
     }
 
     private void OnFileCreated(object sender, FileSystemEventArgs e)
     {
-        _fileSystemWatcher.EnableRaisingEvents = false;
-        _fileSystemWatcher.EnableRaisingEvents = true;
-
         Debug.WriteLine("OnFile " + e.ChangeType + " " + e.FullPath);
 
         ProcessFile(e.FullPath);
