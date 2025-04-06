@@ -1,76 +1,76 @@
 # VRCImageHelper
 
-VRChat‚ÌƒJƒƒ‰‚ÅŽB‚Á‚½‰æ‘œ‚ðˆ³k‚µ‚ÄA
+VRChatã®ã‚«ãƒ¡ãƒ©ã§æ’®ã£ãŸç”»åƒã‚’åœ§ç¸®ã—ã¦ã€
 
-* ƒ[ƒ‹ƒh–¼
-* ƒCƒ“ƒXƒ^ƒ“ƒX‚É‚¢‚½ƒvƒŒƒCƒ„[–¼
-* [VirtualLens2](https://logilabo.booth.pm/items/2280136)‚Ì
-    * i‚è’l
-    * Å“_‹——£
-    * ˜Io•â³
-* [Integral](https://suzufactory.booth.pm/items/4724145)‚Ì
-    * i‚è’l
-    * Å“_‹——£
-    * ˜Io•â³
-    * (‘½d˜IŒõŽž) ˜IŒõŽžŠÔ
-    * ƒŒƒ“ƒY‚Ìƒ{ƒP‚ÌŒ`ó
-* (MakerNotes‚ÉABase64‚ÅƒGƒ“ƒR[ƒh‚³‚ê‚½JSON‚Æ‚µ‚Ä) World Name / World ID / Instance Owner / Permission / Player‚ÌƒŠƒXƒg
+* ãƒ¯ãƒ¼ãƒ«ãƒ‰å
+* ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã«ã„ãŸãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼å
+* [VirtualLens2](https://logilabo.booth.pm/items/2280136)ã®
+    * çµžã‚Šå€¤
+    * ç„¦ç‚¹è·é›¢
+    * éœ²å‡ºè£œæ­£
+* [Integral](https://suzufactory.booth.pm/items/4724145)ã®
+    * çµžã‚Šå€¤
+    * ç„¦ç‚¹è·é›¢
+    * éœ²å‡ºè£œæ­£
+    * (å¤šé‡éœ²å…‰æ™‚) éœ²å…‰æ™‚é–“
+    * ãƒ¬ãƒ³ã‚ºã®ãƒœã‚±ã®å½¢çŠ¶
+* (MakerNotesã«ã€Base64ã§ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã•ã‚ŒãŸJSONã¨ã—ã¦) World Name / World ID / Instance Owner / Permission / Playerã®ãƒªã‚¹ãƒˆ
 
-‚ð‘‚«ž‚Þƒc[ƒ‹‚Å‚·B
+ã‚’æ›¸ãè¾¼ã‚€ãƒ„ãƒ¼ãƒ«ã§ã™ã€‚
 
-### ƒCƒ“ƒXƒg[ƒ‹
+### ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
 
-1. ƒCƒ“ƒXƒg[ƒ‰‚ð[Releases](https://github.com/m-hayabusa/VRCImageHelper/releases/)‚©‚çƒ_ƒEƒ“ƒ[ƒh‚µAƒCƒ“ƒXƒg[ƒ‹‚·‚é  
-(ƒCƒ“ƒXƒg[ƒ‹’†‚É "You must install or update .NET to run this application." ‚©‚çŽn‚Ü‚éƒƒbƒZ[ƒW‚ªo‚Ä‚«‚½ê‡Au‚Í‚¢v‚ðƒNƒŠƒbƒN‚·‚é‚Æ•K—v‚Èƒ‰ƒCƒuƒ‰ƒŠ (.NET 6.0 Desktop Runtime) ‚Ìƒ_ƒEƒ“ƒ[ƒhƒy[ƒW‚ªŠJ‚­‚Ì‚ÅA‚»‚ê‚ðƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‚©‚ç‚à‚¤ˆê“xVRCImageHelper‚ÌƒCƒ“ƒXƒg[ƒ‹‘€ì‚ð‚µ‚Ä‚­‚¾‚³‚¢)
+1. ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ©ã‚’[Releases](https://github.com/m-hayabusa/VRCImageHelper/releases/)ã‹ã‚‰ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã€ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã™ã‚‹  
+(ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ä¸­ã« "You must install or update .NET to run this application." ã‹ã‚‰å§‹ã¾ã‚‹ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒå‡ºã¦ããŸå ´åˆã€ã€Œã¯ã„ã€ã‚’ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ã¨å¿…è¦ãªãƒ©ã‚¤ãƒ–ãƒ©ãƒª (.NET 6.0 Desktop Runtime) ã®ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ãƒšãƒ¼ã‚¸ãŒé–‹ãã®ã§ã€ãã‚Œã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¦ã‹ã‚‰ã‚‚ã†ä¸€åº¦VRCImageHelperã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«æ“ä½œã‚’ã—ã¦ãã ã•ã„)
 
-2. ƒCƒ“ƒXƒg[ƒ‹’†‚ÉÝ’è‰æ–Ê‚ªo‚Ä‚­‚é‚Ì‚ÅAÝ’è‚·‚é  
-    ![Ý’è‰æ–Ê](https://github.com/m-hayabusa/VRCImageHelper/assets/10593623/8b2b56e3-f31e-4017-9c99-e2ce636e8bfd)
+2. ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ä¸­ã«è¨­å®šç”»é¢ãŒå‡ºã¦ãã‚‹ã®ã§ã€è¨­å®šã™ã‚‹  
+    ![è¨­å®šç”»é¢](https://github.com/m-hayabusa/VRCImageHelper/assets/10593623/8b2b56e3-f31e-4017-9c99-e2ce636e8bfd)
 
-    * •Û‘¶æ: •ÏŠ·Œã‚Ìƒtƒ@ƒCƒ‹‚ð•Û‘¶‚·‚éêŠB–¢Ý’è‚Ìê‡‚ÍVRChat‚ªo—Í‚µ‚½ƒtƒHƒ‹ƒ_‚É•Û‘¶‚³‚ê‚é
+    * ä¿å­˜å…ˆ: å¤‰æ›å¾Œã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿å­˜ã™ã‚‹å ´æ‰€ã€‚æœªè¨­å®šã®å ´åˆã¯VRChatãŒå‡ºåŠ›ã—ãŸãƒ•ã‚©ãƒ«ãƒ€ã«ä¿å­˜ã•ã‚Œã‚‹
 
-    * •Û‘¶Œ`Ž®
-        * ƒtƒ@ƒCƒ‹–¼: •Û‘¶‚·‚é‚Æ‚«‚Ìƒtƒ@ƒCƒ‹–¼BƒfƒtƒHƒ‹ƒg‚Ìê‡‚ÍVRChat‚Ìo—Í‚µ‚½ƒtƒ@ƒCƒ‹‚Æ“¯“™‚Æ‚È‚é‚Í‚¸
-            ƒfƒtƒHƒ‹ƒg‚Ì’l‚Í `yyyy-MM\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY.png`
+    * ä¿å­˜å½¢å¼
+        * ãƒ•ã‚¡ã‚¤ãƒ«å: ä¿å­˜ã™ã‚‹ã¨ãã®ãƒ•ã‚¡ã‚¤ãƒ«åã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®å ´åˆã¯VRChatã®å‡ºåŠ›ã—ãŸãƒ•ã‚¡ã‚¤ãƒ«ã¨åŒç­‰ã¨ãªã‚‹ã¯ãš
+            ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®å€¤ã¯ `yyyy-MM\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY.png`
 
-            | ƒtƒH[ƒ}ƒbƒg       | ’uŠ·“à—e                   | —á                                      |
+            | ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆ       | ç½®æ›å†…å®¹                   | ä¾‹                                      |
             |-------------------|----------------------------|-----------------------------------------|
-            | `yyyy`            | ŽB‰eŽž: ”N               | `2025`                                  |
-            | `MM`              | ŽB‰eŽž: ŒŽ               | `04`                                    |
-            | `dd`              | ŽB‰eŽž: “ú               | `05`                                    |
-            | `hh`              | ŽB‰eŽž: Žž               | `14`                                    |
-            | `mm`              | ŽB‰eŽž: •ª               | `19`                                    |
-            | `ss`              | ŽB‰eŽž: •b               | `53`                                    |
-            | `fff`             | ŽB‰eŽž: •b(¬”“_ˆÈ‰º)  | `375`                                   |
-            | `XXXX`            | ‰æ‘œ‚ÌƒsƒNƒZƒ‹” (‰¡)     | `3840`                                  |
-            | `YYYY`            | ‰æ‘œ‚ÌƒsƒNƒZƒ‹” (c)     | `2160`                                  |
-            | `%{CAMERA}%`        | ƒJƒƒ‰‚ÌŽí—Þ             | `VRCCamera`                             |
-            | `%{WORLD}%`         | ƒ[ƒ‹ƒh–¼               | `nS^TownScaper`                        |
-            | `%{WORLD:ID}%`      | ƒ[ƒ‹ƒhID               | `wrld_3208d019-7310-4c35-b12e-e4278c2689c7` |
-            | `%{INSTANCE:ID}%`   | ƒCƒ“ƒXƒ^ƒ“ƒX”Ô†         | `99424`                                 |
-            | `%{INSTANCE:TYPE}%` | ƒCƒ“ƒXƒ^ƒ“ƒX‚ÌŽí—Þ       | `Friends+`                              |
-            | `%{OWNER:ID}%`      | ƒCƒ“ƒXƒ^ƒ“ƒXƒI[ƒi[‚ÌID | `usr_cbced732-f21a-46cd-a6a6-61990bceea14` |
-            | `%{TAKEN:yyyy}%`    | ŽB‰eŽž: ”N             | `2025`                                  |
-            | `%{TAKEN:MM}%`      | ŽB‰eŽž: ŒŽ             | `04`                                    |
-            | `%{TAKEN:dd}%`      | ŽB‰eŽž: “ú             | `06`                                    |
-            | `%{TAKEN:hh}%`      | ŽB‰eŽž: Žž             | `10`                                    |
-            | `%{TAKEN:mm}%`      | ŽB‰eŽž: •ª             | `53`                                    |
-            | `%{TAKEN:ss}%`      | ŽB‰eŽž: •b             | `56`                                    |
-            | `%{TAKEN:fff}%`     | ŽB‰eŽž: •b(¬”“_ˆÈ‰º) | `149`                                   |
-            | `%{JOIN:yyyy}%`     | ƒCƒ“ƒXƒ^ƒ“ƒXJoin“úŽž: ”N | `2025`                                  |
-            | `%{JOIN:MM}%`       | ƒCƒ“ƒXƒ^ƒ“ƒXJoin“úŽž: ŒŽ | `04`                                    |
-            | `%{JOIN:dd}%`       | ƒCƒ“ƒXƒ^ƒ“ƒXJoin“úŽž: “ú | `05`                                    |
-            | `%{JOIN:hh}%`       | ƒCƒ“ƒXƒ^ƒ“ƒXJoin“úŽž: Žž | `14`                                    |
-            | `%{JOIN:mm}%`       | ƒCƒ“ƒXƒ^ƒ“ƒXJoin“úŽž: •ª | `19`                                    |
-            | `%{JOIN:ss}%`       | ƒCƒ“ƒXƒ^ƒ“ƒXJoin“úŽž: •b | `53`                                    |
+            | `yyyy`            | æ’®å½±æ™‚åˆ»: å¹´               | `2025`                                  |
+            | `MM`              | æ’®å½±æ™‚åˆ»: æœˆ               | `04`                                    |
+            | `dd`              | æ’®å½±æ™‚åˆ»: æ—¥               | `05`                                    |
+            | `hh`              | æ’®å½±æ™‚åˆ»: æ™‚               | `14`                                    |
+            | `mm`              | æ’®å½±æ™‚åˆ»: åˆ†               | `19`                                    |
+            | `ss`              | æ’®å½±æ™‚åˆ»: ç§’               | `53`                                    |
+            | `fff`             | æ’®å½±æ™‚åˆ»: ç§’(å°æ•°ç‚¹ä»¥ä¸‹)  | `375`                                   |
+            | `XXXX`            | ç”»åƒã®ãƒ”ã‚¯ã‚»ãƒ«æ•° (æ¨ª)     | `3840`                                  |
+            | `YYYY`            | ç”»åƒã®ãƒ”ã‚¯ã‚»ãƒ«æ•° (ç¸¦)     | `2160`                                  |
+            | `%{CAMERA}%`        | ã‚«ãƒ¡ãƒ©ã®ç¨®é¡ž             | `VRCCamera`                             |
+            | `%{WORLD}%`         | ãƒ¯ãƒ¼ãƒ«ãƒ‰å               | `nSâ„TownScaper`                        |
+            | `%{WORLD:ID}%`      | ãƒ¯ãƒ¼ãƒ«ãƒ‰ID               | `wrld_3208d019-7310-4c35-b12e-e4278c2689c7` |
+            | `%{INSTANCE:ID}%`   | ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç•ªå·         | `99424`                                 |
+            | `%{INSTANCE:TYPE}%` | ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ç¨®é¡ž       | `Friends+`                              |
+            | `%{OWNER:ID}%`      | ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚ªãƒ¼ãƒŠãƒ¼ã®ID | `usr_cbced732-f21a-46cd-a6a6-61990bceea14` |
+            | `%{TAKEN:yyyy}%`    | æ’®å½±æ™‚åˆ»: å¹´             | `2025`                                  |
+            | `%{TAKEN:MM}%`      | æ’®å½±æ™‚åˆ»: æœˆ             | `04`                                    |
+            | `%{TAKEN:dd}%`      | æ’®å½±æ™‚åˆ»: æ—¥             | `06`                                    |
+            | `%{TAKEN:hh}%`      | æ’®å½±æ™‚åˆ»: æ™‚             | `10`                                    |
+            | `%{TAKEN:mm}%`      | æ’®å½±æ™‚åˆ»: åˆ†             | `53`                                    |
+            | `%{TAKEN:ss}%`      | æ’®å½±æ™‚åˆ»: ç§’             | `56`                                    |
+            | `%{TAKEN:fff}%`     | æ’®å½±æ™‚åˆ»: ç§’(å°æ•°ç‚¹ä»¥ä¸‹) | `149`                                   |
+            | `%{JOIN:yyyy}%`     | ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹Joinæ—¥æ™‚: å¹´ | `2025`                                  |
+            | `%{JOIN:MM}%`       | ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹Joinæ—¥æ™‚: æœˆ | `04`                                    |
+            | `%{JOIN:dd}%`       | ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹Joinæ—¥æ™‚: æ—¥ | `05`                                    |
+            | `%{JOIN:hh}%`       | ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹Joinæ—¥æ™‚: æ™‚ | `14`                                    |
+            | `%{JOIN:mm}%`       | ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹Joinæ—¥æ™‚: åˆ† | `19`                                    |
+            | `%{JOIN:ss}%`       | ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹Joinæ—¥æ™‚: ç§’ | `53`                                    |
 
-            —á‚¦‚ÎA`%JOIN:yyyy%-%JOIN:MM%\%JOIN:yyyy%-%JOIN:MM%-%JOIN:dd%\%WORLD%_%INSTANCE:TYPE%_%INSTANCE:ID%\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY_%CAMERA%.heic` ‚ÆŽw’è‚µ‚½‚Æ‚«A
-            •Û‘¶æƒtƒHƒ‹ƒ_‚ª `D:\Pictures\VRChat` ‚È‚çA`D:\Pictures\VRChat\2025-04\2025-04-05\nS?TownScaper_Invite_64792\VRChat_2025-04-06_10-53-56.149_3840x2160_VRCCamera.heic` ‚É•Û‘¶‚³‚ê‚é
+            ä¾‹ãˆã°ã€`%JOIN:yyyy%-%JOIN:MM%\%JOIN:yyyy%-%JOIN:MM%-%JOIN:dd%\%WORLD%_%INSTANCE:TYPE%_%INSTANCE:ID%\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY_%CAMERA%.heic` ã¨æŒ‡å®šã—ãŸã¨ãã€
+            ä¿å­˜å…ˆãƒ•ã‚©ãƒ«ãƒ€ãŒ `D:\Pictures\VRChat` ãªã‚‰ã€`D:\Pictures\VRChat\2025-04\2025-04-05\nSâ„TownScaper_Invite_64792\VRChat_2025-04-06_10-53-56.149_3840x2160_VRCCamera.heic` ã«ä¿å­˜ã•ã‚Œã‚‹
 
-        * Œ`Ž®E•iŽ¿EƒIƒvƒVƒ‡ƒ“: PNG / JPEG / WEBP / AVIF‚ª‘I‘ð‚Å‚«‚é
-            * PNG: •iŽ¿Ý’è‚ÆƒIƒvƒVƒ‡ƒ“‚ÍA–³Ž‹‚³‚ê‚é
-            * JPEG: •iŽ¿Ý’è‚ÍA0‚ªÅ‚A100‚ªÅ’á‚Æ‚È‚éBƒIƒvƒVƒ‡ƒ“‚Í–³Ž‹‚³‚ê‚é
-            * WEBP / AVIF: •iŽ¿Ý’è‚ÍAffmpeg‚Å‚»‚ê‚¼‚ê‚ÌƒGƒ“ƒR[ƒ_‚Ì
-                | ƒGƒ“ƒR[ƒ_ | ˆø” | Å‚•iŽ¿ | Å‚ˆ³k |
+        * å½¢å¼ãƒ»å“è³ªãƒ»ã‚ªãƒ—ã‚·ãƒ§ãƒ³: PNG / JPEG / WEBP / AVIFãŒé¸æŠžã§ãã‚‹
+            * PNG: å“è³ªè¨­å®šã¨ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã¯ã€ç„¡è¦–ã•ã‚Œã‚‹
+            * JPEG: å“è³ªè¨­å®šã¯ã€0ãŒæœ€é«˜ã€100ãŒæœ€ä½Žã¨ãªã‚‹ã€‚ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã¯ç„¡è¦–ã•ã‚Œã‚‹
+            * WEBP / AVIF: å“è³ªè¨­å®šã¯ã€ffmpegã§ãã‚Œãžã‚Œã®ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€ã®
+                | ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€ | å¼•æ•° | æœ€é«˜å“è³ª | æœ€é«˜åœ§ç¸® |
                 |:-|:-|:-|:-|
                 | `libwebp` | `-quality` | `0` | `100` |
                 | `libaom-av1` | `-crf` | `0` | `63` |
@@ -79,27 +79,27 @@ VRChat‚ÌƒJƒƒ‰‚ÅŽB‚Á‚½‰æ‘œ‚ðˆ³k‚µ‚ÄA
                 | `av1_nvenc` | `-cq` | `1` | `51` |
                 | `av1_amf` | `-qp_i` | `0` | `255` |
 
-                CPU‚ÅlibwebpAlibaom-av1‚Ælibsvtav1‚ð—˜—p‚·‚éê‡‚ÆAIntel Arc A770‚Åav1_qsv‚ð—˜—p‚µ‚½ê‡AAMD Radeon 780M‚Åav1_amf‚ð—˜—p‚µ‚½ê‡‚É‚Â‚¢‚Ä“®ì‚ðŠm”F  
-                (NvEnc‚Å‚Ì“®ì‚ÍŒŸØ‚µ‚Ä‚¢‚Ü‚¹‚ñ‚ªAƒfƒtƒHƒ‹ƒg‚ÅŽw’è‚µ‚Ä‚¢‚éƒIƒvƒVƒ‡ƒ“‚Ì `--pix-fmt yuv420p` ‚Ì‰e‹¿‚ÅAFî•ñ‚ªŠÔˆø‚©‚ê‚é‹““®‚É‚È‚é‚Í‚¸‚Å‚· (https://github.com/m-hayabusa/VRCImageHelper/issues/40))  
-                ƒIƒvƒVƒ‡ƒ“‚ÍAffmpeg‚É’Ç‰Á‚Å“n‚·ˆø”‚ð“ü—Í‚Å‚«‚é ‚½‚Æ‚¦‚Îlibwebp‚Å `-lossless 1` ‚È‚Ç
-    * •Û‘¶Œ`Ž®(“§‰ß)  
-        ‰æ‘œ‚ÉƒAƒ‹ƒtƒ@ƒ`ƒƒƒlƒ‹‚ªŠÜ‚Ü‚ê‚éê‡‚ÌŒ`Ž®Žw’è‚ÅA‚»‚êˆÈŠO‚Íã‹L •Û‘¶Œ`Ž® ‚Æ“¯‚¶B‚½‚¾‚µ:
-        * JPEG: ”ñ‘Î‰ž
-        * AVIF: “§‰ß‚É‘Î‰ž‚µ‚È‚¢AV1ƒGƒ“ƒR[ƒ_‚à‚ ‚é (ŽèŒ³‚ÌŠÂ‹«‚Å‚Ílibaom-av1‚µ‚©“§–¾“x‚ðˆ—‚Å‚«‚È‚¢‚æ‚¤‚¾‚Á‚½)
-3. (‚à‚µVRChat Exif Writer‚ðƒCƒ“ƒXƒg[ƒ‹‚µ‚½‚±‚Æ‚ª‚ ‚èAíœ‚µ‚Ä‚¢‚È‚¢ê‡) VRChat Exif Writer‚ðíœ‚·‚é‚±‚Æ‚É‚Â‚¢‚ÄŠm”FƒƒbƒZ[ƒW‚ªo‚é‚Ì‚ÅA“Á‚É——R‚ª‚È‚¯‚ê‚ÎA‚»‚Ì‚Ü‚Üíœ‚µ‚Ä‚­‚¾‚³‚¢
+                CPUã§libwebpã€libaom-av1ã¨libsvtav1ã‚’åˆ©ç”¨ã™ã‚‹å ´åˆã¨ã€Intel Arc A770ã§av1_qsvã‚’åˆ©ç”¨ã—ãŸå ´åˆã€AMD Radeon 780Mã§av1_amfã‚’åˆ©ç”¨ã—ãŸå ´åˆã«ã¤ã„ã¦å‹•ä½œã‚’ç¢ºèª  
+                (NvEncã§ã®å‹•ä½œã¯æ¤œè¨¼ã—ã¦ã„ã¾ã›ã‚“ãŒã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§æŒ‡å®šã—ã¦ã„ã‚‹ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã® `--pix-fmt yuv420p` ã®å½±éŸ¿ã§ã€è‰²æƒ…å ±ãŒé–“å¼•ã‹ã‚Œã‚‹æŒ™å‹•ã«ãªã‚‹ã¯ãšã§ã™ (https://github.com/m-hayabusa/VRCImageHelper/issues/40))  
+                ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã¯ã€ffmpegã«è¿½åŠ ã§æ¸¡ã™å¼•æ•°ã‚’å…¥åŠ›ã§ãã‚‹ ãŸã¨ãˆã°libwebpã§ `-lossless 1` ãªã©
+    * ä¿å­˜å½¢å¼(é€éŽ)  
+        ç”»åƒã«ã‚¢ãƒ«ãƒ•ã‚¡ãƒãƒ£ãƒãƒ«ãŒå«ã¾ã‚Œã‚‹å ´åˆã®å½¢å¼æŒ‡å®šã§ã€ãã‚Œä»¥å¤–ã¯ä¸Šè¨˜ ä¿å­˜å½¢å¼ ã¨åŒã˜ã€‚ãŸã ã—:
+        * JPEG: éžå¯¾å¿œ
+        * AVIF: é€éŽã«å¯¾å¿œã—ãªã„AV1ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€ã‚‚ã‚ã‚‹ (æ‰‹å…ƒã®ç’°å¢ƒã§ã¯libaom-av1ã—ã‹é€æ˜Žåº¦ã‚’å‡¦ç†ã§ããªã„ã‚ˆã†ã ã£ãŸ)
+3. (ã‚‚ã—VRChat Exif Writerã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ãŸã“ã¨ãŒã‚ã‚Šã€å‰Šé™¤ã—ã¦ã„ãªã„å ´åˆ) VRChat Exif Writerã‚’å‰Šé™¤ã™ã‚‹ã“ã¨ã«ã¤ã„ã¦ç¢ºèªãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒå‡ºã‚‹ã®ã§ã€ç‰¹ã«ç†ç”±ãŒãªã‘ã‚Œã°ã€ãã®ã¾ã¾å‰Šé™¤ã—ã¦ãã ã•ã„
 
-4. ƒXƒ^[ƒgƒƒjƒ…[‚©‚çVRCImageHelper‚ð‹N“®‚µAƒ^ƒXƒNƒo[‚Éo‚Ä‚­‚éƒAƒCƒRƒ“ <img style="height:1em" src="https://github.com/m-hayabusa/VRCImageHelper/raw/master/VRCImageHelper/icon.ico"> ‚ð‰EƒNƒŠƒbƒNAŽ©“®‹N“®‚Ìƒ`ƒFƒbƒN‚ð‚Â‚¯‚é‚ÆAŽŸ‰ñ‚©‚çPC‚ÉƒƒOƒCƒ“‚µ‚½Û‚ÉŽ©“®‚Å‹N“®‚·‚é‚æ‚¤‚É‚È‚é
+4. ã‚¹ã‚¿ãƒ¼ãƒˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‹ã‚‰VRCImageHelperã‚’èµ·å‹•ã—ã€ã‚¿ã‚¹ã‚¯ãƒãƒ¼ã«å‡ºã¦ãã‚‹ã‚¢ã‚¤ã‚³ãƒ³ <img style="height:1em" src="https://github.com/m-hayabusa/VRCImageHelper/raw/master/VRCImageHelper/icon.ico"> ã‚’å³ã‚¯ãƒªãƒƒã‚¯ã€è‡ªå‹•èµ·å‹•ã®ãƒã‚§ãƒƒã‚¯ã‚’ã¤ã‘ã‚‹ã¨ã€æ¬¡å›žã‹ã‚‰PCã«ãƒ­ã‚°ã‚¤ãƒ³ã—ãŸéš›ã«è‡ªå‹•ã§èµ·å‹•ã™ã‚‹ã‚ˆã†ã«ãªã‚‹
 
-### uVRChat‚ÌƒƒOo—Í‚ªƒIƒt‚É‚È‚Á‚Ä‚¢‚Ü‚¹‚ñ‚©Hv‚©‚çŽn‚Ü‚é’Ê’m‚ª•\Ž¦‚³‚ê‚½ê‡
+### ã€ŒVRChatã®ãƒ­ã‚°å‡ºåŠ›ãŒã‚ªãƒ•ã«ãªã£ã¦ã„ã¾ã›ã‚“ã‹ï¼Ÿã€ã‹ã‚‰å§‹ã¾ã‚‹é€šçŸ¥ãŒè¡¨ç¤ºã•ã‚ŒãŸå ´åˆ
 
-VRChat‚ÌÝ’è‚©‚çAuLoggingv‚ð—LŒø‚É‚·‚é•K—v‚ª‚ ‚é‰Â”\«‚ª‚ ‚é‚Ì‚ÅAŠm”F‚ª•K—v
+VRChatã®è¨­å®šã‹ã‚‰ã€ã€ŒLoggingã€ã‚’æœ‰åŠ¹ã«ã™ã‚‹å¿…è¦ãŒã‚ã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ã®ã§ã€ç¢ºèªãŒå¿…è¦
 ![image](https://github.com/m-hayabusa/VRCImageHelper/assets/10593623/b4a22571-bf88-4353-80e3-908323dd2470)
 
-### ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹
+### ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
 
-Windows‚Ì Ý’è/ƒAƒvƒŠ/ƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚éƒAƒvƒŠ ‚©‚çƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚Å‚«‚é (“¯Žž‚ÉÝ’èƒtƒ@ƒCƒ‹‚àíœ‚³‚ê‚é)
+Windowsã® è¨­å®š/ã‚¢ãƒ—ãƒª/ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã‚‹ã‚¢ãƒ—ãƒª ã‹ã‚‰ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã§ãã‚‹ (åŒæ™‚ã«è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚‚å‰Šé™¤ã•ã‚Œã‚‹)
 
-### ExifTool‚Æffmpeg‚É‚Â‚¢‚Ä
-“à•”‚Åexiftool.exe‚Æffmpeg.exe‚ð—˜—p‚·‚é‚ªAŠÂ‹«•Ï” PATH ‚ÉÝ’è‚³‚ê‚½ƒfƒBƒŒƒNƒgƒŠ“à‚ÉŒ©‚Â‚©‚ç‚È‚¯‚ê‚ÎAŽ©“®‚Åƒ_ƒEƒ“ƒ[ƒh‚·‚é‚Ì‚ÅA‚±‚¾‚í‚è‚ª‚È‚¯‚ê‚Î—pˆÓ‚·‚é•K—v‚Í‚È‚¢BŽ©“®‚Åƒ_ƒEƒ“ƒ[ƒh‚³‚ê‚é‚à‚Ì‚Í:
+### ExifToolã¨ffmpegã«ã¤ã„ã¦
+å†…éƒ¨ã§exiftool.exeã¨ffmpeg.exeã‚’åˆ©ç”¨ã™ã‚‹ãŒã€ç’°å¢ƒå¤‰æ•° PATH ã«è¨­å®šã•ã‚ŒãŸãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå†…ã«è¦‹ã¤ã‹ã‚‰ãªã‘ã‚Œã°ã€è‡ªå‹•ã§ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã®ã§ã€ã“ã ã‚ã‚ŠãŒãªã‘ã‚Œã°ç”¨æ„ã™ã‚‹å¿…è¦ã¯ãªã„ã€‚è‡ªå‹•ã§ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã•ã‚Œã‚‹ã‚‚ã®ã¯:
 * ExifTool: https://sourceforge.net/projects/exiftool/files/latest/download
 * ffmpeg: https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip
