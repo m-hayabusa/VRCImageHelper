@@ -1,5 +1,7 @@
 ﻿namespace VRCImageHelper.Core;
 
+using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Timers;
 
 public class NewLineEventArgs : EventArgs
@@ -230,5 +232,17 @@ internal class LogReader : IDisposable
             return new FileInfo(logFile);
 
         return null;
+    }
+
+    public static DateTime CurrentHead { get; private set; } = new(0);
+
+    public static void UpdateCurrentHead(object sender, NewLineEventArgs e)
+    {
+        var match = Regex.Match(e.Line, @"$\d{4}.\d{2}.\d{2} \d{2}:\d{2}:\d{2}");
+
+        if (DateTime.TryParseExact(match.Value, "yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var currentLogTime))
+        {
+            CurrentHead = currentLogTime;
+        }
     }
 }

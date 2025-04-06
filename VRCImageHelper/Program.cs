@@ -134,6 +134,8 @@ internal static class Program
         if (s_toolbarIcon is not null)
             logReader.ScanAllProgress += s_toolbarIcon.Scanning;
 
+        logReader.NewLine += LogReader.UpdateCurrentHead;
+
         logReader.NewLine += ImageProcess.Taken;
 
         logReader.NewLine += VRChat.WorldId;
