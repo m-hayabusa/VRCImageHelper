@@ -34,6 +34,8 @@ partial class ConfigWindow
         bottomPanel = new FlowLayoutPanel();
         groupBoxSaveDir = new GroupBox();
         panelOptions = new Panel();
+        numericUpDownParallel = new NumericUpDown();
+        labelParallel = new Label();
         checkBoxOverwriteDest = new CheckBox();
         checkBoxDeleteOriginal = new CheckBox();
         labelOptions = new Label();
@@ -44,7 +46,7 @@ partial class ConfigWindow
         groupBoxFileFormat = new GroupBox();
         panelFilePattern = new Panel();
         labelFilePattern = new Label();
-        textBoxFilePattern = new TextBox();
+        richTextBoxFilePattern = new RichTextBox();
         buttonResetFilePattern = new Button();
         panelFileFormat = new Panel();
         labelFileFormat = new Label();
@@ -57,7 +59,7 @@ partial class ConfigWindow
         groupBoxAlphaFileFormat = new GroupBox();
         panelAlphaFilePattern = new Panel();
         labelAlphaFilePattern = new Label();
-        textBoxAlphaFilePattern = new TextBox();
+        richTextBoxAlphaFilePattern = new RichTextBox();
         buttonResetAlphaFilePattern = new Button();
         panelAlphaFormat = new Panel();
         labelAlphaFormat = new Label();
@@ -69,11 +71,10 @@ partial class ConfigWindow
         textBoxAlphaEncoderOption = new TextBox();
         mainTableLayoutPanel = new TableLayoutPanel();
         buttonQualityTest = new Button();
-        labelParallel = new Label();
-        numericUpDownParallel = new NumericUpDown();
         bottomPanel.SuspendLayout();
         groupBoxSaveDir.SuspendLayout();
         panelOptions.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)numericUpDownParallel).BeginInit();
         panelSaveDir.SuspendLayout();
         groupBoxFileFormat.SuspendLayout();
         panelFilePattern.SuspendLayout();
@@ -84,7 +85,6 @@ partial class ConfigWindow
         panelAlphaFormat.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)numericUpDownAlphaQuality).BeginInit();
         mainTableLayoutPanel.SuspendLayout();
-        ((System.ComponentModel.ISupportInitialize)numericUpDownParallel).BeginInit();
         SuspendLayout();
         // 
         // buttonSave
@@ -126,6 +126,16 @@ partial class ConfigWindow
         panelOptions.Controls.Add(checkBoxDeleteOriginal);
         panelOptions.Controls.Add(labelOptions);
         panelOptions.Name = "panelOptions";
+        // 
+        // numericUpDownParallel
+        // 
+        resources.ApplyResources(numericUpDownParallel, "numericUpDownParallel");
+        numericUpDownParallel.Name = "numericUpDownParallel";
+        // 
+        // labelParallel
+        // 
+        resources.ApplyResources(labelParallel, "labelParallel");
+        labelParallel.Name = "labelParallel";
         // 
         // checkBoxOverwriteDest
         // 
@@ -185,7 +195,7 @@ partial class ConfigWindow
         resources.ApplyResources(panelFilePattern, "panelFilePattern");
         panelFilePattern.BackColor = SystemColors.Control;
         panelFilePattern.Controls.Add(labelFilePattern);
-        panelFilePattern.Controls.Add(textBoxFilePattern);
+        panelFilePattern.Controls.Add(richTextBoxFilePattern);
         panelFilePattern.Controls.Add(buttonResetFilePattern);
         panelFilePattern.Name = "panelFilePattern";
         // 
@@ -194,10 +204,10 @@ partial class ConfigWindow
         resources.ApplyResources(labelFilePattern, "labelFilePattern");
         labelFilePattern.Name = "labelFilePattern";
         // 
-        // textBoxFilePattern
+        // richTextBoxFilePattern
         // 
-        resources.ApplyResources(textBoxFilePattern, "textBoxFilePattern");
-        textBoxFilePattern.Name = "textBoxFilePattern";
+        resources.ApplyResources(richTextBoxFilePattern, "richTextBoxFilePattern");
+        richTextBoxFilePattern.Name = "richTextBoxFilePattern";
         // 
         // buttonResetFilePattern
         // 
@@ -274,7 +284,7 @@ partial class ConfigWindow
         resources.ApplyResources(panelAlphaFilePattern, "panelAlphaFilePattern");
         panelAlphaFilePattern.BackColor = SystemColors.Control;
         panelAlphaFilePattern.Controls.Add(labelAlphaFilePattern);
-        panelAlphaFilePattern.Controls.Add(textBoxAlphaFilePattern);
+        panelAlphaFilePattern.Controls.Add(richTextBoxAlphaFilePattern);
         panelAlphaFilePattern.Controls.Add(buttonResetAlphaFilePattern);
         panelAlphaFilePattern.Name = "panelAlphaFilePattern";
         // 
@@ -283,10 +293,10 @@ partial class ConfigWindow
         resources.ApplyResources(labelAlphaFilePattern, "labelAlphaFilePattern");
         labelAlphaFilePattern.Name = "labelAlphaFilePattern";
         // 
-        // textBoxAlphaFilePattern
+        // richTextBoxAlphaFilePattern
         // 
-        resources.ApplyResources(textBoxAlphaFilePattern, "textBoxAlphaFilePattern");
-        textBoxAlphaFilePattern.Name = "textBoxAlphaFilePattern";
+        resources.ApplyResources(richTextBoxAlphaFilePattern, "richTextBoxAlphaFilePattern");
+        richTextBoxAlphaFilePattern.Name = "richTextBoxAlphaFilePattern";
         // 
         // buttonResetAlphaFilePattern
         // 
@@ -364,16 +374,6 @@ partial class ConfigWindow
         buttonQualityTest.Name = "buttonQualityTest";
         buttonQualityTest.UseVisualStyleBackColor = true;
         // 
-        // labelParallel
-        // 
-        resources.ApplyResources(labelParallel, "labelParallel");
-        labelParallel.Name = "labelParallel";
-        // 
-        // numericUpDownParallel
-        // 
-        resources.ApplyResources(numericUpDownParallel, "numericUpDownParallel");
-        numericUpDownParallel.Name = "numericUpDownParallel";
-        // 
         // ConfigWindow
         // 
         AcceptButton = buttonSave;
@@ -390,6 +390,7 @@ partial class ConfigWindow
         groupBoxSaveDir.PerformLayout();
         panelOptions.ResumeLayout(false);
         panelOptions.PerformLayout();
+        ((System.ComponentModel.ISupportInitialize)numericUpDownParallel).EndInit();
         panelSaveDir.ResumeLayout(false);
         panelSaveDir.PerformLayout();
         groupBoxFileFormat.ResumeLayout(false);
@@ -408,7 +409,6 @@ partial class ConfigWindow
         ((System.ComponentModel.ISupportInitialize)numericUpDownAlphaQuality).EndInit();
         mainTableLayoutPanel.ResumeLayout(false);
         mainTableLayoutPanel.PerformLayout();
-        ((System.ComponentModel.ISupportInitialize)numericUpDownParallel).EndInit();
         ResumeLayout(false);
     }
 
@@ -440,8 +440,8 @@ partial class ConfigWindow
     private Button buttonResetAlphaFilePattern;
     private Button buttonQualityTest;
     private TextBox textBoxDir;
-    private TextBox textBoxFilePattern;
-    private TextBox textBoxAlphaFilePattern;
+    private RichTextBox richTextBoxFilePattern;
+    private RichTextBox richTextBoxAlphaFilePattern;
     private TextBox textBoxEncoderOption;
     private TextBox textBoxAlphaEncoderOption;
     private ComboBox comboBoxFileFormat;

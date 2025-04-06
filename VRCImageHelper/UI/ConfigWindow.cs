@@ -57,13 +57,13 @@ public partial class ConfigWindow : Form
         comboBoxFileFormat.SelectedItem = _config.Format;
         comboBoxEncoder.SelectedItem = _config.Encoder;
 
-        textBoxFilePattern.Text = _config.FilePattern;
+        richTextBoxFilePattern.Text = _config.FilePattern;
         textBoxEncoderOption.Text = _config.EncoderOption;
 
         comboBoxAlphaFileFormat.SelectedItem = _config.AlphaFormat;
         comboBoxAlphaEncoder.SelectedItem = _config.AlphaEncoder;
 
-        textBoxAlphaFilePattern.Text = _config.AlphaFilePattern;
+        richTextBoxAlphaFilePattern.Text = _config.AlphaFilePattern;
         textBoxAlphaEncoderOption.Text = _config.AlphaEncoderOption;
 
         checkBoxDeleteOriginal.CheckState = _config.DeleteOriginalFile ? CheckState.Checked : CheckState.Unchecked;
@@ -104,7 +104,7 @@ public partial class ConfigWindow : Form
         var alpha = false;
         if ((control).Name.Contains("Alpha")) alpha = true;
 
-        var textBox = GetControl<TextBox>(control, "FilePattern");
+        var textBox = GetControl<RichTextBox>(control, "FilePattern");
         var comboBox = GetControl<ComboBox>(control, "FileFormat");
 
         if (textBox is not null && comboBox is not null)
@@ -124,7 +124,7 @@ public partial class ConfigWindow : Form
         var alpha = "";
         if (control.Name.Contains("Alpha")) alpha = "Alpha";
 
-        var textBox = GetControl<TextBox>(control, $"{alpha}FilePattern");
+        var textBox = GetControl<RichTextBox>(control, $"{alpha}FilePattern");
         var fileFormat = GetControl<ComboBox>(control, $"{alpha}FileFormat");
         var encoder = GetControl<ComboBox>(control, $"{alpha}Encoder");
         var encoderOption = GetControl<TextBox>(control, $"{alpha}EncoderOption");
@@ -134,7 +134,7 @@ public partial class ConfigWindow : Form
 
         if (format is not null && format != _format[alpha])
         {
-            textBox.Text = Path.ChangeExtension(textBoxFilePattern.Text, format.ToLower());
+            textBox.Text = Path.ChangeExtension(richTextBoxFilePattern.Text, format.ToLower());
             _format[alpha] = format;
         }
 
@@ -235,10 +235,10 @@ public partial class ConfigWindow : Form
         _config.Quality = Convert.ToInt32(numericUpDownQuality.Value);
         _config.ParallelCompressionProcesses = Convert.ToInt32(numericUpDownParallel.Value);
         _config.EncoderOption = textBoxEncoderOption.Text;
-        _config.FilePattern = textBoxFilePattern.Text;
+        _config.FilePattern = richTextBoxFilePattern.Text;
         _config.AlphaQuality = Convert.ToInt32(numericUpDownAlphaQuality.Value);
         _config.AlphaEncoderOption = textBoxAlphaEncoderOption.Text;
-        _config.AlphaFilePattern = textBoxAlphaFilePattern.Text;
+        _config.AlphaFilePattern = richTextBoxAlphaFilePattern.Text;
 
         _config.DeleteOriginalFile = checkBoxDeleteOriginal.CheckState == CheckState.Checked;
         _config.OverwriteDestinationFile = checkBoxOverwriteDest.CheckState == CheckState.Checked;

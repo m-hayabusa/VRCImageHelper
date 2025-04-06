@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!--
-    Microsoft ResX Schema 
+    Microsoft ResX Schema
 
     Version 2.0
 
@@ -48,7 +48,7 @@
     value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
     value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
@@ -117,1274 +117,1280 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="groupBoxFileFormat.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 5, 5, 5</value>
-  </data>
-  <data name="&gt;&gt;textBoxEncoderOption.Parent" xml:space="preserve">
-    <value>panelFileFormat</value>
-  </data>
-  <data name="&gt;&gt;textBoxAlphaEncoderOption.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="labelFileFormat.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 7</value>
-  </data>
-  <data name="labelAlphaQuality.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 15</value>
+  <data name="&gt;&gt;labelAlphaQuality.Name" xml:space="preserve">
+    <value>labelAlphaQuality</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="labelFileFormat.AutoSize" type="System.Boolean, mscorlib">
+  <data name="panelOptions.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="textBoxFilePattern.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 3</value>
-  </data>
-  <data name="groupBoxSaveDir.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 5, 5, 5</value>
-  </data>
-  <data name="labelAlphaEncoderOption.Text" xml:space="preserve">
-    <value>Params</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="mainTableLayoutPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="panelFileFormat.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>0, 30</value>
-  </data>
-  <data name="&gt;&gt;labelOptions.Parent" xml:space="preserve">
-    <value>panelOptions</value>
-  </data>
-  <data name="&gt;&gt;bottomPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bottomPanel.Name" xml:space="preserve">
-    <value>bottomPanel</value>
-  </data>
-  <data name="&gt;&gt;labelFileFormat.Parent" xml:space="preserve">
-    <value>panelFileFormat</value>
-  </data>
-  <data name="bottomPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Bottom</value>
-  </data>
-  <data name="buttonCancel.TabIndex" type="System.Int32, mscorlib">
-    <value>110</value>
+  <data name="textBoxDir.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
   <data name="labelQuality.TabIndex" type="System.Int32, mscorlib">
     <value>26</value>
   </data>
-  <data name="panelSaveDir.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+  <data name="labelSaveDir.Text" xml:space="preserve">
+    <value>Directory</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="comboBoxFileFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="&gt;&gt;comboBoxAlphaEncoder.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="numericUpDownAlphaQuality.Location" type="System.Drawing.Point, System.Drawing">
+    <value>270, 3</value>
+  </data>
+  <data name="labelFilePattern.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 15</value>
+  </data>
+  <data name="&gt;&gt;buttonCancel.Parent" xml:space="preserve">
+    <value>bottomPanel</value>
+  </data>
+  <data name="&gt;&gt;labelOptions.Name" xml:space="preserve">
+    <value>labelOptions</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="buttonCancel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 6, 0, 6</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelOptions.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;panelOptions.Name" xml:space="preserve">
+    <value>panelOptions</value>
+  </data>
+  <data name="&gt;&gt;buttonCancel.Name" xml:space="preserve">
+    <value>buttonCancel</value>
+  </data>
+  <data name="labelAlphaEncoderOption.Text" xml:space="preserve">
+    <value>Params</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>7, 15</value>
+  </data>
+  <data name="buttonSave.TabIndex" type="System.Int32, mscorlib">
+    <value>100</value>
+  </data>
+  <data name="&gt;&gt;buttonResetAlphaFilePattern.Parent" xml:space="preserve">
+    <value>panelAlphaFilePattern</value>
+  </data>
+  <data name="bottomPanel.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
     <value>GrowAndShrink</value>
   </data>
-  <data name="groupBoxFileFormat.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 30</value>
-  </data>
-  <data name="groupBoxSaveDir.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;labelEncoderOption.Name" xml:space="preserve">
-    <value>labelEncoderOption</value>
+  <data name="&gt;&gt;panelAlphaFilePattern.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="bottomPanel.Size" type="System.Drawing.Size, System.Drawing">
     <value>624, 40</value>
   </data>
-  <data name="&gt;&gt;textBoxDir.Parent" xml:space="preserve">
-    <value>panelSaveDir</value>
+  <data name="panelSaveDir.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
   </data>
-  <data name="&gt;&gt;labelAlphaFilePattern.Type" xml:space="preserve">
+  <data name="labelQuality.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 15</value>
+  </data>
+  <data name="&gt;&gt;numericUpDownQuality.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="labelSaveDir.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;panelAlphaFilePattern.Name" xml:space="preserve">
+    <value>panelAlphaFilePattern</value>
+  </data>
+  <data name="buttonCancel.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="&gt;&gt;panelFileFormat.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="labelFilePattern.Text" xml:space="preserve">
+    <value>Filename</value>
+  </data>
+  <data name="&gt;&gt;labelAlphaFormat.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="buttonResetFilePattern.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Right</value>
+  </data>
+  <data name="comboBoxFileFormat.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="groupBoxSaveDir.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 30</value>
+  </data>
+  <data name="checkBoxOverwriteDest.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;buttonQualityTest.Name" xml:space="preserve">
+    <value>buttonQualityTest</value>
+  </data>
+  <data name="bottomPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 10, 0</value>
+  </data>
+  <data name="numericUpDownParallel.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="bottomPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="buttonCancel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="groupBoxFileFormat.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="groupBoxAlphaFileFormat.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;labelQuality.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="panelFilePattern.Size" type="System.Drawing.Size, System.Drawing">
-    <value>600, 30</value>
-  </data>
-  <data name="buttonCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="&gt;&gt;comboBoxEncoder.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="textBoxAlphaFilePattern.Size" type="System.Drawing.Size, System.Drawing">
-    <value>450, 23</value>
-  </data>
-  <data name="&gt;&gt;labelAlphaFormat.Parent" xml:space="preserve">
+  <data name="&gt;&gt;labelAlphaQuality.Parent" xml:space="preserve">
     <value>panelAlphaFormat</value>
   </data>
-  <data name="panelOptions.AutoSize" type="System.Boolean, mscorlib">
+  <data name="&gt;&gt;comboBoxAlphaEncoder.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;textBoxAlphaEncoderOption.Name" xml:space="preserve">
+    <value>textBoxAlphaEncoderOption</value>
+  </data>
+  <data name="labelFileFormat.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="checkBoxDeleteOriginal.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="bottomPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxFilePattern.Name" xml:space="preserve">
+    <value>richTextBoxFilePattern</value>
+  </data>
+  <data name="buttonSelectDir.Text" xml:space="preserve">
+    <value>Select Directory</value>
+  </data>
+  <data name="comboBoxAlphaEncoder.Location" type="System.Drawing.Point, System.Drawing">
+    <value>125, 3</value>
+  </data>
+  <data name="panelAlphaFormat.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxDeleteOriginal.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="&gt;&gt;labelQuality.Parent" xml:space="preserve">
     <value>panelFileFormat</value>
   </data>
-  <data name="checkBoxDeleteOriginal.Location" type="System.Drawing.Point, System.Drawing">
-    <value>67, 6</value>
+  <data name="&gt;&gt;panelOptions.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="buttonCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 25</value>
+  <data name="&gt;&gt;buttonResetFilePattern.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
-  <data name="&gt;&gt;comboBoxEncoder.Parent" xml:space="preserve">
+  <data name="&gt;&gt;labelFileFormat.Parent" xml:space="preserve">
     <value>panelFileFormat</value>
-  </data>
-  <data name="&gt;&gt;textBoxAlphaEncoderOption.Parent" xml:space="preserve">
-    <value>panelAlphaFormat</value>
-  </data>
-  <data name="textBoxDir.Size" type="System.Drawing.Size, System.Drawing">
-    <value>450, 23</value>
-  </data>
-  <data name="textBoxDir.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 3</value>
-  </data>
-  <data name="&gt;&gt;panelAlphaFilePattern.Name" xml:space="preserve">
-    <value>panelAlphaFilePattern</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="textBoxFilePattern.Size" type="System.Drawing.Size, System.Drawing">
-    <value>450, 23</value>
-  </data>
-  <data name="&gt;&gt;groupBoxSaveDir.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="panelFilePattern.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="panelAlphaFormat.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="buttonResetAlphaFilePattern.Text" xml:space="preserve">
-    <value>Reset</value>
-  </data>
-  <data name="textBoxAlphaEncoderOption.TabIndex" type="System.Int32, mscorlib">
-    <value>40</value>
-  </data>
-  <data name="panelAlphaFilePattern.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>0, 30</value>
-  </data>
-  <data name="&gt;&gt;numericUpDownAlphaQuality.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="buttonResetAlphaFilePattern.Location" type="System.Drawing.Point, System.Drawing">
-    <value>520, 3</value>
-  </data>
-  <data name="labelQuality.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 15</value>
-  </data>
-  <data name="textBoxEncoderOption.Size" type="System.Drawing.Size, System.Drawing">
-    <value>234, 23</value>
-  </data>
-  <data name="&gt;&gt;labelAlphaFormat.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;labelAlphaEncoderOption.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="buttonSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 27</value>
-  </data>
-  <data name="buttonResetFilePattern.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="&gt;&gt;buttonCancel.Parent" xml:space="preserve">
-    <value>bottomPanel</value>
-  </data>
-  <data name="labelOptions.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;textBoxAlphaFilePattern.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="panelFileFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left, Right</value>
-  </data>
-  <data name="labelFilePattern.Text" xml:space="preserve">
-    <value>Filename</value>
-  </data>
-  <data name="panelOptions.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>0, 30</value>
-  </data>
-  <data name="textBoxEncoderOption.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left, Right</value>
-  </data>
-  <data name="mainTableLayoutPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="&gt;&gt;comboBoxAlphaEncoder.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;labelAlphaFormat.Name" xml:space="preserve">
-    <value>labelAlphaFormat</value>
-  </data>
-  <data name="numericUpDownAlphaQuality.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 23</value>
-  </data>
-  <data name="&gt;&gt;groupBoxAlphaFileFormat.Name" xml:space="preserve">
-    <value>groupBoxAlphaFileFormat</value>
-  </data>
-  <data name="comboBoxFileFormat.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 23</value>
-  </data>
-  <data name="&gt;&gt;checkBoxOverwriteDest.Parent" xml:space="preserve">
-    <value>panelOptions</value>
-  </data>
-  <data name="groupBoxAlphaFileFormat.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowAndShrink</value>
-  </data>
-  <data name="numericUpDownAlphaQuality.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left</value>
-  </data>
-  <data name="&gt;&gt;groupBoxSaveDir.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="comboBoxFileFormat.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 3</value>
-  </data>
-  <data name="comboBoxAlphaEncoder.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 23</value>
-  </data>
-  <data name="numericUpDownAlphaQuality.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 3</value>
-  </data>
-  <data name="&gt;&gt;labelAlphaFilePattern.Parent" xml:space="preserve">
-    <value>panelAlphaFilePattern</value>
-  </data>
-  <data name="&gt;&gt;panelFilePattern.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;checkBoxDeleteOriginal.Parent" xml:space="preserve">
-    <value>panelOptions</value>
-  </data>
-  <data name="mainTableLayoutPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="groupBoxSaveDir" Row="-1" RowSpan="1" Column="-1" ColumnSpan="1" /&gt;&lt;Control Name="groupBoxFileFormat" Row="-1" RowSpan="1" Column="-1" ColumnSpan="1" /&gt;&lt;Control Name="groupBoxAlphaFileFormat" Row="-1" RowSpan="1" Column="-1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,20" /&gt;&lt;Rows Styles="Absolute,95,Absolute,95,Absolute,95,Absolute,10" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="labelAlphaFilePattern.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 7</value>
-  </data>
-  <data name="panelAlphaFilePattern.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left, Right</value>
-  </data>
-  <data name="labelSaveDir.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
-  </data>
-  <data name="&gt;&gt;panelAlphaFilePattern.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;labelQuality.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;panelFileFormat.Name" xml:space="preserve">
-    <value>panelFileFormat</value>
-  </data>
-  <data name="&gt;&gt;groupBoxAlphaFileFormat.Parent" xml:space="preserve">
-    <value>mainTableLayoutPanel</value>
-  </data>
-  <data name="&gt;&gt;panelAlphaFormat.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panelSaveDir.Name" xml:space="preserve">
-    <value>panelSaveDir</value>
-  </data>
-  <data name="buttonSave.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="buttonSelectDir.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="numericUpDownQuality.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left</value>
-  </data>
-  <data name="labelFilePattern.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;labelEncoderOption.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="buttonQualityTest.Location" type="System.Drawing.Point, System.Drawing">
-    <value>438, 3</value>
-  </data>
-  <data name="comboBoxAlphaEncoder.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left</value>
-  </data>
-  <data name="labelAlphaFilePattern.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="numericUpDownAlphaQuality.TabIndex" type="System.Int32, mscorlib">
-    <value>30</value>
-  </data>
-  <data name="&gt;&gt;numericUpDownAlphaQuality.Parent" xml:space="preserve">
-    <value>panelAlphaFormat</value>
-  </data>
-  <data name="labelAlphaQuality.Location" type="System.Drawing.Point, System.Drawing">
-    <value>225, 7</value>
-  </data>
-  <data name="panelSaveDir.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left, Right</value>
-  </data>
-  <data name="&gt;&gt;panelAlphaFormat.Name" xml:space="preserve">
-    <value>panelAlphaFormat</value>
-  </data>
-  <data name="&gt;&gt;labelQuality.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="textBoxAlphaEncoderOption.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left, Right</value>
-  </data>
-  <data name="&gt;&gt;panelFilePattern.Name" xml:space="preserve">
-    <value>panelFilePattern</value>
-  </data>
-  <data name="textBoxAlphaFilePattern.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="groupBoxFileFormat.Size" type="System.Drawing.Size, System.Drawing">
-    <value>614, 85</value>
-  </data>
-  <data name="&gt;&gt;panelSaveDir.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="groupBoxAlphaFileFormat.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="labelSaveDir.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;groupBoxSaveDir.Parent" xml:space="preserve">
-    <value>mainTableLayoutPanel</value>
-  </data>
-  <data name="&gt;&gt;checkBoxDeleteOriginal.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="labelAlphaQuality.TabIndex" type="System.Int32, mscorlib">
-    <value>26</value>
-  </data>
-  <data name="panelAlphaFilePattern.Size" type="System.Drawing.Size, System.Drawing">
-    <value>600, 30</value>
-  </data>
-  <data name="buttonSelectDir.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Right</value>
-  </data>
-  <data name="groupBoxAlphaFileFormat.Text" xml:space="preserve">
-    <value>Image format (Transparent)</value>
-  </data>
-  <data name="&gt;&gt;labelAlphaEncoderOption.Parent" xml:space="preserve">
-    <value>panelAlphaFormat</value>
-  </data>
-  <data name="&gt;&gt;checkBoxDeleteOriginal.Name" xml:space="preserve">
-    <value>checkBoxDeleteOriginal</value>
-  </data>
-  <data name="labelFileFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
-  </data>
-  <data name="labelAlphaFormat.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="numericUpDownQuality.TabIndex" type="System.Int32, mscorlib">
-    <value>30</value>
-  </data>
-  <data name="&gt;&gt;comboBoxAlphaFileFormat.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="panelAlphaFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left, Right</value>
-  </data>
-  <data name="&gt;&gt;textBoxFilePattern.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="buttonResetAlphaFilePattern.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="comboBoxFileFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left</value>
-  </data>
-  <data name="mainTableLayoutPanel.RowCount" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="comboBoxAlphaFileFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left</value>
-  </data>
-  <data name="checkBoxDeleteOriginal.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="buttonCancel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="buttonCancel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 6, 0, 6</value>
-  </data>
-  <data name="panelFilePattern.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="labelOptions.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
-  </data>
-  <data name="&gt;&gt;textBoxAlphaFilePattern.Name" xml:space="preserve">
-    <value>textBoxAlphaFilePattern</value>
-  </data>
-  <data name="panelAlphaFilePattern.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 20</value>
-  </data>
-  <data name="panelSaveDir.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 20</value>
-  </data>
-  <data name="panelOptions.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 50</value>
-  </data>
-  <data name="labelAlphaQuality.Text" xml:space="preserve">
-    <value>Quality</value>
-  </data>
-  <data name="textBoxFilePattern.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;labelSaveDir.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;labelEncoderOption.Parent" xml:space="preserve">
-    <value>panelFileFormat</value>
-  </data>
-  <data name="&gt;&gt;buttonResetFilePattern.Parent" xml:space="preserve">
-    <value>panelFilePattern</value>
-  </data>
-  <data name="checkBoxDeleteOriginal.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;panelFilePattern.Parent" xml:space="preserve">
-    <value>groupBoxFileFormat</value>
-  </data>
-  <data name="panelAlphaFormat.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 50</value>
-  </data>
-  <data name="&gt;&gt;comboBoxFileFormat.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="panelSaveDir.Size" type="System.Drawing.Size, System.Drawing">
-    <value>600, 30</value>
-  </data>
-  <data name="labelQuality.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="labelOptions.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 7</value>
-  </data>
-  <data name="&gt;&gt;buttonQualityTest.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;textBoxEncoderOption.Name" xml:space="preserve">
-    <value>textBoxEncoderOption</value>
-  </data>
-  <data name="panelAlphaFilePattern.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;labelFilePattern.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;comboBoxAlphaFileFormat.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panelFileFormat.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="comboBoxEncoder.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 23</value>
-  </data>
-  <data name="&gt;&gt;comboBoxEncoder.Name" xml:space="preserve">
-    <value>comboBoxEncoder</value>
-  </data>
-  <data name="labelSaveDir.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="comboBoxEncoder.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left</value>
-  </data>
-  <data name="&gt;&gt;numericUpDownQuality.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="groupBoxFileFormat.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;panelSaveDir.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonSelectDir.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="textBoxAlphaFilePattern.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left, Right</value>
-  </data>
-  <data name="buttonCancel.Text" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="&gt;&gt;textBoxFilePattern.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="labelAlphaQuality.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
-  </data>
-  <data name="&gt;&gt;labelAlphaQuality.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="buttonSelectDir.Text" xml:space="preserve">
-    <value>Select Directory</value>
-  </data>
-  <data name="textBoxEncoderOption.TabIndex" type="System.Int32, mscorlib">
-    <value>40</value>
-  </data>
-  <data name="panelFileFormat.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowAndShrink</value>
-  </data>
-  <data name="&gt;&gt;checkBoxOverwriteDest.Name" xml:space="preserve">
-    <value>checkBoxOverwriteDest</value>
-  </data>
-  <data name="&gt;&gt;checkBoxOverwriteDest.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;textBoxAlphaFilePattern.Parent" xml:space="preserve">
-    <value>panelAlphaFilePattern</value>
-  </data>
-  <data name="groupBoxAlphaFileFormat.Size" type="System.Drawing.Size, System.Drawing">
-    <value>614, 85</value>
-  </data>
-  <data name="groupBoxFileFormat.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 100</value>
-  </data>
-  <data name="textBoxAlphaEncoderOption.Size" type="System.Drawing.Size, System.Drawing">
-    <value>234, 23</value>
-  </data>
-  <data name="&gt;&gt;labelFilePattern.Name" xml:space="preserve">
-    <value>labelFilePattern</value>
-  </data>
-  <data name="checkBoxOverwriteDest.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>640, 360</value>
-  </data>
-  <data name="numericUpDownQuality.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="&gt;&gt;buttonSelectDir.Name" xml:space="preserve">
-    <value>buttonSelectDir</value>
-  </data>
-  <data name="&gt;&gt;buttonResetAlphaFilePattern.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="mainTableLayoutPanel.ColumnCount" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="panelAlphaFilePattern.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="buttonSave.Text" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="buttonSave.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Right</value>
-  </data>
-  <data name="panelAlphaFormat.Size" type="System.Drawing.Size, System.Drawing">
-    <value>620, 30</value>
-  </data>
-  <data name="&gt;&gt;textBoxFilePattern.Parent" xml:space="preserve">
-    <value>panelFilePattern</value>
-  </data>
-  <data name="&gt;&gt;groupBoxSaveDir.Name" xml:space="preserve">
-    <value>groupBoxSaveDir</value>
-  </data>
-  <data name="&gt;&gt;labelOptions.Name" xml:space="preserve">
-    <value>labelOptions</value>
-  </data>
-  <data name="comboBoxAlphaEncoder.Location" type="System.Drawing.Point, System.Drawing">
-    <value>125, 3</value>
-  </data>
-  <data name="&gt;&gt;panelSaveDir.Parent" xml:space="preserve">
-    <value>groupBoxSaveDir</value>
-  </data>
-  <data name="labelAlphaEncoderOption.Location" type="System.Drawing.Point, System.Drawing">
-    <value>310, 7</value>
-  </data>
-  <data name="textBoxAlphaEncoderOption.Location" type="System.Drawing.Point, System.Drawing">
-    <value>360, 3</value>
-  </data>
-  <data name="&gt;&gt;textBoxAlphaEncoderOption.Name" xml:space="preserve">
-    <value>textBoxAlphaEncoderOption</value>
-  </data>
-  <data name="&gt;&gt;labelOptions.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;labelFileFormat.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;panelAlphaFilePattern.Parent" xml:space="preserve">
-    <value>groupBoxAlphaFileFormat</value>
-  </data>
-  <data name="labelFilePattern.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
-  </data>
-  <data name="labelEncoderOption.TabIndex" type="System.Int32, mscorlib">
-    <value>31</value>
-  </data>
-  <data name="comboBoxAlphaFileFormat.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="labelAlphaFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
-  </data>
-  <data name="&gt;&gt;labelSaveDir.Parent" xml:space="preserve">
-    <value>panelSaveDir</value>
-  </data>
-  <data name="&gt;&gt;panelFileFormat.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="buttonResetAlphaFilePattern.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Right</value>
-  </data>
-  <data name="groupBoxSaveDir.Text" xml:space="preserve">
-    <value>Destination directory</value>
-  </data>
-  <data name="textBoxEncoderOption.Location" type="System.Drawing.Point, System.Drawing">
-    <value>360, 3</value>
-  </data>
-  <data name="&gt;&gt;buttonCancel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="mainTableLayoutPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>624, 321</value>
-  </data>
-  <data name="&gt;&gt;textBoxDir.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="groupBoxAlphaFileFormat.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 30</value>
-  </data>
-  <data name="bottomPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="panelFilePattern.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowAndShrink</value>
-  </data>
-  <data name="&gt;&gt;textBoxAlphaEncoderOption.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="panelAlphaFilePattern.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;labelAlphaFilePattern.Name" xml:space="preserve">
-    <value>labelAlphaFilePattern</value>
-  </data>
-  <data name="groupBoxFileFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left, Right</value>
   </data>
   <data name="panelAlphaFormat.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
-  <data name="panelOptions.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowAndShrink</value>
+  <data name="&gt;&gt;textBoxDir.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="labelAlphaQuality.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;comboBoxFileFormat.Name" xml:space="preserve">
+    <value>comboBoxFileFormat</value>
   </data>
-  <data name="panelFilePattern.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 20</value>
+  <data name="&gt;&gt;numericUpDownParallel.Parent" xml:space="preserve">
+    <value>panelOptions</value>
   </data>
-  <data name="buttonSave.TabIndex" type="System.Int32, mscorlib">
-    <value>100</value>
+  <data name="&gt;&gt;labelOptions.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;labelAlphaQuality.Parent" xml:space="preserve">
-    <value>panelAlphaFormat</value>
+  <data name="groupBoxSaveDir.Text" xml:space="preserve">
+    <value>Destination directory</value>
   </data>
-  <data name="buttonQualityTest.TabIndex" type="System.Int32, mscorlib">
-    <value>45</value>
-  </data>
-  <data name="groupBoxFileFormat.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowAndShrink</value>
-  </data>
-  <data name="&gt;&gt;buttonSelectDir.Type" xml:space="preserve">
+  <data name="&gt;&gt;buttonSave.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;groupBoxFileFormat.ZOrder" xml:space="preserve">
+  <data name="checkBoxOverwriteDest.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;labelAlphaFilePattern.Parent" xml:space="preserve">
+    <value>panelAlphaFilePattern</value>
+  </data>
+  <data name="&gt;&gt;labelFilePattern.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelEncoderOption.Name" xml:space="preserve">
+    <value>labelEncoderOption</value>
+  </data>
+  <data name="&gt;&gt;groupBoxSaveDir.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="labelAlphaQuality.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 15</value>
+  </data>
+  <data name="buttonQualityTest.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Right</value>
+  </data>
+  <data name="labelAlphaFilePattern.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxAlphaFilePattern.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="panelSaveDir.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left, Right</value>
+  </data>
+  <data name="&gt;&gt;numericUpDownAlphaQuality.Name" xml:space="preserve">
+    <value>numericUpDownAlphaQuality</value>
+  </data>
+  <data name="&gt;&gt;labelEncoderOption.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxEncoderOption.Parent" xml:space="preserve">
+    <value>panelFileFormat</value>
+  </data>
+  <data name="&gt;&gt;comboBoxFileFormat.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>624, 321</value>
+  <data name="&gt;&gt;comboBoxAlphaEncoder.Name" xml:space="preserve">
+    <value>comboBoxAlphaEncoder</value>
   </data>
-  <data name="groupBoxSaveDir.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="&gt;&gt;panelOptions.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="panelAlphaFormat.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 50</value>
+  </data>
+  <data name="&gt;&gt;checkBoxOverwriteDest.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;buttonSelectDir.Name" xml:space="preserve">
+    <value>buttonSelectDir</value>
+  </data>
+  <data name="&gt;&gt;comboBoxAlphaFileFormat.Name" xml:space="preserve">
+    <value>comboBoxAlphaFileFormat</value>
+  </data>
+  <data name="numericUpDownAlphaQuality.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>VRC Image Helper / Config</value>
+  </data>
+  <data name="panelSaveDir.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="groupBoxSaveDir.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
+  <data name="panelFilePattern.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Left, Right</value>
   </data>
   <data name="&gt;&gt;buttonResetAlphaFilePattern.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="numericUpDownAlphaQuality.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="&gt;&gt;groupBoxFileFormat.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="groupBoxSaveDir.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBoxOverwriteDest.Location" type="System.Drawing.Point, System.Drawing">
-    <value>193, 6</value>
-  </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>640, 360</value>
-  </data>
-  <data name="&gt;&gt;labelSaveDir.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="comboBoxAlphaFileFormat.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 3</value>
-  </data>
-  <data name="&gt;&gt;labelSaveDir.Name" xml:space="preserve">
-    <value>labelSaveDir</value>
-  </data>
-  <data name="&gt;&gt;buttonSave.Parent" xml:space="preserve">
-    <value>bottomPanel</value>
-  </data>
-  <data name="comboBoxAlphaFileFormat.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 23</value>
-  </data>
-  <data name="buttonQualityTest.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="buttonResetAlphaFilePattern.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Right</value>
-  </data>
-  <data name="labelEncoderOption.Location" type="System.Drawing.Point, System.Drawing">
-    <value>310, 7</value>
-  </data>
-  <data name="groupBoxSaveDir.Size" type="System.Drawing.Size, System.Drawing">
-    <value>614, 85</value>
-  </data>
-  <data name="&gt;&gt;buttonResetFilePattern.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="labelOptions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 15</value>
-  </data>
-  <data name="labelSaveDir.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 7</value>
-  </data>
-  <data name="&gt;&gt;textBoxFilePattern.Name" xml:space="preserve">
-    <value>textBoxFilePattern</value>
-  </data>
-  <data name="&gt;&gt;checkBoxDeleteOriginal.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="comboBoxEncoder.Location" type="System.Drawing.Point, System.Drawing">
-    <value>125, 3</value>
-  </data>
-  <data name="mainTableLayoutPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="numericUpDownQuality.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 23</value>
-  </data>
-  <data name="groupBoxAlphaFileFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left, Right</value>
-  </data>
-  <data name="panelSaveDir.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;groupBoxFileFormat.Name" xml:space="preserve">
-    <value>groupBoxFileFormat</value>
-  </data>
-  <data name="&gt;&gt;labelAlphaQuality.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="buttonResetFilePattern.Location" type="System.Drawing.Point, System.Drawing">
-    <value>520, 3</value>
-  </data>
-  <data name="&gt;&gt;comboBoxFileFormat.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="panelAlphaFilePattern.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowAndShrink</value>
-  </data>
-  <data name="labelFilePattern.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 7</value>
-  </data>
-  <data name="buttonSave.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 6, 2, 6</value>
-  </data>
-  <data name="labelEncoderOption.Text" xml:space="preserve">
-    <value>Params</value>
-  </data>
-  <data name="buttonResetFilePattern.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="comboBoxAlphaEncoder.TabIndex" type="System.Int32, mscorlib">
-    <value>25</value>
-  </data>
-  <data name="labelEncoderOption.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;labelFileFormat.Name" xml:space="preserve">
-    <value>labelFileFormat</value>
-  </data>
-  <data name="&gt;&gt;groupBoxAlphaFileFormat.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBoxOverwriteDest.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonCancel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;textBoxAlphaFilePattern.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;buttonCancel.Name" xml:space="preserve">
-    <value>buttonCancel</value>
-  </data>
-  <data name="&gt;&gt;labelOptions.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bottomPanel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="buttonCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>539, 6</value>
-  </data>
-  <data name="&gt;&gt;panelOptions.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;numericUpDownQuality.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="labelOptions.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;labelAlphaFilePattern.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="panelSaveDir.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="&gt;&gt;labelAlphaFormat.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;mainTableLayoutPanel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="panelSaveDir.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="buttonResetAlphaFilePattern.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="&gt;&gt;textBoxDir.Name" xml:space="preserve">
-    <value>textBoxDir</value>
-  </data>
-  <data name="&gt;&gt;numericUpDownQuality.Parent" xml:space="preserve">
-    <value>panelFileFormat</value>
-  </data>
-  <data name="labelFilePattern.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 15</value>
-  </data>
-  <data name="groupBoxAlphaFileFormat.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 5, 5, 5</value>
-  </data>
-  <data name="buttonSelectDir.Location" type="System.Drawing.Point, System.Drawing">
-    <value>520, 3</value>
-  </data>
-  <data name="panelOptions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>353, 30</value>
-  </data>
-  <data name="&gt;&gt;buttonSave.Name" xml:space="preserve">
-    <value>buttonSave</value>
-  </data>
-  <data name="bottomPanel.FlowDirection" type="System.Windows.Forms.FlowDirection, System.Windows.Forms">
-    <value>RightToLeft</value>
-  </data>
-  <data name="&gt;&gt;buttonSave.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;labelFilePattern.Parent" xml:space="preserve">
-    <value>panelFilePattern</value>
-  </data>
-  <data name="labelFileFormat.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;comboBoxAlphaFileFormat.Parent" xml:space="preserve">
-    <value>panelAlphaFormat</value>
-  </data>
-  <data name="&gt;&gt;buttonResetAlphaFilePattern.Parent" xml:space="preserve">
-    <value>panelAlphaFilePattern</value>
-  </data>
-  <data name="bottomPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 281</value>
-  </data>
-  <data name="labelAlphaFilePattern.Text" xml:space="preserve">
-    <value>Filename</value>
-  </data>
-  <data name="numericUpDownQuality.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 3</value>
-  </data>
-  <data name="buttonResetFilePattern.Text" xml:space="preserve">
-    <value>Reset</value>
-  </data>
-  <data name="&gt;&gt;buttonResetFilePattern.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="labelAlphaFilePattern.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 15</value>
-  </data>
-  <data name="&gt;&gt;textBoxDir.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="labelQuality.Location" type="System.Drawing.Point, System.Drawing">
-    <value>225, 7</value>
-  </data>
-  <data name="&gt;&gt;numericUpDownQuality.Name" xml:space="preserve">
-    <value>numericUpDownQuality</value>
-  </data>
-  <data name="comboBoxFileFormat.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="&gt;&gt;mainTableLayoutPanel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="textBoxDir.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left, Right</value>
-  </data>
-  <data name="buttonQualityTest.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="bottomPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 10, 0</value>
-  </data>
-  <data name="labelOptions.Text" xml:space="preserve">
-    <value>Options</value>
-  </data>
-  <data name="&gt;&gt;panelFilePattern.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="labelAlphaFormat.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 7</value>
-  </data>
-  <data name="groupBoxSaveDir.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 5</value>
-  </data>
-  <data name="panelAlphaFormat.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;comboBoxAlphaFileFormat.Name" xml:space="preserve">
-    <value>comboBoxAlphaFileFormat</value>
-  </data>
-  <data name="panelAlphaFormat.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowAndShrink</value>
-  </data>
-  <data name="labelAlphaFormat.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="panelFileFormat.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="&gt;&gt;comboBoxAlphaEncoder.Name" xml:space="preserve">
-    <value>comboBoxAlphaEncoder</value>
-  </data>
-  <data name="groupBoxFileFormat.Text" xml:space="preserve">
-    <value>Image format</value>
-  </data>
-  <data name="labelAlphaEncoderOption.TabIndex" type="System.Int32, mscorlib">
-    <value>31</value>
-  </data>
-  <data name="panelOptions.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;buttonSelectDir.Parent" xml:space="preserve">
-    <value>panelSaveDir</value>
-  </data>
-  <data name="&gt;&gt;labelQuality.Name" xml:space="preserve">
-    <value>labelQuality</value>
-  </data>
-  <data name="panelOptions.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left, Right</value>
-  </data>
-  <data name="textBoxAlphaFilePattern.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 3</value>
-  </data>
-  <data name="panelFilePattern.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>0, 30</value>
-  </data>
-  <data name="&gt;&gt;panelAlphaFilePattern.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="labelFilePattern.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;bottomPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;numericUpDownAlphaQuality.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonResetFilePattern.Name" xml:space="preserve">
-    <value>buttonResetFilePattern</value>
-  </data>
-  <data name="labelOptions.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="labelSaveDir.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 15</value>
-  </data>
-  <data name="groupBoxSaveDir.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowAndShrink</value>
-  </data>
-  <data name="panelFilePattern.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left, Right</value>
-  </data>
-  <data name="&gt;&gt;textBoxEncoderOption.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="textBoxDir.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;panelFileFormat.Parent" xml:space="preserve">
-    <value>groupBoxFileFormat</value>
-  </data>
-  <data name="&gt;&gt;labelEncoderOption.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="panelFilePattern.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="labelFileFormat.Text" xml:space="preserve">
-    <value>Format</value>
-  </data>
-  <data name="checkBoxDeleteOriginal.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="labelFileFormat.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 15</value>
-  </data>
-  <data name="labelAlphaFormat.Text" xml:space="preserve">
-    <value>Format</value>
-  </data>
-  <data name="mainTableLayoutPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="labelSaveDir.Text" xml:space="preserve">
-    <value>Directory</value>
-  </data>
-  <data name="panelFileFormat.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;numericUpDownAlphaQuality.Name" xml:space="preserve">
-    <value>numericUpDownAlphaQuality</value>
-  </data>
-  <data name="panelFileFormat.Size" type="System.Drawing.Size, System.Drawing">
-    <value>620, 30</value>
-  </data>
-  <data name="buttonSelectDir.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="checkBoxOverwriteDest.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="panelAlphaFormat.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>0, 30</value>
-  </data>
-  <data name="buttonSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>460, 6</value>
-  </data>
-  <data name="&gt;&gt;panelOptions.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="panelOptions.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="labelAlphaFilePattern.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="labelQuality.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
-  </data>
-  <data name="&gt;&gt;panelAlphaFormat.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;mainTableLayoutPanel.Name" xml:space="preserve">
-    <value>mainTableLayoutPanel</value>
-  </data>
-  <data name="panelFileFormat.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="labelAlphaEncoderOption.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;comboBoxFileFormat.Name" xml:space="preserve">
-    <value>comboBoxFileFormat</value>
-  </data>
-  <data name="&gt;&gt;panelAlphaFormat.Parent" xml:space="preserve">
-    <value>groupBoxAlphaFileFormat</value>
-  </data>
-  <data name="&gt;&gt;labelAlphaEncoderOption.Name" xml:space="preserve">
-    <value>labelAlphaEncoderOption</value>
-  </data>
-  <data name="groupBoxAlphaFileFormat.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 195</value>
-  </data>
-  <data name="groupBoxFileFormat.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="groupBoxSaveDir.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 30</value>
-  </data>
-  <data name="labelAlphaFormat.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 15</value>
-  </data>
-  <data name="labelAlphaEncoderOption.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 15</value>
-  </data>
-  <data name="&gt;&gt;labelFileFormat.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonResetAlphaFilePattern.Name" xml:space="preserve">
-    <value>buttonResetAlphaFilePattern</value>
-  </data>
-  <data name="&gt;&gt;labelAlphaEncoderOption.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="buttonResetFilePattern.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Right</value>
-  </data>
-  <data name="&gt;&gt;panelOptions.Parent" xml:space="preserve">
-    <value>groupBoxSaveDir</value>
-  </data>
-  <data name="labelEncoderOption.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left</value>
-  </data>
-  <data name="bottomPanel.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowAndShrink</value>
-  </data>
-  <data name="groupBoxAlphaFileFormat.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;mainTableLayoutPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="checkBoxDeleteOriginal.Text" xml:space="preserve">
-    <value>Delete original file</value>
-  </data>
-  <data name="&gt;&gt;groupBoxFileFormat.Parent" xml:space="preserve">
-    <value>mainTableLayoutPanel</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>7, 15</value>
-  </data>
-  <data name="buttonQualityTest.Text" xml:space="preserve">
-    <value>Test</value>
-  </data>
-  <data name="&gt;&gt;comboBoxFileFormat.Parent" xml:space="preserve">
-    <value>panelFileFormat</value>
-  </data>
-  <data name="checkBoxDeleteOriginal.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 19</value>
-  </data>
-  <data name="checkBoxOverwriteDest.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 19</value>
-  </data>
-  <data name="labelQuality.Text" xml:space="preserve">
-    <value>Quality</value>
-  </data>
-  <data name="&gt;&gt;buttonQualityTest.Name" xml:space="preserve">
-    <value>buttonQualityTest</value>
-  </data>
-  <data name="labelEncoderOption.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 15</value>
-  </data>
-  <data name="panelFileFormat.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 50</value>
-  </data>
-  <data name="&gt;&gt;textBoxEncoderOption.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;groupBoxAlphaFileFormat.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;panelOptions.Name" xml:space="preserve">
-    <value>panelOptions</value>
-  </data>
-  <data name="textBoxFilePattern.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left, Right</value>
-  </data>
-  <data name="labelAlphaEncoderOption.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>VRC Image Helper / Config</value>
-  </data>
-  <data name="labelAlphaFilePattern.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
-  </data>
-  <data name="&gt;&gt;comboBoxAlphaEncoder.Parent" xml:space="preserve">
-    <value>panelAlphaFormat</value>
-  </data>
-  <data name="checkBoxOverwriteDest.Text" xml:space="preserve">
-    <value>Overwrite destination file</value>
   </data>
   <data name="&gt;&gt;buttonSave.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;labelAlphaQuality.Name" xml:space="preserve">
-    <value>labelAlphaQuality</value>
+  <data name="labelAlphaFormat.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;comboBoxEncoder.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="comboBoxAlphaEncoder.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="richTextBoxFilePattern.Location" type="System.Drawing.Point, System.Drawing">
+    <value>65, 3</value>
+  </data>
+  <data name="richTextBoxFilePattern.Size" type="System.Drawing.Size, System.Drawing">
+    <value>450, 23</value>
+  </data>
+  <data name="mainTableLayoutPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="labelFilePattern.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
+  <data name="groupBoxFileFormat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>614, 85</value>
+  </data>
+  <data name="labelFileFormat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 15</value>
+  </data>
+  <data name="&gt;&gt;groupBoxAlphaFileFormat.Name" xml:space="preserve">
+    <value>groupBoxAlphaFileFormat</value>
+  </data>
+  <data name="&gt;&gt;buttonSave.Parent" xml:space="preserve">
+    <value>bottomPanel</value>
   </data>
   <data name="comboBoxEncoder.TabIndex" type="System.Int32, mscorlib">
     <value>25</value>
   </data>
-  <data name="panelSaveDir.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>0, 30</value>
+  <data name="textBoxEncoderOption.Size" type="System.Drawing.Size, System.Drawing">
+    <value>234, 23</value>
   </data>
-  <data name="checkBoxOverwriteDest.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="panelSaveDir.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 20</value>
   </data>
-  <data name="&gt;&gt;labelFilePattern.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;richTextBoxAlphaFilePattern.Name" xml:space="preserve">
+    <value>richTextBoxAlphaFilePattern</value>
   </data>
-  <data name="&gt;&gt;comboBoxAlphaEncoder.ZOrder" xml:space="preserve">
+  <data name="panelFileFormat.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 50</value>
+  </data>
+  <data name="&gt;&gt;buttonResetAlphaFilePattern.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>ConfigWindow</value>
+  <data name="panelOptions.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
   </data>
-  <data name="&gt;&gt;labelParallel.ZOrder" xml:space="preserve">
+  <data name="panelOptions.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left, Right</value>
+  </data>
+  <data name="&gt;&gt;comboBoxAlphaEncoder.Parent" xml:space="preserve">
+    <value>panelAlphaFormat</value>
+  </data>
+  <data name="&gt;&gt;labelFileFormat.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonSelectDir.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="numericUpDownParallel.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="groupBoxSaveDir.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 5</value>
   </data>
-  <data name="&gt;&gt;numericUpDownParallel.ZOrder" xml:space="preserve">
+  <data name="panelSaveDir.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelOptions.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;labelParallel.Name" xml:space="preserve">
-    <value>labelParallel</value>
+  <data name="labelEncoderOption.Location" type="System.Drawing.Point, System.Drawing">
+    <value>310, 7</value>
   </data>
-  <data name="&gt;&gt;numericUpDownParallel.Name" xml:space="preserve">
-    <value>numericUpDownParallel</value>
+  <data name="richTextBoxAlphaFilePattern.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left, Right</value>
   </data>
-  <data name="&gt;&gt;labelParallel.Parent" xml:space="preserve">
-    <value>panelOptions</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>624, 321</value>
   </data>
-  <data name="numericUpDownParallel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>547, 3</value>
+  <data name="&gt;&gt;buttonSave.Name" xml:space="preserve">
+    <value>buttonSave</value>
   </data>
-  <data name="&gt;&gt;numericUpDownParallel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="labelAlphaEncoderOption.TabIndex" type="System.Int32, mscorlib">
+    <value>31</value>
+  </data>
+  <data name="panelAlphaFilePattern.Size" type="System.Drawing.Size, System.Drawing">
+    <value>600, 30</value>
+  </data>
+  <data name="panelSaveDir.Size" type="System.Drawing.Size, System.Drawing">
+    <value>600, 30</value>
+  </data>
+  <data name="richTextBoxAlphaFilePattern.Location" type="System.Drawing.Point, System.Drawing">
+    <value>65, 3</value>
+  </data>
+  <data name="&gt;&gt;panelSaveDir.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="comboBoxEncoder.Location" type="System.Drawing.Point, System.Drawing">
+    <value>125, 3</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxFilePattern.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;labelParallel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="labelParallel.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="&gt;&gt;labelFileFormat.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;labelAlphaQuality.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="labelParallel.Location" type="System.Drawing.Point, System.Drawing">
     <value>474, 7</value>
   </data>
-  <data name="&gt;&gt;numericUpDownParallel.Parent" xml:space="preserve">
+  <data name="textBoxEncoderOption.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="&gt;&gt;numericUpDownQuality.Parent" xml:space="preserve">
+    <value>panelFileFormat</value>
+  </data>
+  <data name="&gt;&gt;labelAlphaFilePattern.Name" xml:space="preserve">
+    <value>labelAlphaFilePattern</value>
+  </data>
+  <data name="labelAlphaEncoderOption.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;numericUpDownParallel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="checkBoxOverwriteDest.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 19</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>640, 360</value>
+  </data>
+  <data name="mainTableLayoutPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="groupBoxSaveDir.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelSaveDir.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
+  <data name="panelFileFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left, Right</value>
+  </data>
+  <data name="&gt;&gt;comboBoxEncoder.Name" xml:space="preserve">
+    <value>comboBoxEncoder</value>
+  </data>
+  <data name="&gt;&gt;groupBoxSaveDir.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="panelSaveDir.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>0, 30</value>
+  </data>
+  <data name="buttonSave.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="labelSaveDir.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="labelAlphaFormat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 15</value>
+  </data>
+  <data name="&gt;&gt;labelAlphaFilePattern.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxOverwriteDest.Parent" xml:space="preserve">
     <value>panelOptions</value>
   </data>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, System.Private.CoreLib, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
-    <value>ja</value>
-  </metadata>
+  <data name="labelOptions.Text" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="labelAlphaQuality.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="&gt;&gt;panelAlphaFormat.Name" xml:space="preserve">
+    <value>panelAlphaFormat</value>
+  </data>
+  <data name="panelAlphaFilePattern.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="checkBoxDeleteOriginal.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;checkBoxOverwriteDest.Name" xml:space="preserve">
+    <value>checkBoxOverwriteDest</value>
+  </data>
+  <data name="&gt;&gt;labelQuality.Name" xml:space="preserve">
+    <value>labelQuality</value>
+  </data>
+  <data name="labelAlphaEncoderOption.Location" type="System.Drawing.Point, System.Drawing">
+    <value>310, 7</value>
+  </data>
+  <data name="comboBoxEncoder.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="labelAlphaFilePattern.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 7</value>
+  </data>
+  <data name="&gt;&gt;panelFileFormat.Name" xml:space="preserve">
+    <value>panelFileFormat</value>
+  </data>
+  <data name="buttonSave.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 6, 2, 6</value>
+  </data>
+  <data name="richTextBoxFilePattern.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left, Right</value>
+  </data>
+  <data name="&gt;&gt;panelSaveDir.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;labelQuality.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="comboBoxAlphaEncoder.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
+  </data>
+  <data name="buttonResetFilePattern.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="labelQuality.Location" type="System.Drawing.Point, System.Drawing">
+    <value>225, 7</value>
+  </data>
+  <data name="labelAlphaQuality.Text" xml:space="preserve">
+    <value>Quality</value>
+  </data>
+  <data name="&gt;&gt;groupBoxAlphaFileFormat.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bottomPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="panelFilePattern.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 20</value>
+  </data>
+  <data name="numericUpDownQuality.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="groupBoxAlphaFileFormat.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 30</value>
+  </data>
+  <data name="checkBoxOverwriteDest.Text" xml:space="preserve">
+    <value>Overwrite destination file</value>
+  </data>
+  <data name="&gt;&gt;labelSaveDir.Parent" xml:space="preserve">
+    <value>panelSaveDir</value>
+  </data>
+  <data name="comboBoxEncoder.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
+  </data>
+  <data name="&gt;&gt;buttonResetFilePattern.Name" xml:space="preserve">
+    <value>buttonResetFilePattern</value>
+  </data>
+  <data name="panelFileFormat.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>0, 30</value>
+  </data>
+  <data name="groupBoxAlphaFileFormat.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="panelFilePattern.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="buttonCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="buttonResetAlphaFilePattern.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="labelQuality.Text" xml:space="preserve">
+    <value>Quality</value>
+  </data>
+  <data name="groupBoxAlphaFileFormat.Text" xml:space="preserve">
+    <value>Image format (Transparent)</value>
+  </data>
+  <data name="&gt;&gt;panelAlphaFormat.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="buttonSelectDir.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="labelAlphaQuality.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxDeleteOriginal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 19</value>
+  </data>
+  <data name="buttonQualityTest.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="&gt;&gt;bottomPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="labelAlphaEncoderOption.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 15</value>
+  </data>
+  <data name="panelAlphaFilePattern.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 20</value>
+  </data>
+  <data name="&gt;&gt;panelFilePattern.Name" xml:space="preserve">
+    <value>panelFilePattern</value>
+  </data>
+  <data name="labelOptions.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 7</value>
+  </data>
+  <data name="buttonCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 25</value>
+  </data>
+  <data name="groupBoxFileFormat.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="mainTableLayoutPanel.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="panelFileFormat.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="&gt;&gt;textBoxDir.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="labelAlphaFormat.Text" xml:space="preserve">
+    <value>Format</value>
+  </data>
+  <data name="numericUpDownAlphaQuality.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 23</value>
+  </data>
+  <data name="panelFilePattern.Size" type="System.Drawing.Size, System.Drawing">
+    <value>600, 30</value>
+  </data>
+  <data name="&gt;&gt;labelAlphaFormat.Name" xml:space="preserve">
+    <value>labelAlphaFormat</value>
+  </data>
+  <data name="&gt;&gt;numericUpDownParallel.Name" xml:space="preserve">
+    <value>numericUpDownParallel</value>
+  </data>
+  <data name="&gt;&gt;labelSaveDir.Name" xml:space="preserve">
+    <value>labelSaveDir</value>
+  </data>
+  <data name="panelAlphaFormat.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="labelFileFormat.Text" xml:space="preserve">
+    <value>Format</value>
+  </data>
+  <data name="textBoxDir.Size" type="System.Drawing.Size, System.Drawing">
+    <value>450, 23</value>
+  </data>
+  <data name="&gt;&gt;numericUpDownAlphaQuality.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="panelFilePattern.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="groupBoxFileFormat.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 100</value>
+  </data>
+  <data name="labelEncoderOption.TabIndex" type="System.Int32, mscorlib">
+    <value>31</value>
+  </data>
+  <data name="buttonSelectDir.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Right</value>
+  </data>
+  <data name="checkBoxOverwriteDest.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;panelFileFormat.Parent" xml:space="preserve">
+    <value>groupBoxFileFormat</value>
+  </data>
+  <data name="groupBoxAlphaFileFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left, Right</value>
+  </data>
+  <data name="groupBoxAlphaFileFormat.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="panelOptions.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 50</value>
+  </data>
+  <data name="panelOptions.Size" type="System.Drawing.Size, System.Drawing">
+    <value>353, 30</value>
+  </data>
+  <data name="textBoxAlphaEncoderOption.Size" type="System.Drawing.Size, System.Drawing">
+    <value>234, 23</value>
+  </data>
+  <data name="labelFileFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
+  <data name="&gt;&gt;groupBoxFileFormat.Name" xml:space="preserve">
+    <value>groupBoxFileFormat</value>
+  </data>
+  <data name="groupBoxFileFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left, Right</value>
+  </data>
+  <data name="checkBoxDeleteOriginal.Text" xml:space="preserve">
+    <value>Delete original file</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxFilePattern.Parent" xml:space="preserve">
+    <value>panelFilePattern</value>
+  </data>
+  <data name="richTextBoxAlphaFilePattern.Size" type="System.Drawing.Size, System.Drawing">
+    <value>450, 23</value>
+  </data>
+  <data name="&gt;&gt;textBoxDir.Name" xml:space="preserve">
+    <value>textBoxDir</value>
+  </data>
+  <data name="&gt;&gt;panelFilePattern.Parent" xml:space="preserve">
+    <value>groupBoxFileFormat</value>
+  </data>
+  <data name="&gt;&gt;labelEncoderOption.Parent" xml:space="preserve">
+    <value>panelFileFormat</value>
+  </data>
+  <data name="&gt;&gt;panelAlphaFilePattern.Parent" xml:space="preserve">
+    <value>groupBoxAlphaFileFormat</value>
+  </data>
+  <data name="richTextBoxFilePattern.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;labelAlphaEncoderOption.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="buttonQualityTest.Location" type="System.Drawing.Point, System.Drawing">
+    <value>438, 3</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxAlphaFilePattern.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;labelAlphaEncoderOption.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;mainTableLayoutPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="groupBoxSaveDir.Size" type="System.Drawing.Size, System.Drawing">
+    <value>614, 85</value>
+  </data>
+  <data name="bottomPanel.FlowDirection" type="System.Windows.Forms.FlowDirection, System.Windows.Forms">
+    <value>RightToLeft</value>
+  </data>
+  <data name="&gt;&gt;textBoxEncoderOption.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="labelEncoderOption.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="labelEncoderOption.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;checkBoxDeleteOriginal.Parent" xml:space="preserve">
+    <value>panelOptions</value>
+  </data>
+  <data name="groupBoxFileFormat.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
+  <data name="numericUpDownQuality.Location" type="System.Drawing.Point, System.Drawing">
+    <value>270, 3</value>
+  </data>
+  <data name="mainTableLayoutPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="textBoxAlphaEncoderOption.Location" type="System.Drawing.Point, System.Drawing">
+    <value>360, 3</value>
+  </data>
+  <data name="&gt;&gt;labelAlphaEncoderOption.Parent" xml:space="preserve">
+    <value>panelAlphaFormat</value>
+  </data>
+  <data name="labelFilePattern.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;labelParallel.Name" xml:space="preserve">
+    <value>labelParallel</value>
+  </data>
+  <data name="labelAlphaFilePattern.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;textBoxAlphaEncoderOption.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panelSaveDir.Name" xml:space="preserve">
+    <value>panelSaveDir</value>
+  </data>
+  <data name="&gt;&gt;mainTableLayoutPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="labelOptions.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;textBoxEncoderOption.Name" xml:space="preserve">
+    <value>textBoxEncoderOption</value>
+  </data>
+  <data name="&gt;&gt;comboBoxFileFormat.Parent" xml:space="preserve">
+    <value>panelFileFormat</value>
+  </data>
+  <data name="checkBoxDeleteOriginal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>67, 6</value>
+  </data>
+  <data name="panelAlphaFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left, Right</value>
+  </data>
+  <data name="panelFilePattern.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>0, 30</value>
+  </data>
+  <data name="labelSaveDir.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 7</value>
+  </data>
+  <data name="textBoxDir.Location" type="System.Drawing.Point, System.Drawing">
+    <value>65, 3</value>
+  </data>
+  <data name="panelFilePattern.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="labelEncoderOption.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 15</value>
+  </data>
+  <data name="labelEncoderOption.Text" xml:space="preserve">
+    <value>Params</value>
+  </data>
+  <data name="&gt;&gt;bottomPanel.Name" xml:space="preserve">
+    <value>bottomPanel</value>
+  </data>
+  <data name="richTextBoxAlphaFilePattern.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="labelFilePattern.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 7</value>
+  </data>
+  <data name="comboBoxFileFormat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 23</value>
+  </data>
+  <data name="groupBoxSaveDir.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxAlphaFilePattern.Parent" xml:space="preserve">
+    <value>panelAlphaFilePattern</value>
+  </data>
+  <data name="&gt;&gt;panelFilePattern.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>640, 360</value>
+  </data>
+  <data name="bottomPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 281</value>
+  </data>
+  <data name="&gt;&gt;textBoxAlphaEncoderOption.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;comboBoxAlphaFileFormat.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="panelAlphaFilePattern.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>0, 30</value>
+  </data>
+  <data name="&gt;&gt;bottomPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="numericUpDownQuality.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 23</value>
+  </data>
+  <data name="panelAlphaFilePattern.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left, Right</value>
+  </data>
+  <data name="&gt;&gt;buttonResetAlphaFilePattern.Name" xml:space="preserve">
+    <value>buttonResetAlphaFilePattern</value>
+  </data>
+  <data name="labelAlphaFormat.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 7</value>
+  </data>
+  <data name="&gt;&gt;labelParallel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupBoxFileFormat.Text" xml:space="preserve">
+    <value>Image format</value>
+  </data>
+  <data name="comboBoxAlphaFileFormat.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;comboBoxAlphaFileFormat.Parent" xml:space="preserve">
+    <value>panelAlphaFormat</value>
+  </data>
+  <data name="buttonResetAlphaFilePattern.Text" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="&gt;&gt;buttonSelectDir.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panelOptions.Parent" xml:space="preserve">
+    <value>groupBoxSaveDir</value>
+  </data>
+  <data name="&gt;&gt;groupBoxSaveDir.Name" xml:space="preserve">
+    <value>groupBoxSaveDir</value>
+  </data>
+  <data name="&gt;&gt;panelAlphaFilePattern.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numericUpDownQuality.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;mainTableLayoutPanel.Name" xml:space="preserve">
+    <value>mainTableLayoutPanel</value>
+  </data>
+  <data name="textBoxEncoderOption.Location" type="System.Drawing.Point, System.Drawing">
+    <value>360, 3</value>
+  </data>
+  <data name="&gt;&gt;labelSaveDir.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="labelAlphaFormat.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;groupBoxAlphaFileFormat.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="groupBoxSaveDir.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left, Right</value>
+  </data>
+  <data name="panelAlphaFilePattern.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="&gt;&gt;buttonSelectDir.Parent" xml:space="preserve">
+    <value>panelSaveDir</value>
+  </data>
+  <data name="labelQuality.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
+  <data name="panelFileFormat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>620, 30</value>
+  </data>
+  <data name="&gt;&gt;comboBoxEncoder.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="buttonCancel.TabIndex" type="System.Int32, mscorlib">
+    <value>110</value>
+  </data>
+  <data name="buttonQualityTest.Text" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="&gt;&gt;checkBoxDeleteOriginal.Name" xml:space="preserve">
+    <value>checkBoxDeleteOriginal</value>
+  </data>
+  <data name="&gt;&gt;labelFilePattern.Parent" xml:space="preserve">
+    <value>panelFilePattern</value>
+  </data>
+  <data name="&gt;&gt;labelOptions.Parent" xml:space="preserve">
+    <value>panelOptions</value>
+  </data>
+  <data name="labelFilePattern.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;numericUpDownAlphaQuality.Parent" xml:space="preserve">
+    <value>panelAlphaFormat</value>
+  </data>
+  <data name="groupBoxFileFormat.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;comboBoxEncoder.Parent" xml:space="preserve">
+    <value>panelFileFormat</value>
+  </data>
+  <data name="buttonResetFilePattern.Text" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="numericUpDownAlphaQuality.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="mainTableLayoutPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;labelAlphaFormat.Parent" xml:space="preserve">
+    <value>panelAlphaFormat</value>
+  </data>
+  <data name="labelAlphaFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
+  <data name="&gt;&gt;textBoxAlphaEncoderOption.Parent" xml:space="preserve">
+    <value>panelAlphaFormat</value>
+  </data>
+  <data name="buttonSave.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="buttonSave.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 27</value>
+  </data>
+  <data name="panelFileFormat.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;groupBoxAlphaFileFormat.Parent" xml:space="preserve">
+    <value>mainTableLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;groupBoxFileFormat.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBoxFileFormat.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="panelSaveDir.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="&gt;&gt;panelFilePattern.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;buttonCancel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;labelParallel.Parent" xml:space="preserve">
+    <value>panelOptions</value>
+  </data>
+  <data name="labelAlphaFilePattern.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
+  <data name="&gt;&gt;checkBoxDeleteOriginal.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;checkBoxOverwriteDest.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="richTextBoxAlphaFilePattern.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;buttonResetFilePattern.Parent" xml:space="preserve">
+    <value>panelFilePattern</value>
+  </data>
+  <data name="buttonCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>539, 6</value>
+  </data>
+  <data name="&gt;&gt;numericUpDownAlphaQuality.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="labelQuality.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="comboBoxAlphaFileFormat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 23</value>
+  </data>
+  <data name="panelOptions.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>ConfigWindow</value>
+  </data>
+  <data name="labelAlphaFilePattern.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 15</value>
+  </data>
+  <data name="panelAlphaFilePattern.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="panelFileFormat.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="&gt;&gt;panelAlphaFormat.Parent" xml:space="preserve">
+    <value>groupBoxAlphaFileFormat</value>
+  </data>
+  <data name="comboBoxAlphaFileFormat.Location" type="System.Drawing.Point, System.Drawing">
+    <value>65, 3</value>
+  </data>
+  <data name="labelAlphaEncoderOption.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="groupBoxFileFormat.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 30</value>
+  </data>
+  <data name="&gt;&gt;labelSaveDir.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="mainTableLayoutPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="groupBoxSaveDir" Row="-1" RowSpan="1" Column="-1" ColumnSpan="1" /&gt;&lt;Control Name="groupBoxFileFormat" Row="-1" RowSpan="1" Column="-1" ColumnSpan="1" /&gt;&lt;Control Name="groupBoxAlphaFileFormat" Row="-1" RowSpan="1" Column="-1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,20" /&gt;&lt;Rows Styles="Absolute,95,Absolute,95,Absolute,95,Absolute,10" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="comboBoxFileFormat.Location" type="System.Drawing.Point, System.Drawing">
+    <value>65, 3</value>
+  </data>
+  <data name="&gt;&gt;comboBoxAlphaFileFormat.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;groupBoxFileFormat.Parent" xml:space="preserve">
+    <value>mainTableLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;labelAlphaQuality.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;groupBoxSaveDir.Parent" xml:space="preserve">
+    <value>mainTableLayoutPanel</value>
+  </data>
+  <data name="labelAlphaQuality.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
+  <data name="buttonResetAlphaFilePattern.Location" type="System.Drawing.Point, System.Drawing">
+    <value>520, 3</value>
+  </data>
+  <data name="labelAlphaFilePattern.Text" xml:space="preserve">
+    <value>Filename</value>
+  </data>
+  <data name="labelOptions.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 15</value>
+  </data>
+  <data name="&gt;&gt;buttonQualityTest.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="groupBoxAlphaFileFormat.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 195</value>
+  </data>
+  <data name="richTextBoxFilePattern.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;buttonResetFilePattern.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxEncoderOption.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="textBoxAlphaEncoderOption.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="buttonResetFilePattern.Location" type="System.Drawing.Point, System.Drawing">
+    <value>520, 3</value>
+  </data>
+  <data name="panelAlphaFormat.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>0, 30</value>
+  </data>
+  <data name="&gt;&gt;buttonCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="labelFileFormat.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="textBoxEncoderOption.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left, Right</value>
+  </data>
+  <data name="&gt;&gt;numericUpDownQuality.Name" xml:space="preserve">
+    <value>numericUpDownQuality</value>
+  </data>
+  <data name="numericUpDownQuality.TabIndex" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="&gt;&gt;labelFileFormat.Name" xml:space="preserve">
+    <value>labelFileFormat</value>
+  </data>
+  <data name="buttonResetFilePattern.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="groupBoxAlphaFileFormat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>614, 85</value>
+  </data>
+  <data name="&gt;&gt;mainTableLayoutPanel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;textBoxDir.Parent" xml:space="preserve">
+    <value>panelSaveDir</value>
+  </data>
+  <data name="&gt;&gt;labelAlphaFormat.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="textBoxAlphaEncoderOption.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left, Right</value>
+  </data>
+  <data name="panelFilePattern.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="panelAlphaFormat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>620, 30</value>
+  </data>
+  <data name="&gt;&gt;groupBoxFileFormat.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="panelAlphaFilePattern.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="groupBoxAlphaFileFormat.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
+  <data name="numericUpDownQuality.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="panelOptions.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="buttonResetAlphaFilePattern.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="groupBoxSaveDir.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;panelSaveDir.Parent" xml:space="preserve">
+    <value>groupBoxSaveDir</value>
+  </data>
+  <data name="labelFileFormat.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 7</value>
+  </data>
+  <data name="labelParallel.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;labelAlphaEncoderOption.Name" xml:space="preserve">
+    <value>labelAlphaEncoderOption</value>
+  </data>
+  <data name="buttonSave.Location" type="System.Drawing.Point, System.Drawing">
+    <value>460, 6</value>
+  </data>
+  <data name="&gt;&gt;comboBoxEncoder.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="checkBoxOverwriteDest.Location" type="System.Drawing.Point, System.Drawing">
+    <value>193, 6</value>
+  </data>
+  <data name="buttonQualityTest.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="comboBoxAlphaFileFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="numericUpDownAlphaQuality.TabIndex" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="&gt;&gt;richTextBoxFilePattern.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="panelAlphaFormat.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="panelOptions.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>0, 30</value>
+  </data>
+  <data name="labelOptions.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
+  <data name="numericUpDownParallel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>547, 3</value>
+  </data>
+  <data name="buttonSelectDir.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="&gt;&gt;checkBoxDeleteOriginal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="labelAlphaQuality.Location" type="System.Drawing.Point, System.Drawing">
+    <value>225, 7</value>
+  </data>
+  <data name="&gt;&gt;labelAlphaFilePattern.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="comboBoxAlphaEncoder.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="buttonSave.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Right</value>
+  </data>
+  <data name="mainTableLayoutPanel.RowCount" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;panelAlphaFormat.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;panelFileFormat.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="buttonSelectDir.Location" type="System.Drawing.Point, System.Drawing">
+    <value>520, 3</value>
+  </data>
+  <data name="mainTableLayoutPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>624, 321</value>
+  </data>
+  <data name="panelFileFormat.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;labelEncoderOption.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;numericUpDownParallel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="labelOptions.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="textBoxDir.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left, Right</value>
+  </data>
+  <data name="labelSaveDir.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 15</value>
+  </data>
+  <data name="&gt;&gt;labelFilePattern.Name" xml:space="preserve">
+    <value>labelFilePattern</value>
+  </data>
+  <data name="&gt;&gt;labelFilePattern.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
+  </metadata>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, System.Private.CoreLib, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+    <value>ja</value>
   </metadata>
 </root>
