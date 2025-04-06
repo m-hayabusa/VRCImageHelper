@@ -32,38 +32,38 @@ VRChatのカメラで撮った画像を圧縮して、
         * ファイル名: 保存するときのファイル名。デフォルトの場合はVRChatの出力したファイルと同等となるはず
             デフォルトの値は `yyyy-MM\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY.png`
 
-            | フォーマット       | 置換内容                   | 例                                      |
-            |-------------------|----------------------------|-----------------------------------------|
-            | `yyyy`            | 撮影時刻: 年               | `2025`                                  |
-            | `MM`              | 撮影時刻: 月               | `04`                                    |
-            | `dd`              | 撮影時刻: 日               | `05`                                    |
-            | `hh`              | 撮影時刻: 時               | `14`                                    |
-            | `mm`              | 撮影時刻: 分               | `19`                                    |
-            | `ss`              | 撮影時刻: 秒               | `53`                                    |
-            | `fff`             | 撮影時刻: 秒(小数点以下)  | `375`                                   |
-            | `XXXX`            | 画像のピクセル数 (横)     | `3840`                                  |
-            | `YYYY`            | 画像のピクセル数 (縦)     | `2160`                                  |
-            | `%{CAMERA}%`        | カメラの種類             | `VRCCamera`                             |
-            | `%{WORLD}%`         | ワールド名               | `nS⁄TownScaper`                        |
-            | `%{WORLD:ID}%`      | ワールドID               | `wrld_3208d019-7310-4c35-b12e-e4278c2689c7` |
-            | `%{INSTANCE:ID}%`   | インスタンス番号         | `99424`                                 |
-            | `%{INSTANCE:TYPE}%` | インスタンスの種類       | `Friends+`                              |
-            | `%{OWNER:ID}%`      | インスタンスオーナーのID | `usr_cbced732-f21a-46cd-a6a6-61990bceea14` |
-            | `%{TAKEN:yyyy}%`    | 撮影時刻: 年             | `2025`                                  |
-            | `%{TAKEN:MM}%`      | 撮影時刻: 月             | `04`                                    |
-            | `%{TAKEN:dd}%`      | 撮影時刻: 日             | `06`                                    |
-            | `%{TAKEN:hh}%`      | 撮影時刻: 時             | `10`                                    |
-            | `%{TAKEN:mm}%`      | 撮影時刻: 分             | `53`                                    |
-            | `%{TAKEN:ss}%`      | 撮影時刻: 秒             | `56`                                    |
-            | `%{TAKEN:fff}%`     | 撮影時刻: 秒(小数点以下) | `149`                                   |
-            | `%{JOIN:yyyy}%`     | インスタンスJoin日時: 年 | `2025`                                  |
-            | `%{JOIN:MM}%`       | インスタンスJoin日時: 月 | `04`                                    |
-            | `%{JOIN:dd}%`       | インスタンスJoin日時: 日 | `05`                                    |
-            | `%{JOIN:hh}%`       | インスタンスJoin日時: 時 | `14`                                    |
-            | `%{JOIN:mm}%`       | インスタンスJoin日時: 分 | `19`                                    |
-            | `%{JOIN:ss}%`       | インスタンスJoin日時: 秒 | `53`                                    |
+            | フォーマット         | 置換内容                   | 例                                          |
+            | ------------------- | -------------------------- | ------------------------------------------- |
+            | `yyyy`              | 撮影時刻: 年               | `2025`                                      |
+            | `MM`                | 撮影時刻: 月               | `04`                                        |
+            | `dd`                | 撮影時刻: 日               | `06`                                        |
+            | `hh`                | 撮影時刻: 時               | `10`                                        |
+            | `mm`                | 撮影時刻: 分               | `53`                                        |
+            | `ss`                | 撮影時刻: 秒               | `56`                                        |
+            | `fff`               | 撮影時刻: 秒(小数点以下)   | `149`                                       |
+            | `XXXX`              | 画像のピクセル数 (横)      | `3840`                                      |
+            | `YYYY`              | 画像のピクセル数 (縦)      | `2160`                                      |
+            | `%{CAMERA}%`        | カメラの種類               | `VRCCamera`                                 |
+            | `%{WORLD}%`         | ワールド名                 | `nS⁄TownScaper`                             |
+            | `%{WORLD:ID}%`      | ワールド ID                | `wrld_3208d019-7310-4c35-b12e-e4278c2689c7` |
+            | `%{INSTANCE:ID}%`   | インスタンス番号           | `99424`                                     |
+            | `%{INSTANCE:TYPE}%` | インスタンスの種類         | `Friends+`                                  |
+            | `%{OWNER:ID}%`      | インスタンスオーナーの ID  | `usr_cbced732-f21a-46cd-a6a6-61990bceea14`  |
+            | `%{TAKEN:yyyy}%`    | 撮影時刻: 年               | `2025`                                      |
+            | `%{TAKEN:MM}%`      | 撮影時刻: 月               | `04`                                        |
+            | `%{TAKEN:dd}%`      | 撮影時刻: 日               | `06`                                        |
+            | `%{TAKEN:hh}%`      | 撮影時刻: 時               | `10`                                        |
+            | `%{TAKEN:mm}%`      | 撮影時刻: 分               | `53`                                        |
+            | `%{TAKEN:ss}%`      | 撮影時刻: 秒               | `56`                                        |
+            | `%{TAKEN:fff}%`     | 撮影時刻: 秒(小数点以下)   | `149`                                       |
+            | `%{JOIN:yyyy}%`     | インスタンス Join 日時: 年 | `2025`                                      |
+            | `%{JOIN:MM}%`       | インスタンス Join 日時: 月 | `04`                                        |
+            | `%{JOIN:dd}%`       | インスタンス Join 日時: 日 | `05`                                        |
+            | `%{JOIN:hh}%`       | インスタンス Join 日時: 時 | `14`                                        |
+            | `%{JOIN:mm}%`       | インスタンス Join 日時: 分 | `19`                                        |
+            | `%{JOIN:ss}%`       | インスタンス Join 日時: 秒 | `53`                                        |
 
-            例えば、`%JOIN:yyyy%-%JOIN:MM%\%JOIN:yyyy%-%JOIN:MM%-%JOIN:dd%\%WORLD%_%INSTANCE:TYPE%_%INSTANCE:ID%\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY_%CAMERA%.heic` と指定したとき、
+            例えば、`%{JOIN:yyyy}%-%{JOIN:MM}%\%{JOIN:yyyy}%-%{JOIN:MM}%-%{JOIN:dd}%\%{WORLD}%_%{INSTANCE:TYPE}%_%{INSTANCE:ID}%\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY_%{CAMERA}%.heic` と指定したとき、
             保存先フォルダが `D:\Pictures\VRChat` なら、`D:\Pictures\VRChat\2025-04\2025-04-05\nS⁄TownScaper_Invite_64792\VRChat_2025-04-06_10-53-56.149_3840x2160_VRCCamera.heic` に保存される
 
         * 形式・品質・オプション: PNG / JPEG / WEBP / AVIFが選択できる
@@ -79,9 +79,10 @@ VRChatのカメラで撮った画像を圧縮して、
                 | `av1_nvenc` | `-cq` | `1` | `51` |
                 | `av1_amf` | `-qp_i` | `0` | `255` |
 
-                CPUでlibwebp、libaom-av1とlibsvtav1を利用する場合と、Intel Arc A770でav1_qsvを利用した場合、AMD Radeon 780Mでav1_amfを利用した場合について動作を確認  
-                (NvEncでの動作は検証していませんが、デフォルトで指定しているオプションの `--pix-fmt yuv420p` の影響で、色情報が間引かれる挙動になるはずです (https://github.com/m-hayabusa/VRCImageHelper/issues/40))  
-                オプションは、ffmpegに追加で渡す引数を入力できる たとえばlibwebpで `-lossless 1` など
+                CPUで `libwebp`、`libaom-av1` と `libsvtav1` を利用する場合と、GeForce RTX 4070 Ti Super で `av1_nvenc` を利用した場合について動作を確認  
+                Intel Arc A770で `av1_qsv`、AMD Radeon 780Mで `av1_amf` を利用できることは過去に確認したが、現在動作するかは未確認  
+                NvEncの場合、色情報がyuv420に間引かれる挙動になる (https://github.com/m-hayabusa/VRCImageHelper/issues/40)  
+                オプションは、ffmpeg に追加で渡す引数を入力できる たとえば libwebp で `-lossless 1` など
     * 保存形式(透過)  
         画像にアルファチャネルが含まれる場合の形式指定で、それ以外は上記 保存形式 と同じ。ただし:
         * JPEG: 非対応
