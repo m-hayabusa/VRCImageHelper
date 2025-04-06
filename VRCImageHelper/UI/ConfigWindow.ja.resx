@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!--
-    Microsoft ResX Schema 
+    Microsoft ResX Schema
 
     Version 2.0
 
@@ -48,7 +48,7 @@
     value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
     value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
@@ -124,6 +124,23 @@
     <value>キャンセル</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="numericUpDownParallel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 23</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="numericUpDownParallel.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="labelParallel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelParallel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 15</value>
+  </data>
+  <data name="labelParallel.Text" xml:space="preserve">
+    <value>同時変換数</value>
+  </data>
   <data name="checkBoxOverwriteDest.Size" type="System.Drawing.Size, System.Drawing">
     <value>275, 19</value>
   </data>
@@ -163,8 +180,23 @@
   <data name="labelFilePattern.Text" xml:space="preserve">
     <value>ファイル名</value>
   </data>
+  <data name="richTextBoxFilePattern.Multiline" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="richTextBoxFilePattern.ScrollBars" type="System.Windows.Forms.RichTextBoxScrollBars, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <data name="richTextBoxFilePattern.WordWrap" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="buttonResetFilePattern.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 24</value>
+  </data>
   <data name="buttonResetFilePattern.Text" xml:space="preserve">
     <value>リセット</value>
+  </data>
+  <data name="panelFilePattern.Size" type="System.Drawing.Size, System.Drawing">
+    <value>600, 31</value>
   </data>
   <data name="labelFileFormat.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 15</value>
@@ -211,8 +243,23 @@
   <data name="labelAlphaFilePattern.Text" xml:space="preserve">
     <value>ファイル名</value>
   </data>
+  <data name="richTextBoxAlphaFilePattern.Multiline" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="richTextBoxAlphaFilePattern.ScrollBars" type="System.Windows.Forms.RichTextBoxScrollBars, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <data name="richTextBoxAlphaFilePattern.WordWrap" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="buttonResetAlphaFilePattern.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 24</value>
+  </data>
   <data name="buttonResetAlphaFilePattern.Text" xml:space="preserve">
     <value>リセット</value>
+  </data>
+  <data name="panelAlphaFilePattern.Size" type="System.Drawing.Size, System.Drawing">
+    <value>600, 31</value>
   </data>
   <data name="labelAlphaFormat.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 15</value>
@@ -255,35 +302,6 @@
   </data>
   <data name="buttonQualityTest.Text" xml:space="preserve">
     <value>テスト</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="labelParallel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="labelParallel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>474, 7</value>
-  </data>
-  <data name="labelParallel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>67, 15</value>
-  </data>
-  <data name="labelParallel.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="labelParallel.Text" xml:space="preserve">
-    <value>同時変換数</value>
-  </data>
-  <data name="numericUpDownParallel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>547, 3</value>
-  </data>
-  <data name="numericUpDownParallel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 23</value>
-  </data>
-  <data name="numericUpDownParallel.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="numericUpDownParallel.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>VRC Image Helper / 設定</value>

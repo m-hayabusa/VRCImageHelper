@@ -1,5 +1,7 @@
 ﻿namespace VRCImageHelper.UI;
 
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using VRCImageHelper.Core;
 using VRCImageHelper.Properties;
@@ -58,13 +60,15 @@ public partial class ConfigWindow : Form
         comboBoxFileFormat.SelectedItem = _config.Format;
         comboBoxEncoder.SelectedItem = _config.Encoder;
 
-        textBoxFilePattern.Text = _config.FilePattern;
+        richTextBoxFilePattern.Text = _config.FilePattern;
+        HighlightMatches(richTextBoxFilePattern);
         textBoxEncoderOption.Text = _config.EncoderOption;
 
         comboBoxAlphaFileFormat.SelectedItem = _config.AlphaFormat;
         comboBoxAlphaEncoder.SelectedItem = _config.AlphaEncoder;
 
-        textBoxAlphaFilePattern.Text = _config.AlphaFilePattern;
+        richTextBoxAlphaFilePattern.Text = _config.AlphaFilePattern;
+        HighlightMatches(richTextBoxAlphaFilePattern);
         textBoxAlphaEncoderOption.Text = _config.AlphaEncoderOption;
 
         checkBoxDeleteOriginal.CheckState = _config.DeleteOriginalFile ? CheckState.Checked : CheckState.Unchecked;
@@ -80,12 +84,56 @@ public partial class ConfigWindow : Form
         ComboBoxFileFormat_SelectedIndexChanged(comboBoxAlphaFileFormat, EventArgs.Empty);
     }
 
+    private static void HighlightMatches(RichTextBox richTextBox)
+    {
+        var foreColor = richTextBox.ForeColor;
+        var validColor = Color.FromArgb(28, 109, 103);
+        var invalidColor = Color.FromArgb(220, 50, 47);
+
+        var currentScrollPosition = ScrollHelper.GetScrollPosition(richTextBox.Handle);
+
+        // UI更新を一時停止 (下のSelectとかでチラつくので)
+        richTextBox.SuspendLayout();
+        RenderHelper.StopRender(richTextBox.Handle);
+
+        var prevSelectionStart = richTextBox.SelectionStart;
+        var prevSelectionLength = richTextBox.SelectionLength;
+
+        var matches = Regex.Matches(richTextBox.Text, @"%\{.*?\}%");
+        var keys = Placeholders.Keys();
+
+        var lastTail = 0;
+        foreach (Match match in matches)
+        {
+            if (!match.Success) break;
+            richTextBox.Select(lastTail, match.Index - lastTail);
+            richTextBox.SelectionColor = foreColor;
+            richTextBox.Select(match.Index, match.Length);
+            richTextBox.SelectionColor = keys.Contains(match.Value) ? validColor : invalidColor;
+            lastTail = match.Index + match.Length;
+        }
+
+        richTextBox.Select(lastTail, richTextBox.TextLength - lastTail);
+        richTextBox.SelectionColor = foreColor;
+
+        ScrollHelper.SetScrollPosition(richTextBox.Handle, currentScrollPosition);
+
+        // 元のキャレット位置を復元
+        richTextBox.SelectionStart = prevSelectionStart;
+        richTextBox.SelectionLength = prevSelectionLength;
+
+        // UI更新を再開・再描画
+        richTextBox.ResumeLayout();
+        RenderHelper.StartRender(richTextBox.Handle);
+        richTextBox.Invalidate();
+    }
+
     private void ButtonSelectDir_Click(object sender, EventArgs e)
     {
         var selectDirectoryDialog = new SaveFileDialog()
         {
             Filter = "Directory|" + groupBoxSaveDir.Text,
-            FileName = Path.GetFileName(textBoxFilePattern.Text)
+            FileName = "image"
         };
         if (selectDirectoryDialog is not null && selectDirectoryDialog.ShowDialog() == DialogResult.OK)
         {
@@ -102,16 +150,16 @@ public partial class ConfigWindow : Form
     {
         var control = (Control)sender;
 
-        var alpha = false;
-        if ((control).Name.Contains("Alpha")) alpha = true;
+        var alpha = "";
+        if (control.Name.Contains("Alpha")) alpha = "Alpha";
 
-        var textBox = GetControl<TextBox>(control, "FilePattern");
-        var comboBox = GetControl<ComboBox>(control, "FileFormat");
+        var textBox = GetControl<RichTextBox>(control, $"{alpha}FilePattern");
+        var fileFormat = GetControl<ComboBox>(control, $"{alpha}FileFormat");
 
-        if (textBox is not null && comboBox is not null)
+        if (textBox is not null && fileFormat is not null)
         {
-            var filePattern = alpha ? Config.Default.AlphaFilePattern : Config.Default.FilePattern;
-            var ext = comboBox.SelectedItem.ToString()?.ToLower();
+            var filePattern = alpha == "Alpha" ? Config.Default.AlphaFilePattern : Config.Default.FilePattern;
+            var ext = fileFormat.SelectedItem.ToString()?.ToLower();
             if (ext is not null)
             {
                 textBox.Text = Path.ChangeExtension(filePattern, ext);
@@ -125,7 +173,7 @@ public partial class ConfigWindow : Form
         var alpha = "";
         if (control.Name.Contains("Alpha")) alpha = "Alpha";
 
-        var textBox = GetControl<TextBox>(control, $"{alpha}FilePattern");
+        var textBox = GetControl<RichTextBox>(control, $"{alpha}FilePattern");
         var fileFormat = GetControl<ComboBox>(control, $"{alpha}FileFormat");
         var encoder = GetControl<ComboBox>(control, $"{alpha}Encoder");
         var encoderOption = GetControl<TextBox>(control, $"{alpha}EncoderOption");
@@ -136,7 +184,7 @@ public partial class ConfigWindow : Form
         if (format is not null && format != _format[alpha])
         {
             var extension = format == "MJPEG" ? "jpeg" : format.ToLower();
-            textBox.Text = Path.ChangeExtension(textBoxFilePattern.Text, extension);
+            textBox.Text = Path.ChangeExtension(richTextBoxFilePattern.Text, extension);
             _format[alpha] = format;
         }
 
@@ -245,10 +293,10 @@ public partial class ConfigWindow : Form
         _config.Quality = Convert.ToInt32(numericUpDownQuality.Value);
         _config.ParallelCompressionProcesses = Convert.ToInt32(numericUpDownParallel.Value);
         _config.EncoderOption = textBoxEncoderOption.Text;
-        _config.FilePattern = textBoxFilePattern.Text;
+        _config.FilePattern = richTextBoxFilePattern.Text;
         _config.AlphaQuality = Convert.ToInt32(numericUpDownAlphaQuality.Value);
         _config.AlphaEncoderOption = textBoxAlphaEncoderOption.Text;
-        _config.AlphaFilePattern = textBoxAlphaFilePattern.Text;
+        _config.AlphaFilePattern = richTextBoxAlphaFilePattern.Text;
 
         _config.DeleteOriginalFile = checkBoxDeleteOriginal.CheckState == CheckState.Checked;
         _config.OverwriteDestinationFile = checkBoxOverwriteDest.CheckState == CheckState.Checked;
@@ -267,5 +315,49 @@ public partial class ConfigWindow : Form
     private void ButtonCancel_Click(object sender, EventArgs e)
     {
         Dispose();
+    }
+
+    private void RichTextBoxFilePattern_TextChanged(object sender, EventArgs e)
+    {
+        HighlightMatches(richTextBoxFilePattern);
+    }
+
+    private void RichTextBoxAlphaFilePattern_TextChanged(object sender, EventArgs e)
+    {
+        HighlightMatches(richTextBoxAlphaFilePattern);
+    }
+}
+
+
+internal class ScrollHelper
+{
+    [DllImport("user32.dll")]
+    private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, ref Point lParam);
+
+    public static Point GetScrollPosition(IntPtr hWnd)
+    {
+        var pos = new Point();
+        SendMessage(hWnd, 0x04DD, 0, ref pos);
+        return pos;
+    }
+
+    public static void SetScrollPosition(IntPtr hWnd, Point newPosition)
+    {
+        SendMessage(hWnd, 0x04DE, 0, ref newPosition);
+    }
+}
+
+internal class RenderHelper
+{
+    [DllImport("user32.dll")]
+    private static extern IntPtr SendMessage(IntPtr hWnd, int msg, bool wParam, int lParam);
+
+    public static void StopRender(IntPtr hWnd)
+    {
+        SendMessage(hWnd, 11, false, 0);
+    }
+    public static void StartRender(IntPtr hWnd)
+    {
+        SendMessage(hWnd, 11, true, 0);
     }
 }

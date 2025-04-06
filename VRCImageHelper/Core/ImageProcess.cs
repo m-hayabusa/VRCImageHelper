@@ -9,6 +9,54 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using VRCImageHelper.Tools;
 
+#pragma warning disable IDE1006 
+public struct Placeholders
+{
+    public const string TakenYear = "%{TAKEN:yyyy}%";
+    public const string TakenMonth = "%{TAKEN:MM}%";
+    public const string TakenDay = "%{TAKEN:dd}%";
+    public const string TakenHour = "%{TAKEN:hh}%";
+    public const string TakenMinute = "%{TAKEN:mm}%";
+    public const string TakenSecond = "%{TAKEN:ss}%";
+    public const string TakenMillisecond = "%{TAKEN:fff}%";
+
+    public const string JoinYear = "%{JOIN:yyyy}%";
+    public const string JoinMonth = "%{JOIN:MM}%";
+    public const string JoinDay = "%{JOIN:dd}%";
+    public const string JoinHour = "%{JOIN:hh}%";
+    public const string JoinMinute = "%{JOIN:mm}%";
+    public const string JoinSecond = "%{JOIN:ss}%";
+
+    public const string Year = "yyyy";
+    public const string Month = "MM";
+    public const string Day = "dd";
+    public const string Hour = "hh";
+    public const string Minute = "mm";
+    public const string Second = "ss";
+    public const string Millisecond = "fff";
+    public const string Width = "XXXX";
+    public const string Height = "YYYY";
+
+    public const string World = "%{WORLD}%";
+    public const string WorldId = "%{WORLD:ID}%";
+    public const string InstanceId = "%{INSTANCE:ID}%";
+    public const string InstanceType = "%{INSTANCE:TYPE}%";
+    public const string OwnerId = "%{OWNER:ID}%";
+
+    public const string Camera = "%{CAMERA}%";
+
+    public static List<string> Keys()
+    {
+        return typeof(Placeholders)
+            .GetFields(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public)
+            .Select(f => f.GetValue(null))
+            .Where(value => value is string)
+            .Select(value => (string)value!)
+            .ToList();
+    }
+}
+#pragma warning restore IDE1006
+
 internal class ImageProcess
 {
     public static void Taken(object sender, NewLineEventArgs e)
@@ -38,11 +86,75 @@ internal class ImageProcess
         }
     }
 
+    private static string FormatFilePath(string sourceFile, State state, bool hasAlpha)
+    {
+
+        var joinMatch = Regex.Match(state.RoomInfo.JoinDateTime, @"(?<Year>\d+)\.(?<Month>\d+)\.(?<Day>\d+) (?<Hour>\d+):(?<Minute>\d+):(?<Second>\d+)");
+        var takenMatch = Regex.Match(sourceFile, @"(?<Year>\d+)-(?<Month>\d+)-(?<Day>\d+)_(?<Hour>\d+)-(?<Minute>\d+)-(?<Second>\d+)\.(?<Millisecond>\d+)_(?<Width>\d+)x(?<Height>\d+)");
+        var instanceType = state.RoomInfo.Permission switch
+        {
+            "hidden" => "Friends+",
+            "friends" => "Friends",
+            "private" => "Invite",
+            "private_plus" => "Invite+",
+            "group_public" => "GroupPublic",
+            "group_members" => "Group",
+            "group_plus" => "Group+",
+            _ => "Public",
+        };
+        var cameraType = state.VirtualLens2.Enabled ? "VirtualLens2"
+                         : state.Integral.Enabled ? "Integral"
+                         : "VRCCamera";
+
+        var placeholders = new Dictionary<string, string>
+        {
+            { Placeholders.TakenYear, takenMatch.Groups["Year"].Value },
+            { Placeholders.TakenMonth, takenMatch.Groups["Month"].Value },
+            { Placeholders.TakenDay, takenMatch.Groups["Day"].Value },
+            { Placeholders.TakenHour, takenMatch.Groups["Hour"].Value },
+            { Placeholders.TakenMinute, takenMatch.Groups["Minute"].Value },
+            { Placeholders.TakenSecond, takenMatch.Groups["Second"].Value },
+            { Placeholders.TakenMillisecond, takenMatch.Groups["Millisecond"].Value },
+
+            { Placeholders.JoinYear, joinMatch.Groups["Year"].Value },
+            { Placeholders.JoinMonth, joinMatch.Groups["Month"].Value },
+            { Placeholders.JoinDay, joinMatch.Groups["Day"].Value },
+            { Placeholders.JoinHour, joinMatch.Groups["Hour"].Value },
+            { Placeholders.JoinMinute, joinMatch.Groups["Minute"].Value },
+            { Placeholders.JoinSecond, joinMatch.Groups["Second"].Value },
+
+            { Placeholders.Year, takenMatch.Groups["Year"].Value },
+            { Placeholders.Month, takenMatch.Groups["Month"].Value },
+            { Placeholders.Day, takenMatch.Groups["Day"].Value },
+            { Placeholders.Hour, takenMatch.Groups["Hour"].Value },
+            { Placeholders.Minute, takenMatch.Groups["Minute"].Value },
+            { Placeholders.Second, takenMatch.Groups["Second"].Value },
+            { Placeholders.Millisecond, takenMatch.Groups["Millisecond"].Value },
+            { Placeholders.Width, takenMatch.Groups["Width"].Value },
+            { Placeholders.Height, takenMatch.Groups["Height"].Value },
+
+            { Placeholders.World, string.IsNullOrEmpty(state.RoomInfo.World_name) ? "UNKNOWN WORLD" : state.RoomInfo.World_name },
+            { Placeholders.WorldId, state.RoomInfo.World_id },
+            { Placeholders.InstanceId, state.RoomInfo.Instance_id},
+            { Placeholders.InstanceType, instanceType },
+            { Placeholders.OwnerId, state.RoomInfo.Organizer },
+
+            { Placeholders.Camera, cameraType }
+        };
+
+        var filePath = hasAlpha ? ConfigManager.AlphaFilePattern : ConfigManager.FilePattern;
+
+        foreach (var entry in placeholders)
+        {
+            filePath = filePath.Replace(entry.Key, entry.Value);
+        }
+
+        return filePath;
+    }
+
     public static void Process(string sourcePath, State state)
     {
         if (!new FileInfo(sourcePath).Exists) return;
-
-        var fileName = Path.GetFileName(sourcePath);
 
         var hasAlpha = false;
         {
@@ -55,56 +167,9 @@ internal class ImageProcess
             }
         }
 
-        var match = Regex.Match(fileName, "(\\d+)-(\\d+)-(\\d+)_(\\d+)-(\\d+)-(\\d+)\\.(\\d+)_(\\d+)x(\\d+)");
-        if (match.Success)
-        {
-            fileName = (hasAlpha ? ConfigManager.AlphaFilePattern : ConfigManager.FilePattern)
-                .Replace("yyyy", match.Groups[1].Value)
-                .Replace("MM", match.Groups[2].Value)
-                .Replace("dd", match.Groups[3].Value)
-                .Replace("hh", match.Groups[4].Value)
-                .Replace("mm", match.Groups[5].Value)
-                .Replace("ss", match.Groups[6].Value)
-                .Replace("fff", match.Groups[7].Value)
-                .Replace("XXXX", match.Groups[8].Value)
-                .Replace("YYYY", match.Groups[9].Value);
-        }
+        var filePath = FormatFilePath(Path.GetFileName(sourcePath), state, hasAlpha);
 
-        {
-            if (state.VirtualLens2.Enabled)
-            {
-                fileName = fileName.Replace("%CAMERA%", "VirtualLens2");
-            }
-            else if (state.Integral.Enabled)
-            {
-                fileName = fileName.Replace("%CAMERA%", "Integral");
-            }
-            else
-            {
-                fileName = fileName.Replace("%CAMERA%", "VRCCamera");
-            }
-
-            fileName = fileName.Replace("%WORLD_ID%", state.RoomInfo.World_id)
-                .Replace("%INSTANCE_ID%", state.RoomInfo.Instance_id)
-                .Replace("%WORLD%", state.RoomInfo.World_name == "" ? "WORLD_UNKNOWN" : state.RoomInfo.World_name);
-
-            var instanceType = state.RoomInfo.Permission switch
-            {
-                "hidden" => "Friends+",
-                "friends" => "Friends",
-                "private" => "Invite",
-                "private_plus" => "Invite+",
-                "group_public" => "GroupPublic",
-                "group_members" => "Group",
-                "group_plus" => "Group+",
-                _ => "Public",
-            };
-
-            fileName = fileName.Replace("%INSTANCE_TYPE%", instanceType)
-                .Replace("%OWNER_ID%", state.RoomInfo.Organizer);
-        }
-
-        fileName = Regex.Replace(fileName, @"[<>:""|?*]", "_");
+        filePath = Regex.Replace(filePath, @"[<>:""|?*]", "_");
 
         var destPath = ConfigManager.DestDir;
         if (destPath == "")
@@ -120,7 +185,7 @@ internal class ImageProcess
 
         var basePath = Path.GetFullPath(destPath);
 
-        destPath = Path.Combine(destPath, fileName);
+        destPath = Path.Combine(destPath, filePath);
 
         if (!Path.GetFullPath(destPath).StartsWith(basePath, StringComparison.OrdinalIgnoreCase))
         {
