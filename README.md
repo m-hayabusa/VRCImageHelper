@@ -43,25 +43,25 @@ VRChatのカメラで撮った画像を圧縮して、
             | `fff`             | 撮影時刻: 秒(小数点以下)  | `375`                                   |
             | `XXXX`            | 画像のピクセル数 (横)     | `3840`                                  |
             | `YYYY`            | 画像のピクセル数 (縦)     | `2160`                                  |
-            | `%CAMERA%`        | カメラの種類             | `VRCCamera`                             |
-            | `%WORLD%`         | ワールド名               | `nS／TownScaper`                        |
-            | `%WORLD:ID%`      | ワールドID               | `wrld_3208d019-7310-4c35-b12e-e4278c2689c7` |
-            | `%INSTANCE:ID%`   | インスタンス番号         | `99424`                                 |
-            | `%INSTANCE:TYPE%` | インスタンスの種類       | `Friends+`                              |
-            | `%OWNER:ID%`      | インスタンスオーナーのID | `usr_cbced732-f21a-46cd-a6a6-61990bceea14` |
-            | `%TAKEN:yyyy%`    | 撮影時刻: 年             | `2025`                                  |
-            | `%TAKEN:MM%`      | 撮影時刻: 月             | `04`                                    |
-            | `%TAKEN:dd%`      | 撮影時刻: 日             | `06`                                    |
-            | `%TAKEN:hh%`      | 撮影時刻: 時             | `10`                                    |
-            | `%TAKEN:mm%`      | 撮影時刻: 分             | `53`                                    |
-            | `%TAKEN:ss%`      | 撮影時刻: 秒             | `56`                                    |
-            | `%TAKEN:fff%`     | 撮影時刻: 秒(小数点以下) | `149`                                   |
-            | `%JOIN:yyyy%`     | インスタンスJoin日時: 年 | `2025`                                  |
-            | `%JOIN:MM%`       | インスタンスJoin日時: 月 | `04`                                    |
-            | `%JOIN:dd%`       | インスタンスJoin日時: 日 | `05`                                    |
-            | `%JOIN:hh%`       | インスタンスJoin日時: 時 | `14`                                    |
-            | `%JOIN:mm%`       | インスタンスJoin日時: 分 | `19`                                    |
-            | `%JOIN:ss%`       | インスタンスJoin日時: 秒 | `53`                                    |
+            | `%{CAMERA}%`        | カメラの種類             | `VRCCamera`                             |
+            | `%{WORLD}%`         | ワールド名               | `nS／TownScaper`                        |
+            | `%{WORLD:ID}%`      | ワールドID               | `wrld_3208d019-7310-4c35-b12e-e4278c2689c7` |
+            | `%{INSTANCE:ID}%`   | インスタンス番号         | `99424`                                 |
+            | `%{INSTANCE:TYPE}%` | インスタンスの種類       | `Friends+`                              |
+            | `%{OWNER:ID}%`      | インスタンスオーナーのID | `usr_cbced732-f21a-46cd-a6a6-61990bceea14` |
+            | `%{TAKEN:yyyy}%`    | 撮影時刻: 年             | `2025`                                  |
+            | `%{TAKEN:MM}%`      | 撮影時刻: 月             | `04`                                    |
+            | `%{TAKEN:dd}%`      | 撮影時刻: 日             | `06`                                    |
+            | `%{TAKEN:hh}%`      | 撮影時刻: 時             | `10`                                    |
+            | `%{TAKEN:mm}%`      | 撮影時刻: 分             | `53`                                    |
+            | `%{TAKEN:ss}%`      | 撮影時刻: 秒             | `56`                                    |
+            | `%{TAKEN:fff}%`     | 撮影時刻: 秒(小数点以下) | `149`                                   |
+            | `%{JOIN:yyyy}%`     | インスタンスJoin日時: 年 | `2025`                                  |
+            | `%{JOIN:MM}%`       | インスタンスJoin日時: 月 | `04`                                    |
+            | `%{JOIN:dd}%`       | インスタンスJoin日時: 日 | `05`                                    |
+            | `%{JOIN:hh}%`       | インスタンスJoin日時: 時 | `14`                                    |
+            | `%{JOIN:mm}%`       | インスタンスJoin日時: 分 | `19`                                    |
+            | `%{JOIN:ss}%`       | インスタンスJoin日時: 秒 | `53`                                    |
 
             例えば、`%JOIN:yyyy%-%JOIN:MM%\%JOIN:yyyy%-%JOIN:MM%-%JOIN:dd%\%WORLD%_%INSTANCE:TYPE%_%INSTANCE:ID%\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY_%CAMERA%.heic` と指定したとき、
             保存先フォルダが `D:\Pictures\VRChat` なら、`D:\Pictures\VRChat\2025-04\2025-04-05\nS?TownScaper_Invite_64792\VRChat_2025-04-06_10-53-56.149_3840x2160_VRCCamera.heic` に保存される
