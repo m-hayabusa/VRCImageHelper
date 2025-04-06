@@ -12,6 +12,7 @@ internal class RoomInfo
         Permission = "";
         Instance_id = "";
         Organizer = "";
+        JoinDateTime = "";
     }
     public RoomInfo(RoomInfo roomInfo)
     {
@@ -20,12 +21,14 @@ internal class RoomInfo
         Permission = roomInfo.Permission;
         Instance_id = roomInfo.Instance_id;
         Organizer = roomInfo.Organizer;
+        JoinDateTime = roomInfo.JoinDateTime;
     }
     public string World_id { get; set; }
     public string World_name { get; set; }
     public string Permission { get; set; }
     public string Instance_id { get; set; }
     public string Organizer { get; set; }
+    public string JoinDateTime { get; set; }
 }
 
 internal class State
