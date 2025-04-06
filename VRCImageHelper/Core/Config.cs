@@ -138,12 +138,12 @@ internal class Config
     public bool OverwriteDestinationFile { get; set; } = false;
     public bool DeleteOriginalFile { get; set; } = false;
     public string DestDir { get; set; } = "";
-    public string FilePattern { get; set; } = "yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY.png";
+    public string FilePattern { get; set; } = "yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY%{_LAYER}%.png";
     public string Format { get; set; } = "PNG";
     public string Encoder { get; set; } = "";
     public string EncoderOption { get; set; } = "";
     public int Quality { get; set; } = 20;
-    public string AlphaFilePattern { get; set; } = "yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY.png";
+    public string AlphaFilePattern { get; set; } = "yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY%{_LAYER}%.png";
     public string AlphaFormat { get; set; } = "PNG";
     public string AlphaEncoder { get; set; } = "";
     public string AlphaEncoderOption { get; set; } = "";

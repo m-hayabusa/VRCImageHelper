@@ -126,6 +126,7 @@ internal static class Program
         });
 
         var logReader = new LogReader(CancelToken.Token);
+        var fileWatcher = new FileWatcher(CancelToken.Token);
         var oscServer = new OscServer(CancelToken.Token);
         ImageProcess.s_cancellationToken = CancelToken.Token;
         Tools.ExifTool.s_cancellationToken = CancelToken.Token;

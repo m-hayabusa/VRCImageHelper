@@ -1,6 +1,7 @@
 namespace VRCImageHelper.Core;
 
 using System;
+using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.Text.Encodings.Web;
@@ -42,6 +43,8 @@ public struct Placeholders
     public const string InstanceType = "%{INSTANCE:TYPE}%";
     public const string OwnerId = "%{OWNER:ID}%";
 
+    public const string MultiLayerPostfix = "%{_LAYER}%";
+
     public const string Camera = "%{CAMERA}%";
 
     public static List<string> Keys()
@@ -60,17 +63,23 @@ internal class ImageProcess
 {
     public static void Taken(object sender, NewLineEventArgs e)
     {
-        var match = Regex.Match(e.Line, @"([0-9.: ]*) (?:Log|Debug) +? -  \[VRC Camera\] Took screenshot to: (.*)");
+        var match = Regex.Match(e.Line, @"$\d{4}.\d{2}.\d{2} \d{2}:\d{2}:\d{2}");
+
         if (match.Success)
         {
-            var state = State.Current.Clone();
+            var currentLogTime = DateTime.ParseExact(match.Value, "yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
 
-            var creationDate = match.Groups[1].ToString().Replace('.', ':');
-            state.CreationDate = creationDate;
+            var result = FileWatcher.s_queue.Where(file => file.Key > currentLogTime);
 
-            var path = match.Groups[2].ToString();
+            foreach (var item in result)
+            {
+                Debug.WriteLine("キューから処理" + item.Value);
+                var state = State.Current.Clone();
 
-            new Task(() => Process(path, state)).Start();
+                state.CreationDate = item.Key.ToString("yyy:MM:dd HH:mm:ss");
+
+                new Task(() => Process(item.Value, state)).Start();
+            }
         }
     }
 
@@ -87,9 +96,8 @@ internal class ImageProcess
 
     private static string FormatFilePath(string sourceFile, State state, bool hasAlpha)
     {
-
         var joinMatch = Regex.Match(state.RoomInfo.JoinDateTime, @"(?<Year>\d+)\.(?<Month>\d+)\.(?<Day>\d+) (?<Hour>\d+):(?<Minute>\d+):(?<Second>\d+)");
-        var takenMatch = Regex.Match(sourceFile, @"(?<Year>\d+)-(?<Month>\d+)-(?<Day>\d+)_(?<Hour>\d+)-(?<Minute>\d+)-(?<Second>\d+)\.(?<Millisecond>\d+)_(?<Width>\d+)x(?<Height>\d+)");
+        var takenMatch = Regex.Match(sourceFile, @"(?<Year>\d+)-(?<Month>\d+)-(?<Day>\d+)_(?<Hour>\d+)-(?<Minute>\d+)-(?<Second>\d+)\.(?<Millisecond>\d+)_(?<Width>\d+)x(?<Height>\d+)(?<MultiLayer>_[A-Za-z]+)?");
         var instanceType = state.RoomInfo.Permission switch
         {
             "hidden" => "Friends+",
@@ -101,8 +109,10 @@ internal class ImageProcess
             "group_plus" => "Group+",
             _ => "Public",
         };
+        var isPrint = takenMatch.Groups["Width"].Value == "2048" && takenMatch.Groups["Height"].Value == "1440";
         var cameraType = state.VirtualLens2.Enabled ? "VirtualLens2"
                          : state.Integral.Enabled ? "Integral"
+                         : isPrint ? "Print"
                          : "VRCCamera";
 
         var placeholders = new Dictionary<string, string>
@@ -132,6 +142,8 @@ internal class ImageProcess
             { Placeholders.Width, takenMatch.Groups["Width"].Value },
             { Placeholders.Height, takenMatch.Groups["Height"].Value },
 
+            { Placeholders.MultiLayerPostfix, takenMatch.Groups["MultiLayer"].Value },
+
             { Placeholders.World, string.IsNullOrEmpty(state.RoomInfo.World_name) ? "UNKNOWN WORLD" : state.RoomInfo.World_name },
             { Placeholders.WorldId, state.RoomInfo.World_id },
             { Placeholders.InstanceId, state.RoomInfo.Instance_id},
@@ -159,10 +171,18 @@ internal class ImageProcess
         {
             using var targetImage = new Bitmap(sourcePath);
 
-            var formatWithAlpha = new PixelFormat[] { PixelFormat.Alpha, PixelFormat.Canonical, PixelFormat.Format16bppArgb1555, PixelFormat.Format32bppArgb, PixelFormat.Format32bppPArgb, PixelFormat.Format64bppArgb, PixelFormat.Format64bppPArgb };
-            if (formatWithAlpha.Contains(targetImage.PixelFormat))
+            if (targetImage.Width == 2048 && targetImage.Height == 1440)
             {
-                hasAlpha = true;
+                // Printが何故か32bit深度
+                hasAlpha = false;
+            }
+            else
+            {
+                var formatWithAlpha = new PixelFormat[] { PixelFormat.Alpha, PixelFormat.Canonical, PixelFormat.Format16bppArgb1555, PixelFormat.Format32bppArgb, PixelFormat.Format32bppPArgb, PixelFormat.Format64bppArgb, PixelFormat.Format64bppPArgb };
+                if (formatWithAlpha.Contains(targetImage.PixelFormat))
+                {
+                    hasAlpha = true;
+                }
             }
         }
 
