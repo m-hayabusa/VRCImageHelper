@@ -1,6 +1,7 @@
 ﻿namespace VRCImageHelper.Core;
 
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using VRCImageHelper.Tools;
 
 internal class ConfigManager
@@ -106,6 +107,23 @@ internal class ConfigManager
         if (result.VirtualLens2.ApertureDefault >= result.VirtualLens2.ApertureMin)
             result.VirtualLens2.ApertureDefault = float.PositiveInfinity;
 
+        if (result.Version == null || result.Version == 0)
+        {
+            var pattern = new Regex(@"^yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY(?<Extension>.[a-zA-Z]*?)$");
+            var filePatternMatch = pattern.Match(result.FilePattern);
+            if (filePatternMatch.Success)
+            {
+                result.FilePattern = "yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY%{_LAYER}%" + filePatternMatch.Groups["Extension"];
+            }
+
+            filePatternMatch = pattern.Match(result.FilePattern);
+            if (filePatternMatch.Success)
+            {
+                result.AlphaFilePattern = "yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY%{_LAYER}%" + filePatternMatch.Groups["Extension"];
+            }
+            result.Version = 1;
+        }
+
         return result;
     }
     public static string DefaultEncoderOptions(string encoder, bool hasAlphaChannel)
@@ -133,6 +151,7 @@ internal class Config
         clone.VirtualLens2 = VirtualLens2.Clone();
         return clone;
     }
+    public int? Version { get; set; } = 1;
     public static Config Default { get; } = new();
     public bool ScanAll { get; set; } = false;
     public bool OverwriteDestinationFile { get; set; } = false;
@@ -148,7 +167,7 @@ internal class Config
     public string AlphaEncoder { get; set; } = "";
     public string AlphaEncoderOption { get; set; } = "";
     public int AlphaQuality { get; set; } = 20;
-    public int ParallelCompressionProcesses { get;set; } = 1;
+    public int ParallelCompressionProcesses { get; set; } = 1;
     public VirtualLens2Config VirtualLens2 { get; set; } = new();
     internal class VirtualLens2Config
     {
