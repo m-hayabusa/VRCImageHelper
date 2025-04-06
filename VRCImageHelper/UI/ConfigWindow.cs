@@ -98,16 +98,17 @@ public partial class ConfigWindow : Form
         var prevSelectionStart = richTextBox.SelectionStart;
         var prevSelectionLength = richTextBox.SelectionLength;
 
-        var matches = Regex.Matches(richTextBox.Text, @"(%\{.*?\}%)");
+        var matches = Regex.Matches(richTextBox.Text, @"%\{.*?\}%");
         var keys = Placeholders.Keys();
 
         var lastTail = 0;
         foreach (Match match in matches)
         {
+            if (!match.Success) break;
             richTextBox.Select(lastTail, match.Index - lastTail);
             richTextBox.SelectionColor = foreColor;
             richTextBox.Select(match.Index, match.Length);
-            richTextBox.SelectionColor = keys.Contains(match.Groups[1].Value) ? validColor : invalidColor;
+            richTextBox.SelectionColor = keys.Contains(match.Value) ? validColor : invalidColor;
             lastTail = match.Index + match.Length;
         }
 
