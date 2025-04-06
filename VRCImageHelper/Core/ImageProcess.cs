@@ -26,15 +26,15 @@ public struct Placeholders
     public const string JoinMinute = "%{JOIN:mm}%";
     public const string JoinSecond = "%{JOIN:ss}%";
 
-    public const string Year = "%{yyyy}%";
-    public const string Month = "%{MM}%";
-    public const string Day = "%{dd}%";
-    public const string Hour = "%{hh}%";
-    public const string Minute = "%{mm}%";
-    public const string Second = "%{ss}%";
-    public const string Millisecond = "%{fff}%";
-    public const string Width = "%{XXXX}%";
-    public const string Height = "%{YYYY}%";
+    public const string Year = "yyyy";
+    public const string Month = "MM";
+    public const string Day = "dd";
+    public const string Hour = "hh";
+    public const string Minute = "mm";
+    public const string Second = "ss";
+    public const string Millisecond = "fff";
+    public const string Width = "XXXX";
+    public const string Height = "YYYY";
 
     public const string World = "%{WORLD}%";
     public const string WorldId = "%{WORLD:ID}%";
