@@ -8,6 +8,54 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using VRCImageHelper.Tools;
 
+#pragma warning disable IDE1006 
+public struct Placeholders
+{
+    public const string TakenYear = "%{TAKEN:yyyy}%";
+    public const string TakenMonth = "%{TAKEN:MM}%";
+    public const string TakenDay = "%{TAKEN:dd}%";
+    public const string TakenHour = "%{TAKEN:hh}%";
+    public const string TakenMinute = "%{TAKEN:mm}%";
+    public const string TakenSecond = "%{TAKEN:ss}%";
+    public const string TakenMillisecond = "%{TAKEN:fff}%";
+
+    public const string JoinYear = "%{JOIN:yyyy}%";
+    public const string JoinMonth = "%{JOIN:MM}%";
+    public const string JoinDay = "%{JOIN:dd}%";
+    public const string JoinHour = "%{JOIN:hh}%";
+    public const string JoinMinute = "%{JOIN:mm}%";
+    public const string JoinSecond = "%{JOIN:ss}%";
+
+    public const string Year = "%{yyyy}%";
+    public const string Month = "%{MM}%";
+    public const string Day = "%{dd}%";
+    public const string Hour = "%{hh}%";
+    public const string Minute = "%{mm}%";
+    public const string Second = "%{ss}%";
+    public const string Millisecond = "%{fff}%";
+    public const string Width = "%{XXXX}%";
+    public const string Height = "%{YYYY}%";
+
+    public const string World = "%{WORLD}%";
+    public const string WorldId = "%{WORLD:ID}%";
+    public const string InstanceId = "%{INSTANCE:ID}%";
+    public const string InstanceType = "%{INSTANCE:TYPE}%";
+    public const string OwnerId = "%{OWNER:ID}%";
+
+    public const string Camera = "%{CAMERA}%";
+
+    public static List<string> Keys()
+    {
+        return typeof(Placeholders)
+            .GetFields(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public)
+            .Select(f => f.GetValue(null))
+            .Where(value => value is string)
+            .Select(value => (string)value!)
+            .ToList();
+    }
+}
+#pragma warning restore IDE1006
+
 internal class ImageProcess
 {
     public static void Taken(object sender, NewLineEventArgs e)
@@ -59,38 +107,38 @@ internal class ImageProcess
 
         var placeholders = new Dictionary<string, string>
         {
-            { "%TAKEN:yyyy%", takenMatch.Groups["Year"].Value },
-            { "%TAKEN:MM%", takenMatch.Groups["Month"].Value },
-            { "%TAKEN:dd%", takenMatch.Groups["Day"].Value },
-            { "%TAKEN:hh%", takenMatch.Groups["Hour"].Value },
-            { "%TAKEN:mm%", takenMatch.Groups["Minute"].Value },
-            { "%TAKEN:ss%", takenMatch.Groups["Second"].Value },
-            { "%TAKEN:fff%", takenMatch.Groups["Millisecond"].Value },
+            { Placeholders.TakenYear, takenMatch.Groups["Year"].Value },
+            { Placeholders.TakenMonth, takenMatch.Groups["Month"].Value },
+            { Placeholders.TakenDay, takenMatch.Groups["Day"].Value },
+            { Placeholders.TakenHour, takenMatch.Groups["Hour"].Value },
+            { Placeholders.TakenMinute, takenMatch.Groups["Minute"].Value },
+            { Placeholders.TakenSecond, takenMatch.Groups["Second"].Value },
+            { Placeholders.TakenMillisecond, takenMatch.Groups["Millisecond"].Value },
 
-            { "%JOIN:yyyy%", joinMatch.Groups["Year"].Value },
-            { "%JOIN:MM%", joinMatch.Groups["Month"].Value },
-            { "%JOIN:dd%", joinMatch.Groups["Day"].Value },
-            { "%JOIN:hh%", joinMatch.Groups["Hour"].Value },
-            { "%JOIN:mm%", joinMatch.Groups["Minute"].Value },
-            { "%JOIN:ss%", joinMatch.Groups["Second"].Value },
+            { Placeholders.JoinYear, joinMatch.Groups["Year"].Value },
+            { Placeholders.JoinMonth, joinMatch.Groups["Month"].Value },
+            { Placeholders.JoinDay, joinMatch.Groups["Day"].Value },
+            { Placeholders.JoinHour, joinMatch.Groups["Hour"].Value },
+            { Placeholders.JoinMinute, joinMatch.Groups["Minute"].Value },
+            { Placeholders.JoinSecond, joinMatch.Groups["Second"].Value },
 
-            { "yyyy", takenMatch.Groups["Year"].Value },
-            { "MM", takenMatch.Groups["Month"].Value },
-            { "dd", takenMatch.Groups["Day"].Value },
-            { "hh", takenMatch.Groups["Hour"].Value },
-            { "mm", takenMatch.Groups["Minute"].Value },
-            { "ss", takenMatch.Groups["Second"].Value },
-            { "fff", takenMatch.Groups["Millisecond"].Value },
-            { "XXXX", takenMatch.Groups["Width"].Value },
-            { "YYYY", takenMatch.Groups["Height"].Value },
+            { Placeholders.Year, takenMatch.Groups["Year"].Value },
+            { Placeholders.Month, takenMatch.Groups["Month"].Value },
+            { Placeholders.Day, takenMatch.Groups["Day"].Value },
+            { Placeholders.Hour, takenMatch.Groups["Hour"].Value },
+            { Placeholders.Minute, takenMatch.Groups["Minute"].Value },
+            { Placeholders.Second, takenMatch.Groups["Second"].Value },
+            { Placeholders.Millisecond, takenMatch.Groups["Millisecond"].Value },
+            { Placeholders.Width, takenMatch.Groups["Width"].Value },
+            { Placeholders.Height, takenMatch.Groups["Height"].Value },
 
-            { "%WORLD%", string.IsNullOrEmpty(state.RoomInfo.World_name) ? "UNKNOWN WORLD" : state.RoomInfo.World_name },
-            { "%WORLD:ID%", state.RoomInfo.World_id },
-            { "%INSTANCE:ID%", state.RoomInfo.Instance_id},
-            { "%INSTANCE:TYPE%", instanceType  },
-            { "%OWNER:ID%", state.RoomInfo.Organizer },
+            { Placeholders.World, string.IsNullOrEmpty(state.RoomInfo.World_name) ? "UNKNOWN WORLD" : state.RoomInfo.World_name },
+            { Placeholders.WorldId, state.RoomInfo.World_id },
+            { Placeholders.InstanceId, state.RoomInfo.Instance_id},
+            { Placeholders.InstanceType, instanceType },
+            { Placeholders.OwnerId, state.RoomInfo.Organizer },
 
-            { "%CAMERA%", cameraType}
+            { Placeholders.Camera, cameraType }
         };
 
         var filePath = hasAlpha ? ConfigManager.AlphaFilePattern : ConfigManager.FilePattern;

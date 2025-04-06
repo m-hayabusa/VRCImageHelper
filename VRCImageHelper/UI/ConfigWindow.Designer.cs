@@ -208,6 +208,7 @@ partial class ConfigWindow
         // 
         resources.ApplyResources(richTextBoxFilePattern, "richTextBoxFilePattern");
         richTextBoxFilePattern.Name = "richTextBoxFilePattern";
+        richTextBoxFilePattern.TextChanged += RichTextBoxFilePattern_TextChanged;
         // 
         // buttonResetFilePattern
         // 
@@ -297,6 +298,7 @@ partial class ConfigWindow
         // 
         resources.ApplyResources(richTextBoxAlphaFilePattern, "richTextBoxAlphaFilePattern");
         richTextBoxAlphaFilePattern.Name = "richTextBoxAlphaFilePattern";
+        richTextBoxAlphaFilePattern.TextChanged += RichTextBoxAlphaFilePattern_TextChanged;
         // 
         // buttonResetAlphaFilePattern
         // 
