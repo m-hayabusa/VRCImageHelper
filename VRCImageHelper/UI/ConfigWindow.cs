@@ -149,16 +149,16 @@ public partial class ConfigWindow : Form
     {
         var control = (Control)sender;
 
-        var alpha = false;
-        if ((control).Name.Contains("Alpha")) alpha = true;
+        var alpha = "";
+        if (control.Name.Contains("Alpha")) alpha = "Alpha";
 
-        var textBox = GetControl<RichTextBox>(control, "FilePattern");
-        var comboBox = GetControl<ComboBox>(control, "FileFormat");
+        var textBox = GetControl<RichTextBox>(control, $"{alpha}FilePattern");
+        var fileFormat = GetControl<ComboBox>(control, $"{alpha}FileFormat");
 
-        if (textBox is not null && comboBox is not null)
+        if (textBox is not null && fileFormat is not null)
         {
-            var filePattern = alpha ? Config.Default.AlphaFilePattern : Config.Default.FilePattern;
-            var ext = comboBox.SelectedItem.ToString()?.ToLower();
+            var filePattern = alpha == "Alpha" ? Config.Default.AlphaFilePattern : Config.Default.FilePattern;
+            var ext = fileFormat.SelectedItem.ToString()?.ToLower();
             if (ext is not null)
             {
                 textBox.Text = Path.ChangeExtension(filePattern, ext);
