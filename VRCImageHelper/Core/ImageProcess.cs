@@ -76,7 +76,7 @@ internal class ImageProcess
                 Debug.WriteLine("キューから処理" + item.Value);
                 var state = State.Current.Clone();
 
-                state.CreationDate = item.Key.ToString("yyy:MM:dd HH:mm:ss");
+                state.CreationDate = item.Key.ToString("yyyy:MM:dd HH:mm:ss");
 
                 new Task(() => Process(item.Value, state)).Start();
             }
