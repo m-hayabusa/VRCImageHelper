@@ -129,7 +129,6 @@ internal static class Program
         var oscServer = new OscServer(CancelToken.Token);
         FileWatcher? fileWatcher = null;
 
-        ImageProcess.s_cancellationToken = CancelToken.Token;
         Tools.ExifTool.s_cancellationToken = CancelToken.Token;
         Tools.FFMpeg.s_cancellationToken = CancelToken.Token;
 
@@ -138,16 +137,13 @@ internal static class Program
 
         logReader.NewLine += LogReader.UpdateCurrentHead;
 
-        // 初期化時に LogReader.CurrentHead を参照する
-        DateTime dTZero = new(0);
         logReader.NewLine += (sender, e) =>
         {
-            if (fileWatcher == null && LogReader.CurrentHead.CompareTo(dTZero) > 0)
+            if (fileWatcher == null && LogReader.CurrentHead.CompareTo(new DateTime(0)) > 0)
                 fileWatcher = new FileWatcher(LogReader.CurrentHead, CancelToken.Token);
         };
 
         logReader.NewLine += ImageProcess.Taken;
-        logReader.NewLine += ImageProcess.CheckQueue;
 
         logReader.NewLine += VRChat.WorldId;
         logReader.NewLine += VRChat.JoinRoom;

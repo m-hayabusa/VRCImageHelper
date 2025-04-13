@@ -1,13 +1,10 @@
 ﻿namespace VRCImageHelper.Core;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Timers;
 
 internal class FileWatcher : IDisposable
 {
-    // <撮影時刻のDateTime, フルパス>
-    public static SortedDictionary<DateTime, string> s_queue = new();
 
     // TODO: VRChatのconfig.json見る
     private readonly string _targetDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "VRChat");
@@ -74,26 +71,7 @@ internal class FileWatcher : IDisposable
             return;
         }
 
-        if (ParseDate.TryParseFilePathToDateTime(path, out var parsedDateTime))
-        {
-            Debug.WriteLine($"抽出された日時: {parsedDateTime} {path}");
-            if ((parsedDateTime - LogReader.CurrentHead).TotalSeconds < 5)
-            {
-                if (!s_queue.Any(pair => pair.Key == parsedDateTime && pair.Value == path))
-                {
-                    Debug.WriteLine("FileWatcher: キューに積む " + path);
-                    s_queue.Add(parsedDateTime, path);
-                }
-                else
-                {
-                    Debug.WriteLine("FileWatcher: すでにある " + path);
-                }
-            }
-        }
-        else
-        {
-            Debug.WriteLine("ファイル名から日時情報を抽出できませんでした。");
-        }
+        ProcessQueue.Enqueue(path);
     }
 
     private void AddAllFileToQueueAfterDate(DateTime threshold)
@@ -107,11 +85,7 @@ internal class FileWatcher : IDisposable
 
         foreach (var entry in files)
         {
-            if (!s_queue.Any(pair => pair.Key == entry.date && pair.Value == entry.file))
-            {
-                s_queue.Add(entry.date, entry.file);
-                Debug.WriteLine("FileWatcher: 初期化・キューに積む " + entry.file);
-            }
+            ProcessQueue.Enqueue(entry.file);
         }
     }
 }
