@@ -180,7 +180,7 @@ internal class ImageProcess
         }
     }
 
-    private static string FormatFilePath(string sourceFile, State state, bool hasAlpha)
+    private static string FormatFilePath(string sourceFile, State state, bool hasAlpha, bool isPrint)
     {
         var joinMatch = Regex.Match(state.RoomInfo.JoinDateTime, @"(?<Year>\d+)\.(?<Month>\d+)\.(?<Day>\d+) (?<Hour>\d+):(?<Minute>\d+):(?<Second>\d+)");
         var takenMatch = Regex.Match(sourceFile, @"(?<Year>\d+)-(?<Month>\d+)-(?<Day>\d+)_(?<Hour>\d+)-(?<Minute>\d+)-(?<Second>\d+)\.(?<Millisecond>\d+)_(?<Width>\d+)x(?<Height>\d+)(?<MultiLayer>_[A-Za-z]+)?");
@@ -195,11 +195,10 @@ internal class ImageProcess
             "group_plus" => "Group+",
             _ => "Public",
         };
-        var isPrint = takenMatch.Groups["Width"].Value == "2048" && takenMatch.Groups["Height"].Value == "1440";
-        var cameraType = state.VirtualLens2.Enabled ? "VirtualLens2"
-                         : state.Integral.Enabled ? "Integral"
-                         : isPrint ? "Print"
-                         : "VRCCamera";
+        var cameraType = isPrint ? "Print"
+                       : state.VirtualLens2.Enabled ? "VirtualLens2"
+                       : state.Integral.Enabled ? "Integral"
+                       : "VRCCamera";
 
         var placeholders = new Dictionary<string, string>
         {
@@ -253,12 +252,33 @@ internal class ImageProcess
     {
         if (!new FileInfo(sourcePath).Exists) return;
 
+        var isPrint = false;
         var hasAlpha = false;
+
         {
             using var targetImage = new Bitmap(sourcePath);
 
-            if (targetImage.Width == 2048 && targetImage.Height == 1440)
+            static bool CheckCornersAreWhite(Bitmap image)
             {
+                static bool IsPureWhite(Color color)
+                {
+                    return color.R == 255 && color.G == 255 && color.B == 255;
+                }
+
+                var topLeft = image.GetPixel(0, 0);
+                var topRight = image.GetPixel(image.Width - 1, 0);
+                var bottomLeft = image.GetPixel(0, image.Height - 1);
+                var bottomRight = image.GetPixel(image.Width - 1, image.Height - 1);
+
+                return IsPureWhite(topLeft)
+                    && IsPureWhite(topRight)
+                    && IsPureWhite(bottomLeft)
+                    && IsPureWhite(bottomRight);
+            }
+
+            if (targetImage.Width == 2048 && targetImage.Height == 1440 && CheckCornersAreWhite(targetImage))
+            {
+                isPrint = true;
                 // Printが何故か32bit深度
                 hasAlpha = false;
             }
@@ -272,7 +292,7 @@ internal class ImageProcess
             }
         }
 
-        var filePath = FormatFilePath(Path.GetFileName(sourcePath), state, hasAlpha);
+        var filePath = FormatFilePath(Path.GetFileName(sourcePath), state, hasAlpha, isPrint);
 
         filePath = Regex.Replace(filePath, @"[<>:""|?*]", "_");
 
@@ -471,5 +491,4 @@ internal class ImageProcess
             return false;
         }
     }
-
 }
