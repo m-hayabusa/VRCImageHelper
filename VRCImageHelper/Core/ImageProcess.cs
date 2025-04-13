@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Timers;
 using VRCImageHelper.Tools;
 
 #pragma warning disable IDE1006 
@@ -82,13 +83,24 @@ internal static class ProcessQueue
 {
     public static SemaphoreSlimWrapper? s_compressSemaphore;
     public static SortedDictionary<DateTime, LinkedList<QueueTask>> s_queue = new();
+    private static readonly Timer s_timer;
 
     static ProcessQueue()
     {
+        s_timer = new Timer(10000);
+        s_timer.Elapsed += (sender, e) => CheckQueue();
+        s_timer.AutoReset = false; // 一度タイムアウトしたら再実行を防ぐ
+
         if (ConfigManager.ParallelCompressionProcesses > 0)
         {
             s_compressSemaphore = new SemaphoreSlimWrapper(ConfigManager.ParallelCompressionProcesses, ConfigManager.ParallelCompressionProcesses);
         }
+    }
+
+    private static void ResetTimer()
+    {
+        s_timer.Stop();
+        s_timer.Start();
     }
 
     public static void Enqueue(string path, State? state = null)
@@ -122,6 +134,8 @@ internal static class ProcessQueue
 
     public static void CheckQueue()
     {
+        ResetTimer();
+
         var currentLogTime = LogReader.CurrentHead;
 
         foreach (var list in s_queue.Where(file => file.Key < currentLogTime))
