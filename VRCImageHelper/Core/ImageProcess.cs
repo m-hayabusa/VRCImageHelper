@@ -63,15 +63,59 @@ internal class ImageProcess
 {
     public static void Taken(object sender, NewLineEventArgs e)
     {
+        var match = Regex.Match(e.Line, @"([0-9.: ]*) (?:Log|Debug) +? -  \[VRC Camera\] Took screenshot to: (.*)");
+        if (match.Success)
+        {
+            var state = State.Current.Clone();
+
+            var creationDate = match.Groups[1].ToString().Replace('.', ':');
+            state.CreationDate = creationDate;
+
+            var path = match.Groups[2].ToString();
+
+            new Task(() => Process(path, state)).Start();
+        }
+    }
+
+    public static void CheckQueue(object sender, NewLineEventArgs e)
+    {
         var match = Regex.Match(e.Line, @"$\d{4}.\d{2}.\d{2} \d{2}:\d{2}:\d{2}");
 
         if (match.Success)
         {
+            // ログファイルから見たときでも、書き込み先パスがわかる → ファイル名から同じ時刻が計算できる → キーが同じであることでディレクトリ監視で見つけたものとの重複を検知できるはず (キーは時刻)
+            // 「処理済みのリスト」は持つ必要ない
+            // 「処理中のリスト」は必要 (ログとディレクトリ監視両方でキューに積みうる)
+            //   キューから落とすタイミングを処理完了時にすればいい？そんなことはないな (この関数が処理中にも呼ばれる)
+            // どこまで処理したかを持てば、それより古いファイルは処理済みであることにできる
+            // 「どこまで処理したか」、すなわち最後に処理が完了したファイル名から計算される時刻であり、これを永続化することでプログラムの再起動時に重複処理をしないようにできる
+
+            // 「過去ログをすべてスキャン」時は、ファイル一覧を取ってキューに積み、ログファイルを見て、ログ上を舐めるカーソルの時刻がファイル名から計算される時刻を越えたときに処理を実行する
+            //   これだけだと、ログ先端でそれより過去のものすべてを処理してしまうので、それをケアする必要がある
+
+            // まとめると
+
+            // 初期化
+            //   ログファイルの先頭位置がCurrentHeadに保持される (のを、待つ → 2回目のlogReader.NewLine) // done
+            //     それと同じ月か、それより新しいディレクトリ内にある、それより新しいすべてのファイルをキューに持つ // done -> 変更
+            // 監視
+            //   ディレクトリ監視で、新しく生えたもの、キューに積む // done -> 変更
+            //     キューに積むとき、同じキーで同じファイル名のものがあれば、積まない // done
+            //   ログファイル監視で、新しく生えたもの、キューに積む // WIP
+            //     キューに積むとき、同じキーで同じファイル名のものがあれば、積まない
+            //     積んだあと、TakenからLogChangedを呼び出す (実質的に即時処理)
+            // 処理
+            //   logReader.NewLineで、キューからキーがログの時刻よりも古いものを抽出し、Processする // done
+            //     キューに追加する処理はImageProcess.Enqueueにして、キュー自体もこちらで持つ
+            //       Enqueue時、CheckQueueも呼ぶ
+            //       ログの先頭かどうかはどうでもよくて、CurrentHeadを見ればいいので、CheckQueueは「15秒ごと、あるいはEnqueueから」呼べばいい
+            //   Processでは、処理中リストにファイル名を積んでから処理する
+            //     処理が完了したら、キューから削除して、処理済みの時刻が自分よりも古ければ、それを更新して、積んだファイル名を処理中リストから落とす
+
             var currentLogTime = DateTime.ParseExact(match.Value, "yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
 
-            var result = FileWatcher.s_queue.Where(file => file.Key > currentLogTime);
-
-            foreach (var item in result)
+            // この処理タイマーでも呼ぶので別関数に切り出す
+            foreach (var item in FileWatcher.s_queue.Where(file => file.Key > currentLogTime))
             {
                 Debug.WriteLine("キューから処理" + item.Value);
                 var state = State.Current.Clone();
@@ -245,6 +289,7 @@ internal class ImageProcess
                 }
             }
         }
+        UI.SendNotify.Send("OK!", false);
     }
 
     private static string Compress(string sourcePath, bool hasAlpha)

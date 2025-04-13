@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Timers;
 
 internal class FileWatcher : IDisposable
@@ -22,8 +19,11 @@ internal class FileWatcher : IDisposable
         _refreshTimer.Dispose();
         _fsWatcher.EnableRaisingEvents = false;
     }
-    public FileWatcher(CancellationToken token)
+    public FileWatcher(DateTime start, CancellationToken token)
     {
+        // start = 最初に読んだログの時刻より新しいすべてのスクショをキューに積む
+        AddAllFileToQueueAfterDate(start);
+
         // FileSystemWatcherを初期化
         _fsWatcher = new()
         {
@@ -73,35 +73,45 @@ internal class FileWatcher : IDisposable
         {
             return;
         }
-        var dateString = Regex.Match(Path.GetFileName(path), @"\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}.\d{3}");
 
-        if (dateString.Success)
+        if (ParseDate.TryParseFilePathToDateTime(path, out var parsedDateTime))
         {
-            // 日時文字列を変換
-            if (DateTime.TryParseExact(dateString.Value, "yyyy-MM-dd_HH-mm-ss.fff", CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedDateTime))
+            Debug.WriteLine($"抽出された日時: {parsedDateTime} {path}");
+            if ((parsedDateTime - LogReader.CurrentHead).TotalSeconds < 5)
             {
-                Debug.WriteLine($"抽出された日時: {parsedDateTime} {path}");
-                if ((parsedDateTime - LogReader.CurrentHead).TotalSeconds < 5)
+                if (!s_queue.Any(pair => pair.Key == parsedDateTime && pair.Value == path))
                 {
-                    Debug.WriteLine("先端じゃないのでログが追いつくまでまつ");
+                    Debug.WriteLine("FileWatcher: キューに積む " + path);
                     s_queue.Add(parsedDateTime, path);
                 }
                 else
                 {
-                    Debug.WriteLine("先端なのですぐに処理してよい");
-                    var state = State.Current.Clone();
-                    state.CreationDate = parsedDateTime.ToString("yyy:MM:dd HH:mm:ss");
-                    new Task(() => ImageProcess.Process(path, state)).Start();
+                    Debug.WriteLine("FileWatcher: すでにある " + path);
                 }
-            }
-            else
-            {
-                Debug.WriteLine("日時の変換に失敗しました。" + dateString);
             }
         }
         else
         {
             Debug.WriteLine("ファイル名から日時情報を抽出できませんでした。");
+        }
+    }
+
+    private void AddAllFileToQueueAfterDate(DateTime threshold)
+    {
+        var files = Directory.EnumerateDirectories(_targetDirectory)
+            .Select(dir => new { dir, sucess = ParseDate.TryParseDirectoryPathToDateTime(dir, out var date), date })
+            .Where(x => x.sucess && (x.date >= threshold || (x.date.Year == threshold.Year && x.date.Month == threshold.Month))) // dateには月始めの日が入るので、「月が同じか、時刻が先のとき」になる
+            .SelectMany(x => Directory.EnumerateFiles(x.dir, "*.png"))
+            .Select(file => new { file, success = ParseDate.TryParseFilePathToDateTime(file, out var date), date })
+            .Where(x => x.success && x.date >= threshold);
+
+        foreach (var entry in files)
+        {
+            if (!s_queue.Any(pair => pair.Key == entry.date && pair.Value == entry.file))
+            {
+                s_queue.Add(entry.date, entry.file);
+                Debug.WriteLine("FileWatcher: 初期化・キューに積む " + entry.file);
+            }
         }
     }
 }
