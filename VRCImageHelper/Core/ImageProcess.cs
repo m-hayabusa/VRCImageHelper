@@ -108,22 +108,20 @@ internal static class ProcessQueue
         if (ParseDate.TryParseFilePathToDateTime(path, out var timestamp))
         {
             Debug.WriteLine($"抽出された日時: {timestamp} {path}");
-            if ((timestamp - LogReader.CurrentHead).TotalSeconds < 5)
+            if (!s_queue.ContainsKey(timestamp))
             {
-                if (!s_queue.ContainsKey(timestamp))
-                {
-                    s_queue[timestamp] = new LinkedList<QueueTask>();
-                }
+                s_queue[timestamp] = new LinkedList<QueueTask>();
+            }
 
-                if (!s_queue[timestamp].Any(item => item.path == path))
-                {
-                    s_queue[timestamp].AddLast(new QueueTask(path) { state = state });
-                    Debug.WriteLine($"Task '{path}' added at {timestamp}.");
-                }
-                else
-                {
-                    Debug.WriteLine($"Task '{path}' already exists at {timestamp}, not adding.");
-                }
+            if (!s_queue[timestamp].Any(item => item.path == path))
+            {
+                s_queue[timestamp].AddLast(new QueueTask(path) { state = state });
+                Debug.WriteLine($"Task '{path}' added at {timestamp}.");
+                CheckQueue();
+            }
+            else
+            {
+                Debug.WriteLine($"Task '{path}' already exists at {timestamp}, not adding.");
             }
         }
         else
@@ -140,8 +138,12 @@ internal static class ProcessQueue
 
         foreach (var list in s_queue.Where(file => file.Key < currentLogTime))
         {
-            foreach (var item in list.Value.ToList())
+            Debug.WriteLine("CheckQueue foreach#LIST " + list.Key + " " + list.Value.Count);
+
+            foreach (var item in list.Value)
             {
+                Debug.WriteLine("  CheckQueue foreach#ITEM " + item.path);
+
                 if (item.isProcessing)
                     break;
                 item.SetIsProcessing(true);
