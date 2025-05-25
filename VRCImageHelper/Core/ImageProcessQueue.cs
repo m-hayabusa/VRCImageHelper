@@ -13,17 +13,17 @@ internal struct QueueTask
     {
         this.path = path;
     }
-    
+
     public void SetIsProcessing(bool isProcessing)
     {
         this.isProcessing = isProcessing;
     }
-    
+
     public void SetState(State state)
     {
         this.state = state;
     }
-    
+
     public string path;
     public bool isProcessing = false;
     public State? state = null;
@@ -109,12 +109,29 @@ internal static class ImageProcessQueue
                 {
                     using (s_compressSemaphore?.Wait())
                     {
-                        Debug.WriteLine("キューから処理: 実行中" + item);
-                        ImageProcessor.ProcessImage(item.path, state);
-                        list.Value.Remove(item);
-                        if (list.Value.Count == 0)
+                        try
                         {
-                            s_queue.Remove(list.Key);
+                            Debug.WriteLine("キューから処理: 実行中" + item);
+                            ImageProcessor.ProcessImage(item.path, state);
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"画像処理でエラーが発生しました: {item.path}, エラー: {ex.Message}");
+                        }
+                        finally
+                        {
+                            lock (s_queue)
+                            {
+                                if (s_queue.TryGetValue(list.Key, out var taskList))
+                                {
+                                    taskList.Remove(item);
+                                    if (taskList.Count == 0)
+                                    {
+                                        s_queue.Remove(list.Key);
+                                    }
+                                }
+                            }
+                            Debug.WriteLine($"キューから削除: {item.path}");
                         }
                     }
                 }).Start();

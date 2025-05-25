@@ -74,28 +74,35 @@ internal class ImageProcessor
     }
 
     /// <summary>
-    /// 画像を処理する（メインエントリーポイント）
+    /// 画像を処理する
     /// </summary>
     public static void ProcessImage(string sourcePath, State state)
     {
-        if (!new FileInfo(sourcePath).Exists) return;
+        if (!new FileInfo(sourcePath).Exists)
+            throw new FileNotFoundException($"ソースファイルが見つかりません: {sourcePath}");
 
         var imageInfo = AnalyzeImage(sourcePath);
         var filePath = FormatFilePath(Path.GetFileName(sourcePath), state, imageInfo.HasAlpha, imageInfo.IsPrint);
         var destPath = BuildDestinationPath(sourcePath, filePath);
 
-        if (destPath == null) return;
+        if (destPath == null)
+            throw new InvalidOperationException("出力先パスの生成に失敗しました");
 
-        if (!ValidateDestination(destPath)) return;
+        if (!ValidateDestination(destPath))
+            throw new InvalidOperationException($"出力先の検証に失敗しました: {destPath}");
 
         var tmpPath = CompressImage(sourcePath, imageInfo.HasAlpha);
-        if (new FileInfo(tmpPath).Exists)
+        if (!new FileInfo(tmpPath).Exists)
+            throw new InvalidOperationException($"画像圧縮に失敗しました: {sourcePath}");
+
+        if (WriteMetadata(tmpPath, destPath, state) != true)
+            throw new InvalidOperationException($"メタデータの書き込みに失敗しました: {tmpPath}");
+
+        if (ConfigManager.DeleteOriginalFile)
         {
-            if (WriteMetadata(tmpPath, destPath, state) == true && ConfigManager.DeleteOriginalFile)
-            {
-                DeleteOriginalFile(sourcePath);
-            }
+            DeleteOriginalFile(sourcePath);
         }
+
         UI.SendNotify.Send("OK!", false);
     }
 
