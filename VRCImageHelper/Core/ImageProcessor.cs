@@ -1,13 +1,15 @@
 namespace VRCImageHelper.Core;
 
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using System.Timers;
 using VRCImageHelper.Tools;
 
 #pragma warning disable IDE1006 
@@ -60,149 +62,196 @@ public struct Placeholders
 }
 #pragma warning restore IDE1006
 
-internal struct QueueTask
+/// <summary>
+/// 画像処理を行うクラス
+/// </summary>
+internal class ImageProcessor
 {
-    public QueueTask(string path)
+    private struct ImageInfo
     {
-        this.path = path;
+        public bool HasAlpha { get; set; }
+        public bool IsPrint { get; set; }
     }
-    public void SetIsProcessing(bool isProcessing)
-    {
-        this.isProcessing = isProcessing;
-    }
-    public void SetState(State state)
-    {
-        this.state = state;
-    }
-    public string path;
-    public bool isProcessing = false;
-    public State? state = null;
-}
 
-internal static class ProcessQueue
-{
-    public static SemaphoreSlimWrapper? s_compressSemaphore;
-    public static SortedDictionary<DateTime, LinkedList<QueueTask>> s_queue = new();
-    private static readonly Timer s_timer;
-
-    static ProcessQueue()
+    /// <summary>
+    /// 画像を処理する（メインエントリーポイント）
+    /// </summary>
+    public static void ProcessImage(string sourcePath, State state)
     {
-        s_timer = new Timer(10000);
-        s_timer.Elapsed += (sender, e) => CheckQueue();
-        s_timer.AutoReset = false; // 一度タイムアウトしたら再実行を防ぐ
+        if (!new FileInfo(sourcePath).Exists) return;
 
-        if (ConfigManager.ParallelCompressionProcesses > 0)
+        var imageInfo = AnalyzeImage(sourcePath);
+        var filePath = FormatFilePath(Path.GetFileName(sourcePath), state, imageInfo.HasAlpha, imageInfo.IsPrint);
+        var destPath = BuildDestinationPath(sourcePath, filePath);
+
+        if (destPath == null) return;
+
+        if (!ValidateDestination(destPath)) return;
+
+        var tmpPath = CompressImage(sourcePath, imageInfo.HasAlpha);
+        if (new FileInfo(tmpPath).Exists)
         {
-            s_compressSemaphore = new SemaphoreSlimWrapper(ConfigManager.ParallelCompressionProcesses, ConfigManager.ParallelCompressionProcesses);
-        }
-    }
-
-    private static void ResetTimer()
-    {
-        s_timer.Stop();
-        s_timer.Start();
-    }
-
-    public static void Enqueue(string path, State? state = null)
-    {
-        if (ParseDate.TryParseFilePathToDateTime(path, out var timestamp))
-        {
-            Debug.WriteLine($"抽出された日時: {timestamp} {path}");
-            if (!s_queue.ContainsKey(timestamp))
+            if (WriteMetadata(tmpPath, destPath, state) == true && ConfigManager.DeleteOriginalFile)
             {
-                s_queue[timestamp] = new LinkedList<QueueTask>();
-            }
-
-            if (!s_queue[timestamp].Any(item => item.path == path))
-            {
-                s_queue[timestamp].AddLast(new QueueTask(path) { state = state });
-                Debug.WriteLine($"Task '{path}' added at {timestamp}.");
-                CheckQueue();
-            }
-            else
-            {
-                Debug.WriteLine($"Task '{path}' already exists at {timestamp}, not adding.");
+                DeleteOriginalFile(sourcePath);
             }
         }
-        else
-        {
-            Debug.WriteLine("ファイル名から日時情報を抽出できませんでした。");
-        }
+        UI.SendNotify.Send("OK!", false);
     }
 
-    public static void CheckQueue()
+    #region Image Analysis
+
+    private static ImageInfo AnalyzeImage(string sourcePath)
     {
-        ResetTimer();
+        using var targetImage = new Bitmap(sourcePath);
 
-        var currentLogTime = LogReader.CurrentHead;
+        var isPrint = IsPrintImage(targetImage);
+        var hasAlpha = !isPrint && HasAlphaChannel(targetImage);
 
-        foreach (var list in s_queue.Where(file => file.Key < currentLogTime))
+        return new ImageInfo
         {
-            Debug.WriteLine("CheckQueue foreach#LIST " + list.Key + " " + list.Value.Count);
-
-            foreach (var item in list.Value)
-            {
-                Debug.WriteLine("  CheckQueue foreach#ITEM " + item.path);
-
-                if (item.isProcessing)
-                    break;
-                item.SetIsProcessing(true);
-
-                var state = item.state ?? State.Current.Clone();
-
-                state.CreationDate = list.Key.ToString("yyyy:MM:dd HH:mm:ss");
-
-                Debug.WriteLine("キューから処理" + item);
-                new Task(() =>
-                {
-                    using (s_compressSemaphore?.Wait())
-                    {
-                        Debug.WriteLine("キューから処理: 実行中" + item);
-                        ImageProcess.Process(item.path, state);
-                        list.Value.Remove(item);
-                        if (list.Value.Count == 0)
-                        {
-                            s_queue.Remove(list.Key);
-                        }
-                    }
-                }).Start();
-            }
-        }
+            HasAlpha = hasAlpha,
+            IsPrint = isPrint
+        };
     }
-}
 
-internal class ImageProcess
-{
-    public static void Taken(object sender, NewLineEventArgs e)
+    private static bool IsPrintImage(Bitmap image)
     {
-        var match = Regex.Match(e.Line, @"[0-9.: ]* (?:Log|Debug) +? -  \[VRC Camera\] Took screenshot to: (?<Path>.*)");
-        if (match.Success)
+        if (image.Width != 2048 || image.Height != 1440) return false;
+
+        return CheckCornersAreWhite(image);
+    }
+
+    private static bool CheckCornersAreWhite(Bitmap image)
+    {
+        static bool IsPureWhite(Color color)
         {
-            ProcessQueue.Enqueue(match.Groups["Path"].ToString(), State.Current.Clone());
+            return color.R == 255 && color.G == 255 && color.B == 255;
+        }
+
+        var topLeft = image.GetPixel(0, 0);
+        var topRight = image.GetPixel(image.Width - 1, 0);
+        var bottomLeft = image.GetPixel(0, image.Height - 1);
+        var bottomRight = image.GetPixel(image.Width - 1, image.Height - 1);
+
+        return IsPureWhite(topLeft)
+            && IsPureWhite(topRight)
+            && IsPureWhite(bottomLeft)
+            && IsPureWhite(bottomRight);
+    }
+
+    private static bool HasAlphaChannel(Bitmap image)
+    {
+        var formatWithAlpha = new PixelFormat[]
+        {
+            PixelFormat.Alpha,
+            PixelFormat.Canonical,
+            PixelFormat.Format16bppArgb1555,
+            PixelFormat.Format32bppArgb,
+            PixelFormat.Format32bppPArgb,
+            PixelFormat.Format64bppArgb,
+            PixelFormat.Format64bppPArgb
+        };
+
+        return formatWithAlpha.Contains(image.PixelFormat);
+    }
+
+    #endregion
+
+    #region Path Management
+
+    private static string? BuildDestinationPath(string sourcePath, string filePath)
+    {
+        filePath = Regex.Replace(filePath, @"[<>:""|?*]", "_");
+
+        var destPath = GetDestinationDirectory(sourcePath);
+        if (destPath == null) return null;
+
+        var basePath = Path.GetFullPath(destPath);
+        destPath = Path.Combine(destPath, filePath);
+
+        // パストラバーサル攻撃の防止
+        if (!Path.GetFullPath(destPath).StartsWith(basePath, StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        return destPath;
+    }
+
+    private static string? GetDestinationDirectory(string sourcePath)
+    {
+        var destPath = ConfigManager.DestDir;
+        if (destPath == "")
+        {
+            var sourceDir = Path.GetDirectoryName(sourcePath);
+            if (sourceDir is null) return null;
+
+            destPath = new DirectoryInfo(sourceDir)?.Parent?.FullName;
+            if (destPath is null) return null;
+        }
+
+        return destPath;
+    }
+
+    private static bool ValidateDestination(string destPath)
+    {
+        var destDir = Path.GetDirectoryName(destPath);
+        if (destDir is null) return false;
+
+        if (Directory.CreateDirectory(destDir).Exists == false)
+        {
+            UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessCantCreateDirectory, false);
+            return false;
+        }
+
+        if (!ConfigManager.OverwriteDestinationFile && new FileInfo(destPath).Exists)
+        {
+            UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessFileExist, false);
+            return false;
+        }
+
+        return true;
+    }
+
+    private static void DeleteOriginalFile(string sourcePath)
+    {
+        try
+        {
+            File.Delete(sourcePath);
+        }
+        catch (IOException ex)
+        {
+            UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessCantDeleteOriginal + ":\n" + ex.Message, false);
         }
     }
+
+    #endregion
+
+    #region File Naming
 
     private static string FormatFilePath(string sourceFile, State state, bool hasAlpha, bool isPrint)
     {
+        var placeholders = BuildPlaceholders(sourceFile, state, isPrint);
+        var filePath = hasAlpha ? ConfigManager.AlphaFilePattern : ConfigManager.FilePattern;
+
+        foreach (var entry in placeholders)
+        {
+            filePath = filePath.Replace(entry.Key, entry.Value);
+        }
+
+        return filePath;
+    }
+
+    private static Dictionary<string, string> BuildPlaceholders(string sourceFile, State state, bool isPrint)
+    {
         var joinMatch = Regex.Match(state.RoomInfo.JoinDateTime, @"(?<Year>\d+)\.(?<Month>\d+)\.(?<Day>\d+) (?<Hour>\d+):(?<Minute>\d+):(?<Second>\d+)");
         var takenMatch = Regex.Match(sourceFile, @"(?<Year>\d+)-(?<Month>\d+)-(?<Day>\d+)_(?<Hour>\d+)-(?<Minute>\d+)-(?<Second>\d+)\.(?<Millisecond>\d+)_(?<Width>\d+)x(?<Height>\d+)(?<MultiLayer>_[A-Za-z]+)?");
-        var instanceType = state.RoomInfo.Permission switch
-        {
-            "hidden" => "Friends+",
-            "friends" => "Friends",
-            "private" => "Invite",
-            "private_plus" => "Invite+",
-            "group_public" => "GroupPublic",
-            "group_members" => "Group",
-            "group_plus" => "Group+",
-            _ => "Public",
-        };
-        var cameraType = isPrint ? "Print"
-                       : state.VirtualLens2.Enabled ? "VirtualLens2"
-                       : state.Integral.Enabled ? "Integral"
-                       : "VRCCamera";
 
-        var placeholders = new Dictionary<string, string>
+        var instanceType = GetInstanceType(state.RoomInfo.Permission);
+        var cameraType = GetCameraType(isPrint, state);
+
+        return new Dictionary<string, string>
         {
             { Placeholders.TakenYear, takenMatch.Groups["Year"].Value },
             { Placeholders.TakenMonth, takenMatch.Groups["Month"].Value },
@@ -239,121 +288,36 @@ internal class ImageProcess
 
             { Placeholders.Camera, cameraType }
         };
-
-        var filePath = hasAlpha ? ConfigManager.AlphaFilePattern : ConfigManager.FilePattern;
-
-        foreach (var entry in placeholders)
-        {
-            filePath = filePath.Replace(entry.Key, entry.Value);
-        }
-
-        return filePath;
     }
 
-    public static void Process(string sourcePath, State state)
+    private static string GetInstanceType(string permission)
     {
-        if (!new FileInfo(sourcePath).Exists) return;
-
-        var isPrint = false;
-        var hasAlpha = false;
-
+        return permission switch
         {
-            using var targetImage = new Bitmap(sourcePath);
-
-            static bool CheckCornersAreWhite(Bitmap image)
-            {
-                static bool IsPureWhite(Color color)
-                {
-                    return color.R == 255 && color.G == 255 && color.B == 255;
-                }
-
-                var topLeft = image.GetPixel(0, 0);
-                var topRight = image.GetPixel(image.Width - 1, 0);
-                var bottomLeft = image.GetPixel(0, image.Height - 1);
-                var bottomRight = image.GetPixel(image.Width - 1, image.Height - 1);
-
-                return IsPureWhite(topLeft)
-                    && IsPureWhite(topRight)
-                    && IsPureWhite(bottomLeft)
-                    && IsPureWhite(bottomRight);
-            }
-
-            if (targetImage.Width == 2048 && targetImage.Height == 1440 && CheckCornersAreWhite(targetImage))
-            {
-                isPrint = true;
-                // Printが何故か32bit深度
-                hasAlpha = false;
-            }
-            else
-            {
-                var formatWithAlpha = new PixelFormat[] { PixelFormat.Alpha, PixelFormat.Canonical, PixelFormat.Format16bppArgb1555, PixelFormat.Format32bppArgb, PixelFormat.Format32bppPArgb, PixelFormat.Format64bppArgb, PixelFormat.Format64bppPArgb };
-                if (formatWithAlpha.Contains(targetImage.PixelFormat))
-                {
-                    hasAlpha = true;
-                }
-            }
-        }
-
-        var filePath = FormatFilePath(Path.GetFileName(sourcePath), state, hasAlpha, isPrint);
-
-        filePath = Regex.Replace(filePath, @"[<>:""|?*]", "_");
-
-        var destPath = ConfigManager.DestDir;
-        if (destPath == "")
-        {
-            var sourceDir = Path.GetDirectoryName(sourcePath);
-            if (sourceDir is null)
-                return;
-
-            destPath = new DirectoryInfo(sourceDir)?.Parent?.FullName;
-            if (destPath is null)
-                return;
-        }
-
-        var basePath = Path.GetFullPath(destPath);
-
-        destPath = Path.Combine(destPath, filePath);
-
-        if (!Path.GetFullPath(destPath).StartsWith(basePath, StringComparison.OrdinalIgnoreCase))
-        {
-            return;
-        }
-
-        var destDir = Path.GetDirectoryName(destPath);
-
-        if (destDir is null)
-            return;
-
-        if (Directory.CreateDirectory(destDir).Exists == false)
-        {
-            UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessCantCreateDirectory, false);
-            return;
-        }
-
-        if (!ConfigManager.OverwriteDestinationFile && new FileInfo(destPath).Exists)
-        {
-            UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessFileExist, false);
-            return;
-        }
-        var tmpPath = Compress(sourcePath, hasAlpha);
-        if (new FileInfo(tmpPath).Exists)
-        {
-            if (WriteMetadata(tmpPath, destPath, state) == true && ConfigManager.DeleteOriginalFile)
-            {
-                try
-                {
-                    File.Delete(sourcePath);
-                }
-                catch (IOException ex)
-                {
-                    UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessCantDeleteOriginal + ":\n" + ex.Message, false);
-                }
-            }
-        }
-        UI.SendNotify.Send("OK!", false);
+            "hidden" => "Friends+",
+            "friends" => "Friends",
+            "private" => "Invite",
+            "private_plus" => "Invite+",
+            "group_public" => "GroupPublic",
+            "group_members" => "Group",
+            "group_plus" => "Group+",
+            _ => "Public",
+        };
     }
 
-    private static string Compress(string sourcePath, bool hasAlpha)
+    private static string GetCameraType(bool isPrint, State state)
+    {
+        return isPrint ? "Print"
+             : state.VirtualLens2.Enabled ? "VirtualLens2"
+             : state.Integral.Enabled ? "Integral"
+             : "VRCCamera";
+    }
+
+    #endregion
+
+    #region Image Compression
+
+    private static string CompressImage(string sourcePath, bool hasAlpha)
     {
         var destPath = Path.GetTempFileName();
         File.Delete(destPath);
@@ -411,6 +375,10 @@ internal class ImageProcess
         FFMpeg.Encode(src, dest, "webp", encoder, quality, option).Wait();
     }
 
+    #endregion
+
+    #region Metadata
+
     /// <summary>
     /// 
     /// </summary>
@@ -428,42 +396,7 @@ internal class ImageProcess
             )
         );
 
-        var args = new List<string>
-        {
-            "-n",
-            "-overwrite_original",
-            "-codedcharacterset=utf8",
-            $"-:ImageDescription={desc}",
-            $"-:Description={desc}",
-            $"-:Comment={desc}",
-            $"-makernote={makernote}",
-            "-sep \";\"",
-            $"-:Keywords={state.RoomInfo.World_name};{string.Join(';', state.Players)}"
-        };
-
-        var offset = "";
-        if (DateTime.TryParseExact(state.CreationDate, "yyyy:MM:dd HH:mm:ss", CultureInfo.CurrentCulture, DateTimeStyles.None, out var dT))
-        {
-            var offsetSpan = TimeZoneInfo.Local.GetUtcOffset(dT);
-            var sign = offsetSpan > TimeSpan.Zero ? "+" : "";
-            offset = sign + offsetSpan.ToString();
-            args.Add($"-:OffsetTime={offset}");
-            args.Add($"-:DateCreated={dT:yyyy:MM:dd}:");
-            args.Add($"-:TimeCreated={dT:HH:mm:ss}{offset}");
-        }
-
-        args.Add($"-:CreateDate={state.CreationDate}{offset}");
-        args.Add($"-:DateTimeOriginal={state.CreationDate}{offset}");
-        args.Add($"-xmp-Photoshop:DateCreated={state.CreationDate}{offset}");
-
-        args.AddRange(StateChecker.VirtualLens2.Publish(state.VirtualLens2));
-        args.AddRange(StateChecker.Integral.Publish(state.Integral));
-
-        if (!(state.VirtualLens2.Enabled || state.Integral.Enabled))
-        {
-            args.Add("-:Make=VRChat");
-            args.Add("-:Model=VRChat Camera");
-        }
+        var args = BuildMetadataArgs(desc, makernote, state);
 
         var exifTool = ExifTool.Write(path, args);
         if (exifTool is not null)
@@ -493,4 +426,57 @@ internal class ImageProcess
             return false;
         }
     }
+
+    private static List<string> BuildMetadataArgs(string desc, string makernote, State state)
+    {
+        var args = new List<string>
+        {
+            "-n",
+            "-overwrite_original",
+            "-codedcharacterset=utf8",
+            $"-:ImageDescription={desc}",
+            $"-:Description={desc}",
+            $"-:Comment={desc}",
+            $"-makernote={makernote}",
+            "-sep \";\"",
+            $"-:Keywords={state.RoomInfo.World_name};{string.Join(';', state.Players)}"
+        };
+
+        AddDateTimeArgs(args, state);
+        AddCameraArgs(args, state);
+
+        return args;
+    }
+
+    private static void AddDateTimeArgs(List<string> args, State state)
+    {
+        var offset = "";
+        if (DateTime.TryParseExact(state.CreationDate, "yyyy:MM:dd HH:mm:ss", CultureInfo.CurrentCulture, DateTimeStyles.None, out var dT))
+        {
+            var offsetSpan = TimeZoneInfo.Local.GetUtcOffset(dT);
+            var sign = offsetSpan > TimeSpan.Zero ? "+" : "";
+            offset = sign + offsetSpan.ToString();
+            args.Add($"-:OffsetTime={offset}");
+            args.Add($"-:DateCreated={dT:yyyy:MM:dd}:");
+            args.Add($"-:TimeCreated={dT:HH:mm:ss}{offset}");
+        }
+
+        args.Add($"-:CreateDate={state.CreationDate}{offset}");
+        args.Add($"-:DateTimeOriginal={state.CreationDate}{offset}");
+        args.Add($"-xmp-Photoshop:DateCreated={state.CreationDate}{offset}");
+    }
+
+    private static void AddCameraArgs(List<string> args, State state)
+    {
+        args.AddRange(StateChecker.VirtualLens2.Publish(state.VirtualLens2));
+        args.AddRange(StateChecker.Integral.Publish(state.Integral));
+
+        if (!(state.VirtualLens2.Enabled || state.Integral.Enabled))
+        {
+            args.Add("-:Make=VRChat");
+            args.Add("-:Model=VRChat Camera");
+        }
+    }
+
+    #endregion
 }

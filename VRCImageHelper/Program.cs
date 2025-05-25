@@ -143,7 +143,7 @@ internal static class Program
                 fileWatcher = new FileWatcher(LogReader.CurrentHead, CancelToken.Token);
         };
 
-        logReader.NewLine += ImageProcess.Taken;
+        logReader.NewLine += ScreenshotWatcher.OnNewLogLine;
 
         logReader.NewLine += VRChat.WorldId;
         logReader.NewLine += VRChat.JoinRoom;

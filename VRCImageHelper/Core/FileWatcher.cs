@@ -71,7 +71,7 @@ internal class FileWatcher : IDisposable
             return;
         }
 
-        ProcessQueue.Enqueue(path);
+        ImageProcessQueue.Enqueue(path);
     }
 
     private void AddAllFileToQueueAfterDate(DateTime threshold)
@@ -85,7 +85,7 @@ internal class FileWatcher : IDisposable
 
         foreach (var entry in files)
         {
-            ProcessQueue.Enqueue(entry.file);
+            ImageProcessQueue.Enqueue(entry.file);
         }
     }
 }
