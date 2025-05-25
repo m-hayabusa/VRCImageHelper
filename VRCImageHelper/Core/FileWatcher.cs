@@ -71,6 +71,8 @@ internal class FileWatcher : IDisposable
             return;
         }
 
+        Debug.WriteLine("ProcessFile " + path + " をキューに追加します");
+
         ImageProcessQueue.Enqueue(path);
     }
 

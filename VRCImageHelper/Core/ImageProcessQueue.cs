@@ -38,11 +38,14 @@ internal static class ImageProcessQueue
     public static SortedDictionary<DateTime, LinkedList<QueueTask>> s_queue = new();
     private static readonly Timer s_timer;
 
+    private static DateTime s_lastEnqueuedTime = DateTime.MinValue;
+    private static readonly object s_lockObject = new();
+
     static ImageProcessQueue()
     {
         s_timer = new Timer(10000);
         s_timer.Elapsed += (sender, e) => CheckQueue();
-        s_timer.AutoReset = false; // 一度タイムアウトしたら再実行を防ぐ
+        s_timer.AutoReset = false;
 
         if (ConfigManager.ParallelCompressionProcesses > 0)
         {
@@ -60,26 +63,25 @@ internal static class ImageProcessQueue
     {
         if (ParseDate.TryParseFilePathToDateTime(path, out var timestamp))
         {
-            Debug.WriteLine($"抽出された日時: {timestamp} {path}");
-            if (!s_queue.ContainsKey(timestamp))
+            lock (s_lockObject)
             {
-                s_queue[timestamp] = new LinkedList<QueueTask>();
-            }
+                if (timestamp <= s_lastEnqueuedTime)
+                {
+                    return;
+                }
 
-            if (!s_queue[timestamp].Any(item => item.path == path))
-            {
-                s_queue[timestamp].AddLast(new QueueTask(path) { state = state });
-                Debug.WriteLine($"Task '{path}' added at {timestamp}.");
-                CheckQueue();
+                if (!s_queue.ContainsKey(timestamp))
+                {
+                    s_queue[timestamp] = new LinkedList<QueueTask>();
+                }
+
+                if (!s_queue[timestamp].Any(item => item.path == path))
+                {
+                    s_queue[timestamp].AddLast(new QueueTask(path) { state = state });
+                    s_lastEnqueuedTime = timestamp;
+                    CheckQueue();
+                }
             }
-            else
-            {
-                Debug.WriteLine($"Task '{path}' already exists at {timestamp}, not adding.");
-            }
-        }
-        else
-        {
-            Debug.WriteLine("ファイル名から日時情報を抽出できませんでした。");
         }
     }
 
@@ -89,52 +91,70 @@ internal static class ImageProcessQueue
 
         var currentLogTime = LogReader.CurrentHead;
 
-        foreach (var list in s_queue.Where(file => file.Key < currentLogTime))
+        lock (s_lockObject)
         {
-            Debug.WriteLine("CheckQueue foreach#LIST " + list.Key + " " + list.Value.Count);
+            var keysToProcess = s_queue.Keys.Where(key => key < currentLogTime).ToList();
 
-            foreach (var item in list.Value)
+            foreach (var key in keysToProcess)
             {
-                Debug.WriteLine("  CheckQueue foreach#ITEM " + item.path);
+                if (!s_queue.TryGetValue(key, out var taskList))
+                    continue;
 
-                if (item.isProcessing)
-                    break;
-                item.SetIsProcessing(true);
+                var itemsToProcess = taskList.Where(item => !item.isProcessing).ToList();
 
-                var state = item.state ?? State.Current.Clone();
-                state.CreationDate = list.Key.ToString("yyyy:MM:dd HH:mm:ss");
-
-                Debug.WriteLine("キューから処理" + item);
-                new Task(() =>
+                foreach (var item in itemsToProcess)
                 {
-                    using (s_compressSemaphore?.Wait())
+                    var node = taskList.Find(item);
+                    if (node != null)
                     {
-                        try
+                        var updatedItem = node.Value;
+                        updatedItem.SetIsProcessing(true);
+                        node.Value = updatedItem;
+
+                        var state = item.state ?? State.Current.Clone();
+                        state.CreationDate = key.ToString("yyyy:MM:dd HH:mm:ss");
+
+                        Task.Run(() =>
                         {
-                            Debug.WriteLine("キューから処理: 実行中" + item);
-                            ImageProcessor.ProcessImage(item.path, state);
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.WriteLine($"画像処理でエラーが発生しました: {item.path}, エラー: {ex.Message}");
-                        }
-                        finally
-                        {
-                            lock (s_queue)
+                            using (s_compressSemaphore?.Wait())
                             {
-                                if (s_queue.TryGetValue(list.Key, out var taskList))
+                                try
                                 {
-                                    taskList.Remove(item);
-                                    if (taskList.Count == 0)
+                                    ImageProcessor.ProcessImage(item.path, state);
+                                }
+                                catch (Exception ex)
+                                {
+                                    Debug.WriteLine($"画像処理でエラーが発生しました: {item.path}, エラー: {ex.Message}");
+                                }
+                                finally
+                                {
+                                    lock (s_lockObject)
                                     {
-                                        s_queue.Remove(list.Key);
+                                        if (s_queue.TryGetValue(key, out var currentTaskList))
+                                        {
+                                            var nodeToRemove = currentTaskList.First;
+                                            while (nodeToRemove != null)
+                                            {
+                                                var nextNode = nodeToRemove.Next;
+                                                if (nodeToRemove.Value.path == item.path)
+                                                {
+                                                    currentTaskList.Remove(nodeToRemove);
+                                                    break;
+                                                }
+                                                nodeToRemove = nextNode;
+                                            }
+
+                                            if (currentTaskList.Count == 0)
+                                            {
+                                                s_queue.Remove(key);
+                                            }
+                                        }
                                     }
                                 }
                             }
-                            Debug.WriteLine($"キューから削除: {item.path}");
-                        }
+                        });
                     }
-                }).Start();
+                }
             }
         }
     }
