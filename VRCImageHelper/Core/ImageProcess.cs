@@ -202,7 +202,9 @@ internal class ImageProcess
             return;
         }
 
-        if (!ConfigManager.OverwriteDestinationFile && new FileInfo(destPath).Exists)
+        var overwrite = new FileInfo(destPath).Exists;
+
+        if (!ConfigManager.OverwriteDestinationFile && overwrite)
         {
             UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessFileExist, false);
             return;
@@ -212,7 +214,7 @@ internal class ImageProcess
             var tmpPath = Compress(sourcePath, hasAlpha);
             if (new FileInfo(tmpPath).Exists)
             {
-                if (WriteMetadata(tmpPath, destPath, state) == true && ConfigManager.DeleteOriginalFile)
+                if (WriteMetadata(tmpPath, destPath, state) == true && ConfigManager.DeleteOriginalFile && !overwrite)
                 {
                     try
                     {
