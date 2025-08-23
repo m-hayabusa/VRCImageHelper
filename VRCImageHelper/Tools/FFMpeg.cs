@@ -110,7 +110,7 @@ internal class FFMpeg
             {
                 var line = ffmpeg.StandardOutput.ReadLine();
                 if (line is null) break;
-                if (line.Contains($"(codec {format})"))
+                if (line.Contains($" {format}"))
                 {
                     result.Add(line[8..29].Trim());
                 }
@@ -140,6 +140,10 @@ internal class FFMpeg
 
                     switch (encoder)
                     {
+                        case "mjpeg":
+                            options
+                                .WithCustomArgument($"-q {quality}");
+                            break;
                         case "libaom-av1":
                             options
                                 .WithConstantRateFactor(quality);
