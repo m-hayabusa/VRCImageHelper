@@ -95,13 +95,11 @@ internal class ImageProcessor
         if (!new FileInfo(tmpPath).Exists)
             throw new InvalidOperationException($"画像圧縮に失敗しました: {sourcePath}");
 
-        if (WriteMetadata(tmpPath, destPath, state) != true)
+        if (WriteMetadata(tmpPath, sourcePath, destPath, state) != true)
             throw new InvalidOperationException($"メタデータの書き込みに失敗しました: {tmpPath}");
 
         if (ConfigManager.DeleteOriginalFile)
-        {
             DeleteOriginalFile(sourcePath);
-        }
 
         UI.SendNotify.Send("OK!", false);
     }
@@ -393,7 +391,7 @@ internal class ImageProcessor
     /// <param name="destPath"></param>
     /// <param name="state"></param>
     /// <returns>ExiftoolのExit Codeが0ならTrue それ以外ならFalse</returns>
-    private static bool WriteMetadata(string path, string destPath, State state)
+    private static bool WriteMetadata(string path, string sourcePath, string destPath, State state)
     {
         var desc = $"Taken at {state.RoomInfo.World_name}, with {string.Join(",", state.Players)}.";
 
@@ -404,6 +402,9 @@ internal class ImageProcessor
         );
 
         var args = BuildMetadataArgs(desc, makernote, state);
+
+        // 純正で書き込まれるようになったXMPをまるごとコピーする
+        ExifTool.Copy(sourcePath, path)?.Wait();
 
         var exifTool = ExifTool.Write(path, args);
         if (exifTool is not null)
