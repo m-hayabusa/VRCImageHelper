@@ -15,7 +15,7 @@ public partial class ConfigWindow : Form
         _config = new Config();
 
         Icon = new Icon($"{Path.GetDirectoryName(Application.ExecutablePath)}\\icon.ico");
-        comboBoxFileFormat.Items.AddRange(new object[] { "PNG", "JPEG", "MJPEG", "AVIF", "WEBP" });
+        comboBoxFileFormat.Items.AddRange(new object[] { "PNG", "JPEG", "AVIF", "WEBP" });
         comboBoxAlphaFileFormat.Items.AddRange(new object[] { "PNG", "AVIF", "WEBP" });
     }
 
@@ -24,7 +24,7 @@ public partial class ConfigWindow : Form
     private readonly Dictionary<string, string> _selectedEncoder = new() {
         { "AVIF", "libaom-av1" }, { "WEBP", "libwebp" },
         { "AVIFAlpha", "libaom-av1" }, { "WEBPAlpha", "libwebp" },
-        { "MJPEG", "mjpeg" }
+        { "JPEG", "default" }
     };
     private readonly Dictionary<string, string> _selectedEncoderOption = new();
 
@@ -183,14 +183,13 @@ public partial class ConfigWindow : Form
 
         if (format is not null && format != _format[alpha])
         {
-            var extension = format == "MJPEG" ? "jpeg" : format.ToLower();
+            var extension = format.ToLower();
             textBox.Text = Path.ChangeExtension(richTextBoxFilePattern.Text, extension);
             _format[alpha] = format;
         }
 
         if ((format == "AVIF" && FFMpeg.GetSupportedEncoder("av1").Length == 0)
-            || (format == "WEBP" && FFMpeg.GetSupportedEncoder("webp").Length == 0)
-            || (format == "MJPEG" && FFMpeg.GetSupportedEncoder("mjpeg").Length == 0))
+            || (format == "WEBP" && FFMpeg.GetSupportedEncoder("webp").Length == 0))
         {
             var res = MessageBox.Show(Resources.FFMpegDownloadMessage, Resources.FFMpegDownloadTitle, MessageBoxButtons.OKCancel);
             if (res == DialogResult.OK)
@@ -228,16 +227,12 @@ public partial class ConfigWindow : Form
                 encoder.SelectedItem = _selectedEncoder["WEBP" + alpha];
                 break;
             case "JPEG":
-                encoder.Enabled = false;
-                encoderOption.Enabled = false;
-                quality.Enabled = true;
-                break;
-            case "MJPEG":
                 encoder.Enabled = true;
                 encoderOption.Enabled = true;
                 quality.Enabled = true;
+                encoder.Items.AddRange(new object[] { "default" });
                 encoder.Items.AddRange(FFMpeg.GetSupportedEncoder("mjpeg"));
-                encoder.SelectedItem = _selectedEncoder["MJPEG"];
+                encoder.SelectedItem = _selectedEncoder["JPEG" + alpha];
                 break;
             default:
                 encoder.Enabled = false;
@@ -261,6 +256,15 @@ public partial class ConfigWindow : Form
 
         encoderOption.Text = GetEncoderOptions(encoder.Text, alpha == "Alpha");
         _selectedEncoder[fileFormat.Text + alpha] = encoder.Text;
+
+        if (fileFormat.Text == "JPEG" && encoder.Text == "default")
+        {
+            encoderOption.Enabled = false;
+        }
+        else
+        {
+            encoderOption.Enabled = true;
+        }
     }
 
     private void TextBoxEncoderOption_TextChanged(object sender, EventArgs e)
