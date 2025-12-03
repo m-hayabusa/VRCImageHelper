@@ -71,7 +71,7 @@ internal class FileWatcher : IDisposable
             return;
         }
 
-        Debug.WriteLine("FileWatcher: キューに追加" + path);
+        Debug.WriteLine("FileWatcher: キューに追加 " + path);
 
         ImageProcessQueue.Enqueue(path);
     }

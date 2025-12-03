@@ -51,6 +51,7 @@ internal static class ImageProcessQueue
         {
             s_compressSemaphore = new SemaphoreSlimWrapper(ConfigManager.ParallelCompressionProcesses, ConfigManager.ParallelCompressionProcesses);
         }
+        ResetTimer();
     }
 
     private static void ResetTimer()
@@ -65,7 +66,7 @@ internal static class ImageProcessQueue
         {
             lock (s_lockObject)
             {
-                if (timestamp <= s_lastEnqueuedTime)
+                if (timestamp < s_lastEnqueuedTime)
                 {
                     return;
                 }
@@ -79,9 +80,10 @@ internal static class ImageProcessQueue
                 {
                     s_queue[timestamp].AddLast(new QueueTask(path) { state = state });
                     s_lastEnqueuedTime = timestamp;
-                    CheckQueue();
                 }
             }
+
+            ResetTimer();
         }
     }
 
@@ -90,6 +92,14 @@ internal static class ImageProcessQueue
         ResetTimer();
 
         var currentLogTime = LogReader.CurrentHead;
+
+        var now = DateTime.Now - TimeSpan.FromSeconds(5);
+
+        // 5秒以上進んでいなければ、該当のファイルに関連するログの書き込みは存在しないとみなす
+        if (currentLogTime < now)
+        {
+            currentLogTime = now;
+        }
 
         lock (s_lockObject)
         {
