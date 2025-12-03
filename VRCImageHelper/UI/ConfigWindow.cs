@@ -76,8 +76,8 @@ public partial class ConfigWindow : Form
 
         _selectedEncoder[_config.Format] = _config.Encoder;
         _selectedEncoder[_config.AlphaFormat + "Alpha"] = _config.AlphaEncoder;
-        _selectedEncoderOption[_config.Format] = _config.EncoderOption;
-        _selectedEncoderOption[_config.Format + "Alpha"] = _config.AlphaEncoderOption;
+        _selectedEncoderOption[_config.Encoder] = _config.EncoderOption;
+        _selectedEncoderOption[_config.AlphaEncoder + "Alpha"] = _config.AlphaEncoderOption;
 
         ComboBoxFileFormat_SelectedIndexChanged(comboBoxFileFormat, EventArgs.Empty);
         ComboBoxFileFormat_SelectedIndexChanged(comboBoxAlphaFileFormat, EventArgs.Empty);

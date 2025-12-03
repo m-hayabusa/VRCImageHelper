@@ -127,14 +127,23 @@ internal static class Program
 
         var logReader = new LogReader(CancelToken.Token);
         var oscServer = new OscServer(CancelToken.Token);
-        ImageProcess.s_cancellationToken = CancelToken.Token;
+        FileWatcher? fileWatcher = null;
+
         Tools.ExifTool.s_cancellationToken = CancelToken.Token;
         Tools.FFMpeg.s_cancellationToken = CancelToken.Token;
 
         if (s_toolbarIcon is not null)
             logReader.ScanAllProgress += s_toolbarIcon.Scanning;
 
-        logReader.NewLine += ImageProcess.Taken;
+        logReader.NewLine += LogReader.UpdateCurrentHead;
+
+        logReader.NewLine += (sender, e) =>
+        {
+            if (fileWatcher == null && LogReader.CurrentHead.CompareTo(new DateTime(0)) > 0)
+                fileWatcher = new FileWatcher(LogReader.CurrentHead, CancelToken.Token);
+        };
+
+        logReader.NewLine += ScreenshotWatcher.OnNewLogLine;
 
         logReader.NewLine += VRChat.WorldId;
         logReader.NewLine += VRChat.JoinRoom;
