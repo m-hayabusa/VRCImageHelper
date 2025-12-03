@@ -46,6 +46,46 @@ internal class ExifTool
         return dir + "\\exiftool.exe";
     }
 
+    public static async Task<bool> Copy(string source, string destination)
+    {
+        var exifTool = new ProcessStartInfo(GetExifTool()) { Arguments = " -TagsFromFile " + source + " -XMP " + destination, CreateNoWindow = true };
+
+        Process? process;
+        try
+        {
+            process = Process.Start(exifTool);
+        }
+        catch (Exception ex)
+        {
+            UI.SendNotify.Send(Properties.Resources.NotifyError + ":\n" + ex.Message, false, (e) =>
+            {
+                MessageBox.Show(ToastArguments.Parse(e.Argument).Get("Message"));
+            }, new Dictionary<string, string> { { "Message", ex.Message } });
+            return false;
+        }
+
+        if (process is null) return false;
+
+        await process.WaitForExitAsync(s_cancellationToken);
+
+        if (s_cancellationToken.IsCancellationRequested)
+            return false;
+
+        if (process.ExitCode == 0)
+        {
+            return true;
+        }
+        else
+        {
+            var log = process.StandardOutput.ReadToEnd();
+            UI.SendNotify.Send(Properties.Resources.NotifyErrorExiftool + ":\n", false, (e) =>
+            {
+                MessageBox.Show(ToastArguments.Parse(e.Argument).Get("Message"));
+            }, new Dictionary<string, string> { { "Message", log } });
+            return false;
+        }
+    }
+
     public static async Task<bool> Write(string path, List<string> args)
     {
         var argsFilePath = Path.GetTempFileName();

@@ -214,7 +214,7 @@ internal class ImageProcess
             var tmpPath = Compress(sourcePath, hasAlpha);
             if (new FileInfo(tmpPath).Exists)
             {
-                if (WriteMetadata(tmpPath, destPath, state) == true && ConfigManager.DeleteOriginalFile && !overwrite)
+                if (WriteMetadata(tmpPath, sourcePath, destPath, state) == true && ConfigManager.DeleteOriginalFile && !overwrite)
                 {
                     try
                     {
@@ -294,7 +294,7 @@ internal class ImageProcess
     /// <param name="destPath"></param>
     /// <param name="state"></param>
     /// <returns>ExiftoolのExit Codeが0ならTrue それ以外ならFalse</returns>
-    private static bool WriteMetadata(string path, string destPath, State state)
+    private static bool WriteMetadata(string path, string sourcePath, string destPath, State state)
     {
         var desc = $"Taken at {state.RoomInfo.World_name}, with {string.Join(",", state.Players)}.";
 
@@ -340,6 +340,9 @@ internal class ImageProcess
             args.Add("-:Make=VRChat");
             args.Add("-:Model=VRChat Camera");
         }
+
+        // 純正で書き込まれるようになったXMPをまるごとコピーする
+        ExifTool.Copy(sourcePath, path)?.Wait();
 
         var exifTool = ExifTool.Write(path, args);
         if (exifTool is not null)
