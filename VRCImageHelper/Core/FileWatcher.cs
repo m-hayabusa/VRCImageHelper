@@ -54,12 +54,12 @@ internal class FileWatcher : IDisposable
         });
         _refreshTimer.Start();
 
-        Debug.WriteLine("監視を開始しました");
+        Debug.WriteLine("FileWatcher: 監視を開始");
     }
 
     private void OnFileCreated(object sender, FileSystemEventArgs e)
     {
-        Debug.WriteLine("OnFile " + e.ChangeType + " " + e.FullPath);
+        Debug.WriteLine("FileWatcher: OnFile" + e.ChangeType + " " + e.FullPath);
 
         ProcessFile(e.FullPath);
     }
@@ -71,7 +71,7 @@ internal class FileWatcher : IDisposable
             return;
         }
 
-        Debug.WriteLine("ProcessFile " + path + " をキューに追加します");
+        Debug.WriteLine("FileWatcher: キューに追加" + path);
 
         ImageProcessQueue.Enqueue(path);
     }

@@ -43,7 +43,7 @@ internal static class ImageProcessQueue
 
     static ImageProcessQueue()
     {
-        s_timer = new Timer(10000);
+        s_timer = new Timer(1000);
         s_timer.Elapsed += (sender, e) => CheckQueue();
         s_timer.AutoReset = false;
 
@@ -116,8 +116,10 @@ internal static class ImageProcessQueue
 
                         Task.Run(() =>
                         {
+                            Debug.WriteLine($"画像処理: 待機中: {item.path}");
                             using (s_compressSemaphore?.Wait())
                             {
+                                Debug.WriteLine($"画像処理: 開始: {item.path}");
                                 try
                                 {
                                     ImageProcessor.ProcessImage(item.path, state);
