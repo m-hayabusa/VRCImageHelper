@@ -88,7 +88,9 @@ internal class ImageProcessor
         if (destPath == null)
             throw new InvalidOperationException("出力先パスの生成に失敗しました");
 
-        if (!ValidateDestination(destPath))
+        var mayOverwritten = new FileInfo(destPath).Exists;
+
+        if (!ValidateDestination(destPath, mayOverwritten))
             throw new InvalidOperationException($"出力先の検証に失敗しました: {destPath}");
 
         var tmpPath = CompressImage(sourcePath, imageInfo.HasAlpha);
@@ -98,7 +100,7 @@ internal class ImageProcessor
         if (WriteMetadata(tmpPath, sourcePath, destPath, state) != true)
             throw new InvalidOperationException($"メタデータの書き込みに失敗しました: {tmpPath}");
 
-        if (ConfigManager.DeleteOriginalFile)
+        if (ConfigManager.DeleteOriginalFile && !mayOverwritten)
             DeleteOriginalFile(sourcePath);
 
         UI.SendNotify.Send("OK!", false);
@@ -199,7 +201,7 @@ internal class ImageProcessor
         return destPath;
     }
 
-    private static bool ValidateDestination(string destPath)
+    private static bool ValidateDestination(string destPath, bool mayOverwritten)
     {
         var destDir = Path.GetDirectoryName(destPath);
         if (destDir is null) return false;
@@ -210,7 +212,7 @@ internal class ImageProcessor
             return false;
         }
 
-        if (!ConfigManager.OverwriteDestinationFile && new FileInfo(destPath).Exists)
+        if (!ConfigManager.OverwriteDestinationFile && mayOverwritten)
         {
             UI.SendNotify.Send(Properties.Resources.NotifyErrorImageProcessFileExist, false);
             return false;
