@@ -125,6 +125,7 @@ internal static class Program
             }
         });
 
+        ImageProcessQueue.Initialize(ConfigManager.ScanAll || s_scanAll);
         var logReader = new LogReader(CancelToken.Token);
         var oscServer = new OscServer(CancelToken.Token);
         FileWatcher? fileWatcher = null;

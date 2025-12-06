@@ -38,8 +38,16 @@ internal static class ImageProcessQueue
     public static SortedDictionary<DateTime, LinkedList<QueueTask>> s_queue = new();
     private static readonly Timer s_timer;
 
-    private static DateTime s_lastEnqueuedTime = DateTime.MinValue;
+    private static DateTime s_lastEnqueuedTime;
     private static readonly object s_lockObject = new();
+    private static readonly string s_lastProcessedTimeFile = "last_processed_time.txt";
+
+
+    // 初期化メソッドを追加
+    public static void Initialize(bool scanAll = false)
+    {
+        s_lastEnqueuedTime = LoadLastProcessedTime(scanAll);
+    }
 
     static ImageProcessQueue()
     {
@@ -52,6 +60,44 @@ internal static class ImageProcessQueue
             s_compressSemaphore = new SemaphoreSlimWrapper(ConfigManager.ParallelCompressionProcesses, ConfigManager.ParallelCompressionProcesses);
         }
         ResetTimer();
+    }
+
+    private static void SaveLastProcessedTime(DateTime time)
+    {
+        try
+        {
+            File.WriteAllText(s_lastProcessedTimeFile, time.ToString("O"));
+        }
+        catch (Exception)
+        {
+            // ファイル書き込みに失敗した場合は無視
+        }
+    }
+
+    private static DateTime LoadLastProcessedTime(bool scanAll = false)
+    {
+        // scanAllがtrueの場合は常にMinValueを返す
+        if (scanAll)
+        {
+            return DateTime.MinValue;
+        }
+
+        try
+        {
+            if (File.Exists(s_lastProcessedTimeFile))
+            {
+                var timeStr = File.ReadAllText(s_lastProcessedTimeFile);
+                if (DateTime.TryParse(timeStr, out DateTime time))
+                {
+                    return time;
+                }
+            }
+        }
+        catch (Exception)
+        {
+            SaveLastProcessedTime(DateTime.MinValue);
+        }
+        return DateTime.MinValue;
     }
 
     private static void ResetTimer()
@@ -133,6 +179,7 @@ internal static class ImageProcessQueue
                                 try
                                 {
                                     ImageProcessor.ProcessImage(item.path, state);
+                                    SaveLastProcessedTime(key);
                                 }
                                 catch (Exception ex)
                                 {
