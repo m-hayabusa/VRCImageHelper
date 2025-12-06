@@ -102,8 +102,6 @@ internal class ImageProcessor
 
         if (ConfigManager.DeleteOriginalFile && !mayOverwritten)
             DeleteOriginalFile(sourcePath);
-
-        UI.SendNotify.Send("OK!", false);
     }
 
     #region Image Analysis
@@ -342,7 +340,7 @@ internal class ImageProcessor
                 break;
 
             case "JPEG":
-                CompressJPEG(sourcePath, destPath, 100 - quality);
+                CompressJPEG(sourcePath, destPath, quality, hasAlpha);
                 break;
 
             case "PNG":
@@ -353,17 +351,27 @@ internal class ImageProcessor
         return destPath;
     }
 
-    private static void CompressJPEG(string src, string dest, int quality)
+    private static void CompressJPEG(string src, string dest, int quality, bool hasAlpha)
     {
-        using var image = new Bitmap(src);
-        var encoder = ImageCodecInfo.GetImageEncoders().ToList()
-                        .Where(e => e.FormatID == ImageFormat.Jpeg.Guid)
-                        .First();
+        var encoder = hasAlpha ? ConfigManager.AlphaEncoder : ConfigManager.Encoder;
+        var option = hasAlpha ? ConfigManager.AlphaEncoderOption : ConfigManager.EncoderOption;
 
-        var encodeParams = new EncoderParameters(1);
-        encodeParams.Param[0] = new EncoderParameter(Encoder.Quality, quality);
+        if (encoder == "default")
+        {
+            using var image = new Bitmap(src);
+            var codecInfo = ImageCodecInfo.GetImageEncoders().ToList()
+                            .Where(e => e.FormatID == ImageFormat.Jpeg.Guid)
+                            .First();
 
-        image.Save(dest, encoder, encodeParams);
+            var encodeParams = new EncoderParameters(1);
+            encodeParams.Param[0] = new EncoderParameter(Encoder.Quality, 100 - quality);
+
+            image.Save(dest, codecInfo, encodeParams);
+        }
+        else
+        {
+            FFMpeg.Encode(src, dest, "mjpeg", encoder, quality, option).Wait();
+        }
     }
 
     private static void CompressAVIF(string src, string dest, int quality, bool hasAlpha)

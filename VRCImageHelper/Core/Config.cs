@@ -103,6 +103,10 @@ internal class ConfigManager
         {
             result.Encoder = Config.Default.Encoder;
         }
+        if (result.Format == "JPEG" && result.Encoder != "default" && !FFMpeg.GetSupportedEncoder("mjpeg").Contains(result.Encoder))
+        {
+            result.Encoder = "default";
+        }
 
         if (result.VirtualLens2.ApertureDefault >= result.VirtualLens2.ApertureMin)
             result.VirtualLens2.ApertureDefault = float.PositiveInfinity;
@@ -130,7 +134,6 @@ internal class ConfigManager
     {
         return encoder switch
         {
-            "" => "",
             "libaom-av1" => "-threads 1 -cpu-used 8 -still-picture 1 " + (hasAlphaChannel ? "-filter:v:1 alphaextract -map 0 -map 0" : ""),
             "libsvtav1" => "-threads 1 -preset 10",
             "librav1e" => "-threads 1 -speed 10",
@@ -138,7 +141,8 @@ internal class ConfigManager
             "av1_nvenc" => "-preset p7 -pix_fmt yuv420p",
             "av1_amf" => "-quality high_quality",
             "libwebp" => "-threads 1 -preset picture",
-            _ => "-threads 1",
+            "mjpeg" => "-threads 1",
+            _ => "",
         };
     }
 }
