@@ -1,7 +1,6 @@
 namespace VRCImageHelper.Core;
 
 using System;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -103,8 +102,6 @@ internal class ImageProcessor
 
         if (ConfigManager.DeleteOriginalFile && !mayOverwritten)
             DeleteOriginalFile(sourcePath);
-
-        UI.SendNotify.Send("OK!", false);
     }
 
     #region Image Analysis
@@ -332,7 +329,6 @@ internal class ImageProcessor
         var format = hasAlpha ? ConfigManager.AlphaFormat : ConfigManager.Format;
         var quality = hasAlpha ? ConfigManager.AlphaQuality : ConfigManager.Quality;
 
-        Debug.WriteLine(format);
         switch (format)
         {
             case "AVIF":
