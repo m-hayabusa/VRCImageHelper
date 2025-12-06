@@ -231,7 +231,7 @@ public partial class ConfigWindow : Form
                 encoder.Items.AddRange(new object[] { "default" });
                 encoder.Items.AddRange(FFMpeg.GetSupportedEncoder("mjpeg"));
                 encoder.SelectedItem = _selectedEncoder["JPEG" + alpha];
-                encoderOption.Enabled = encoder.SelectedItem?.ToString() != "default";
+                encoderOption.Enabled = encoder.Text != "default";
                 break;
             default:
                 encoder.Enabled = false;
@@ -256,13 +256,9 @@ public partial class ConfigWindow : Form
         encoderOption.Text = GetEncoderOptions(encoder.Text, alpha == "Alpha");
         _selectedEncoder[fileFormat.Text + alpha] = encoder.Text;
 
-        if (fileFormat.Text == "JPEG" && encoder.Text == "default")
+        if (fileFormat.Text == "JPEG")
         {
-            encoderOption.Enabled = false;
-        }
-        else
-        {
-            encoderOption.Enabled = true;
+            encoderOption.Enabled = encoder.Text != "default";
         }
     }
 
