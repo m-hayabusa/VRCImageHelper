@@ -183,8 +183,7 @@ public partial class ConfigWindow : Form
 
         if (format is not null && format != _format[alpha])
         {
-            var extension = format.ToLower();
-            textBox.Text = Path.ChangeExtension(richTextBoxFilePattern.Text, extension);
+            textBox.Text = Path.ChangeExtension(richTextBoxFilePattern.Text, format.ToLower());
             _format[alpha] = format;
         }
 
@@ -228,11 +227,11 @@ public partial class ConfigWindow : Form
                 break;
             case "JPEG":
                 encoder.Enabled = true;
-                encoderOption.Enabled = true;
                 quality.Enabled = true;
                 encoder.Items.AddRange(new object[] { "default" });
                 encoder.Items.AddRange(FFMpeg.GetSupportedEncoder("mjpeg"));
                 encoder.SelectedItem = _selectedEncoder["JPEG" + alpha];
+                encoderOption.Enabled = encoder.SelectedItem?.ToString() != "default";
                 break;
             default:
                 encoder.Enabled = false;
