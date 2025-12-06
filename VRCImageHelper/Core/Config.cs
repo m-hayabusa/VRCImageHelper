@@ -94,14 +94,18 @@ internal class ConfigManager
             result = JsonSerializer.Deserialize<Config>(source) ?? result;
         }
 
-        if ((result.Format == "AVIF" && FFMpeg.GetSupportedEncoder("av1").Length == 0) || (result.Format == "WEBP" && FFMpeg.GetSupportedEncoder("webp").Length == 0) || (result.Format == "JPEG" && FFMpeg.GetSupportedEncoder("mjpeg").Length == 0))
+        if ((result.Format == "AVIF" && FFMpeg.GetSupportedEncoder("av1").Length == 0) || (result.Format == "WEBP" && FFMpeg.GetSupportedEncoder("webp").Length == 0))
         {
             result.Format = Config.Default.Format;
             result.FilePattern = Path.ChangeExtension(result.FilePattern, result.Format.ToLower());
         }
-        if ((result.Format == "AVIF" && !FFMpeg.GetSupportedEncoder("av1").Contains(result.Encoder)) || result.Format == "WEBP" && !FFMpeg.GetSupportedEncoder("webp").Contains(result.Encoder) || (result.Format == "JPEG" && !FFMpeg.GetSupportedEncoder("mjpeg").Contains(result.Encoder)))
+        if ((result.Format == "AVIF" && !FFMpeg.GetSupportedEncoder("av1").Contains(result.Encoder)) || result.Format == "WEBP" && !FFMpeg.GetSupportedEncoder("webp").Contains(result.Encoder))
         {
             result.Encoder = Config.Default.Encoder;
+        }
+        if (result.Format == "JPEG" && result.Encoder != "default" && !FFMpeg.GetSupportedEncoder("mjpeg").Contains(result.Encoder))
+        {
+            result.Encoder = "default";
         }
 
         if (result.VirtualLens2.ApertureDefault >= result.VirtualLens2.ApertureMin)

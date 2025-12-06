@@ -227,11 +227,11 @@ public partial class ConfigWindow : Form
                 break;
             case "JPEG":
                 encoder.Enabled = true;
+                encoderOption.Enabled = _selectedEncoder["JPEG" + alpha] != "default";
                 quality.Enabled = true;
                 encoder.Items.AddRange(new object[] { "default" });
                 encoder.Items.AddRange(FFMpeg.GetSupportedEncoder("mjpeg"));
                 encoder.SelectedItem = _selectedEncoder["JPEG" + alpha];
-                encoderOption.Enabled = encoder.Text != "default";
                 break;
             default:
                 encoder.Enabled = false;
