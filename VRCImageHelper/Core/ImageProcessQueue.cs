@@ -46,7 +46,7 @@ internal static class ImageProcessQueue
     // 初期化メソッドを追加
     public static void Initialize(bool scanAll = false)
     {
-        s_lastEnqueuedTime = LoadLastProcessedTime(scanAll);
+        s_lastEnqueuedTime = LoadLastProcessedTime(scanAll) + TimeSpan.FromMilliseconds(1);
     }
 
     static ImageProcessQueue()
