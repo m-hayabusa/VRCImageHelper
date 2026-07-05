@@ -120,10 +120,10 @@ internal class ConfigManager
                 result.FilePattern = "yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY%{_LAYER}%" + filePatternMatch.Groups["Extension"];
             }
 
-            filePatternMatch = pattern.Match(result.FilePattern);
-            if (filePatternMatch.Success)
+            var alphaFilePatternMatch = pattern.Match(result.AlphaFilePattern);
+            if (alphaFilePatternMatch.Success)
             {
-                result.AlphaFilePattern = "yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY%{_LAYER}%" + filePatternMatch.Groups["Extension"];
+                result.AlphaFilePattern = "yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY%{_LAYER}%" + alphaFilePatternMatch.Groups["Extension"];
             }
             result.Version = 1;
         }
