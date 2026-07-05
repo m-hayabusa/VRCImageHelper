@@ -7,7 +7,7 @@ internal static class VRChat
 {
     public static void WorldId(object sender, NewLineEventArgs e)
     {
-        var match = Regex.Match(e.Line, @"(?<DateTime>\d+\.\d+\.\d+ \d+:\d+:\d+) .*\[Behaviour\] Joining (?<WorldID>wrld_.*?):(?<InstanceID>.*?)~(?<Options>.*)?");
+        var match = Regex.Match(e.Line, @"(?<DateTime>\d+\.\d+\.\d+ \d+:\d+:\d+) .*\[Behaviour\] Joining (?<WorldID>wrld_[^:]+):(?<InstanceID>[^~]*)(?:~(?<Options>.*))?$");
         if (match.Success)
         {
             Debug.WriteLine($"Joining {match.Groups["WorldID"]}, {match.Groups["InstanceID"]}, {match.Groups["Options"]}");
