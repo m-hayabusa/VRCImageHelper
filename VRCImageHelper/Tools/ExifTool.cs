@@ -48,7 +48,11 @@ internal class ExifTool
 
     public static async Task<bool> Copy(string source, string destination)
     {
-        var exifTool = new ProcessStartInfo(GetExifTool()) { Arguments = " -TagsFromFile " + source + " -XMP " + destination, CreateNoWindow = true };
+        var exifTool = new ProcessStartInfo(GetExifTool()) { CreateNoWindow = true };
+        exifTool.ArgumentList.Add("-TagsFromFile");
+        exifTool.ArgumentList.Add(source);
+        exifTool.ArgumentList.Add("-XMP");
+        exifTool.ArgumentList.Add(destination);
 
         Process? process;
         try
