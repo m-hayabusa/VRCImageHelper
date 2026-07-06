@@ -127,6 +127,21 @@ internal static class ImageProcessQueue
                     s_queue[timestamp].AddLast(new QueueTask(path) { state = state });
                     s_lastEnqueuedTime = timestamp;
                 }
+                else if (state != null)
+                {
+                    // FS由来が先にあったとき
+                    var node = s_queue[timestamp].First;
+                    while (node != null)
+                    {
+                        if (node.Value.path == path && node.Value.state == null)
+                        {
+                            var updated = node.Value;
+                            updated.SetState(state);
+                            node.Value = updated;
+                        }
+                        node = node.Next;
+                    }
+                }
             }
 
             ResetTimer();
@@ -208,7 +223,7 @@ internal static class ImageProcessQueue
                                             }
                                         }
 
-                                        if (!s_queue.Keys.Any(k => k < key))
+                                        if (!s_queue.Keys.Any(k => k < key) && !s_queue.ContainsKey(key))
                                         {
                                             SaveLastProcessedTime(key);
                                         }

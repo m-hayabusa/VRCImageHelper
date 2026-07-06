@@ -96,7 +96,10 @@ internal class ExifTool
         var argsFile = new StreamWriter(argsFilePath);
         argsFile.Write(string.Join("\n", args));
         argsFile.Close();
-        var exifTool = new ProcessStartInfo(GetExifTool()) { Arguments = path + " -@ " + argsFilePath, CreateNoWindow = true };
+        var exifTool = new ProcessStartInfo(GetExifTool()) { CreateNoWindow = true ,RedirectStandardOutput = true};
+        exifTool.ArgumentList.Add(path);
+        exifTool.ArgumentList.Add("-@");
+        exifTool.ArgumentList.Add(argsFilePath);
 
         Process? process;
         try

@@ -183,7 +183,7 @@ public partial class ConfigWindow : Form
 
         if (format is not null && format != _format[alpha])
         {
-            textBox.Text = Path.ChangeExtension(richTextBoxFilePattern.Text, format.ToLower());
+            textBox.Text = Path.ChangeExtension(textBox.Text, format.ToLower());
             _format[alpha] = format;
         }
 

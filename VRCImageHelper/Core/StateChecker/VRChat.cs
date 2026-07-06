@@ -50,6 +50,10 @@ internal static class VRChat
                         State.Current.RoomInfo.Permission += "_" + value;
                     }
                 }
+            } else
+            {
+                State.Current.RoomInfo.Permission = "public";
+                State.Current.RoomInfo.Organizer = "public";
             }
             State.Current.Players.Clear();
         }
