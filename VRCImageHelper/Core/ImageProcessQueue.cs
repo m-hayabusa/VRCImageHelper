@@ -179,7 +179,6 @@ internal static class ImageProcessQueue
                                 try
                                 {
                                     ImageProcessor.ProcessImage(item.path, state);
-                                    SaveLastProcessedTime(key);
                                 }
                                 catch (Exception ex)
                                 {
@@ -207,6 +206,11 @@ internal static class ImageProcessQueue
                                             {
                                                 s_queue.Remove(key);
                                             }
+                                        }
+
+                                        if (!s_queue.Keys.Any(k => k < key))
+                                        {
+                                            SaveLastProcessedTime(key);
                                         }
                                     }
                                 }
