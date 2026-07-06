@@ -111,7 +111,7 @@ internal class ConfigManager
         if (result.VirtualLens2.ApertureDefault >= result.VirtualLens2.ApertureMin)
             result.VirtualLens2.ApertureDefault = float.PositiveInfinity;
 
-        if (result.Version == null || result.Version == 0)
+        if (result.Version == null || result.Version < 2)
         {
             var pattern = new Regex(@"^yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY(?<Extension>.[a-zA-Z]*?)$");
             var filePatternMatch = pattern.Match(result.FilePattern);
@@ -125,7 +125,7 @@ internal class ConfigManager
             {
                 result.AlphaFilePattern = "yyyy-MM\\VRChat_yyyy-MM-dd_hh-mm-ss.fff_XXXXxYYYY%{_LAYER}%" + alphaFilePatternMatch.Groups["Extension"];
             }
-            result.Version = 1;
+            result.Version = 2;
         }
 
         return result;
