@@ -19,6 +19,6 @@ internal static class ParseDate
 
     public static bool TryParseDirectoryPathToDateTime(string path, out DateTime parsedDateTime)
     {
-        return DateTime.TryParseExact(Path.GetDirectoryName(path), "yyyy-MM", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDateTime);
+        return DateTime.TryParseExact(Path.GetFileName(path), "yyyy-MM", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDateTime);
     }
 }

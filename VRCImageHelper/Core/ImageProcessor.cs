@@ -168,20 +168,21 @@ internal class ImageProcessor
     private static string? BuildDestinationPath(string sourcePath, string filePath)
     {
         filePath = Regex.Replace(filePath, @"[<>:""|?*]", "_");
+        var destDir = GetDestinationDirectory(sourcePath);
+        if (destDir == null) return null;
 
-        var destPath = GetDestinationDirectory(sourcePath);
-        if (destPath == null) return null;
+        var basePath = Path.GetFullPath(destDir);
+        var fullDest = Path.GetFullPath(Path.Combine(basePath, filePath));
 
-        var basePath = Path.GetFullPath(destPath);
-        destPath = Path.Combine(destPath, filePath);
-
-        // パストラバーサル攻撃の防止
-        if (!Path.GetFullPath(destPath).StartsWith(basePath, StringComparison.OrdinalIgnoreCase))
+        // basePath配下に収まっているか
+        var rel = Path.GetRelativePath(basePath, fullDest);
+        if (rel == ".."
+            || rel.StartsWith(".." + Path.DirectorySeparatorChar, StringComparison.Ordinal)
+            || Path.IsPathRooted(rel))
         {
             return null;
         }
-
-        return destPath;
+        return fullDest;
     }
 
     private static string? GetDestinationDirectory(string sourcePath)
